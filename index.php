@@ -327,7 +327,7 @@ $app_name = idx($app_info, 'name', '');
         </ul>
       </div>
       <?php */ ?>
-      <div class="list">
+      <!--<div class="list">
         <h3>Friends using this app</h3>
         <ul class="friends">
           <?php
@@ -346,7 +346,7 @@ $app_name = idx($app_info, 'name', '');
             }
           ?>
         </ul>
-      </div>
+      </div> -->
       <?php /* ?>
     </section>
 
