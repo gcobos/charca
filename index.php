@@ -207,7 +207,8 @@ $app_name = idx($app_info, 'name', '');
     </script>
 
     <header class="clearfix">
-      <?php include 'charca.html' ?>
+      <?php include 'charca.html'; /* ?>
+      
       <?php if (isset($basic)) { ?>
       <p id="picture" style="background-image: url(https://graph.facebook.com/<?php echo he($user_id); ?>/picture?type=normal)"></p>
 
@@ -244,9 +245,9 @@ $app_name = idx($app_info, 'name', '');
         <h1>Welcome</h1>
         <div class="fb-login-button" data-scope="user_likes,user_photos"></div>
       </div>
-      <?php } ?>
+      <?php } */ ?>
     </header>
-
+        <?php /* ?>
     <section id="get-started">
       <p>Welcome to your Facebook app, running on <span>heroku</span>!</p>
       <a href="https://devcenter.heroku.com/articles/facebook" target="_top" class="button">Learn How to Edit This App</a>
@@ -379,5 +380,6 @@ $app_name = idx($app_info, 'name', '');
         </li>
       </ul>
     </section>
+    <?php */ ?>
   </body>
 </html>
