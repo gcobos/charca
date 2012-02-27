@@ -207,6 +207,7 @@ $app_name = idx($app_info, 'name', '');
     </script>
 
     <header class="clearfix">
+      <?php include 'charca.html' ?>
       <?php if (isset($basic)) { ?>
       <p id="picture" style="background-image: url(https://graph.facebook.com/<?php echo he($user_id); ?>/picture?type=normal)"></p>
 
