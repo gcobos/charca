@@ -360,7 +360,7 @@ function angleBetweenPoints (p1, p2)
 
 // Mouse handling functions
 // executed in response to a mouse click on the screen
-function handleClick () {
+function handleClick (e) {
 	// prevent extra clicks and hide text
 	if (playing && frog.alive) {
 	 	if (!frog.shooting) {
@@ -371,6 +371,7 @@ function handleClick () {
 		stage.removeChild(messageField);
 		restart();
 	}
+	e.preventDefault();
 }
 
 //called when the mouse is moved over the canvas
