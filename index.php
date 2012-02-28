@@ -211,7 +211,7 @@ if (!isset($_REQUEST['prb'])) {
   if(isset($_COOKIE['Sscore']))
         $cscore = $_COOKIE['Sscore'];
 else
-        exit;
+        exit('Sale?');
 
 
   $score=$cscore;
