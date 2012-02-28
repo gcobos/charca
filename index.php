@@ -267,7 +267,7 @@ print "UID".$uid."<br />";
     return base64_decode(strtr($input, '-_', '+/'));
 
   } 
-
+?>
 <div class="list">
         <h3>Friends using this app</h3>
         <ul class="friends">
@@ -288,6 +288,7 @@ print "UID".$uid."<br />";
           ?>
         </ul>
       </div>
+<?php
 
 print strlen($app_access_token);
 ?>
