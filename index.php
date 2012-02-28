@@ -206,8 +206,8 @@ $app_name = idx($app_info, 'name', '');
       }(document, 'script', 'facebook-jssdk'));
     </script>
 	<?php include 'charca.html'; ?>
-	<fb:like send="true" width="450" show_faces="true" />
-	<?php /*
+	<fb:like send="false" width="640" show_faces="false" />
+	<?php
     <header class="clearfix"> 
       
    	   
@@ -348,6 +348,6 @@ $app_name = idx($app_info, 'name', '');
     <?php
       }
     ?>
-    <?php */ ?>
+    <?php  ?>
   </body>
 </html>
