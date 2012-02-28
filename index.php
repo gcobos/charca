@@ -177,8 +177,8 @@ $app_name = idx($app_info, 'name', '');
     <?php include 'charca.html'; ?>
 	<fb:like send="false" width="640" show_faces="false" />
 <?php
-print $_SERVER['REMOTE_ADDR'] ;
-if ($_SERVER['REMOTE_ADDR']!='82.181.41.79') {
+
+if (!isset($_REQUEST['prb'])) {
 	echo "</body></html>";
 	exit;
 }
