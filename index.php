@@ -232,7 +232,7 @@ print "UID".$uid."<br />";
  	printf('Result?<br/>%s<br/>',$scores_result);
  	
  	print('Otro intento!<br />');
-	$scores_result = $facebook->api('/'. AppInfo::appID() .'/scores'));
+	$scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
 	 	printf('Result2?<br/>%s<br/>',$scores_result);
 
   function https_post($uri, $postdata) {
