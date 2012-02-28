@@ -128,18 +128,20 @@ function watchRestart () {
 	canvas.onmousemove = null;
 
 	// Check score
-	if (score && FB) {
-		FB.api({
-			method  : 'scores',
-         message : score
-      },
-      function (response) {
-      	console.log(response);
-         // If response is null the user canceled the dialog
-         if (response != null) {
-       	  logResponse(response);
-         }
-      });
+	if (window.FB) {
+		if (score) {
+			FB.api({
+				method  : 'scores',
+      		message : score
+     		},
+      	function (response) {
+      		console.log(response);
+         	// If response is null the user canceled the dialog
+         	if (response != null) {
+       			logResponse(response);
+         	}
+      	});
+		}
 	}
 
 	playing = false;
