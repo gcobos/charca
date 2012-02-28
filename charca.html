@@ -131,17 +131,13 @@ function watchRestart () {
 	// Check score
 	if (window.FB) {
 		if (score) {
-			FB.api({
-				method  : 'scores',
-      		message : score
-     		},
-      	function (response) {
-      		console.log(response);
-         	// If response is null the user canceled the dialog
-         	if (response != null) {
-       			logResponse(response);
-         	}
-      	});
+				FB.api("/me/scores", 'post', {score: score, access_token: FB.getSession().access_token}, function(response){
+       		if (!response || response.error) {
+          		console.error(response);
+       		} else {
+          		console.log(response);
+       		}
+			});
 		}
 	}
 
