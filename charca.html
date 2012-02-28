@@ -150,7 +150,7 @@ function watchRestart () {
 	
 	// Wait for a second at least before giving control
 	clearTimeout(timer);
-	timer = setTimeout('canvas.onclick = handleClick;canvas.ondblclick = handleClick; canvas.onmousemove = handleMouseMove;', 1000);
+	timer = setTimeout('canvas.onclick = handleClick; canvas.ondblclick = null; canvas.onmousemove = handleMouseMove;', 1000);
 }
 
 // reset all game logic
