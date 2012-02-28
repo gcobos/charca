@@ -183,12 +183,11 @@ if (!isset($_REQUEST['prb'])) {
 	exit;
 }
 
-$facebook = new Facebook($config);
+  $app_id = AppInfo::appID();
+  $app_secret = AppInfo::appSecret();
+  $canvas_page_url = AppInfo::getUrl();
 
-
-  $app_id = 'APPID';
-  $app_secret = 'SECRET';
-  $canvas_page_url = 'CANVASURL';
+	print "canvas url:". $canvas_page_url."<br />";
 
 // Get the User ID
   $signed_request = parse_signed_request($_POST['signed_request'],
@@ -208,8 +207,6 @@ $facebook = new Facebook($config);
   parse_str($token_response, $params);
   $app_access_token = $params['access_token'];
 
-
-
   //Get Score **************
   if(isset($_COOKIE['Sscore']))
         $cscore = $_COOKIE['Sscore'];
@@ -217,7 +214,7 @@ else
         exit;
 
 
-$score=$cscore;
+  $score=$cscore;
   // POST a user score
   //print('Publish a User Score<br/>');
   $score_URL = 'https://graph.facebook.com/' . $uid . '/scores';
