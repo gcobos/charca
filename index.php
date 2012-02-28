@@ -207,7 +207,8 @@ $app_name = idx($app_info, 'name', '');
     </script>
 	<?php include 'charca.html'; ?>
 	<fb:like send="false" width="640" show_faces="false" />
-	<?php
+	<div class="fb-login-button" data-scope="user_likes,user_photos"></div>
+	<?php /*
     <header class="clearfix"> 
       
    	   
@@ -348,6 +349,6 @@ $app_name = idx($app_info, 'name', '');
     <?php
       }
     ?>
-    <?php  ?>
+    <?php */ ?>
   </body>
 </html>
