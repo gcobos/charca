@@ -213,10 +213,11 @@ if (!isset($_REQUEST['prb'])) {
 else
         exit('Sale?');
 
+print "UID".$uid."<br />";
 
   $score=$cscore;
   // POST a user score
-  //print('Publish a User Score<br/>');
+  print('Publish a User Score<br/>');
   $score_URL = 'https://graph.facebook.com/' . $uid . '/scores';
   $score_result = https_post($score_URL,
     'score=' . $score
