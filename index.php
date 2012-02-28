@@ -227,7 +227,7 @@ print "UID".$uid."<br />";
  printf('<br/>%s<br/>',$score_result);
 */
     print('Get scores from all users of the application<br/>');
-  $score_URL = 'https://graph.facebook.com/' . $AppInfo::appID() . '/scores';
+  $score_URL = 'https://graph.facebook.com/' . AppInfo::appID() . '/scores';
   $scores_result = file_get_contents($score_URL.'?access_token=' . $app_access_token);
  	printf('Result?<br/>%s<br/>',$scores_result);
 
