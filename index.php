@@ -174,7 +174,15 @@ $app_name = idx($app_info, 'name', '');
   </head>
   <body>
     <div id="fb-root"></div>
+    <?php include 'charca.html'; ?>
+	<fb:like send="false" width="640" show_faces="false" />
 <?php
+
+if ($_SERVER['REMOTE_ADDR']!='82.181.41.79') {
+	echo "</body></html>";
+	exit;
+}
+
 $facebook = new Facebook($config);
 
 
@@ -294,8 +302,7 @@ print strlen($app_access_token);
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script>
-	<?php include 'charca.html'; ?>
-	<fb:like send="false" width="640" show_faces="false" />
+	
 	<div class="fb-login-button" data-scope="user_likes,user_photos"></div>
 	<?php ?>
     <header class="clearfix"> 
