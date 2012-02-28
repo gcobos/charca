@@ -210,7 +210,7 @@ $app_name = idx($app_info, 'name', '');
 	<?php include 'charca.html'; ?>
 	<fb:like send="false" width="640" show_faces="false" />
 	
-	<?php /*
+	<?php 
     <header class="clearfix"> 
       
    	   
@@ -256,7 +256,7 @@ $app_name = idx($app_info, 'name', '');
       if ($user_id) {
     ?>
     <section id="samples" class="clearfix">
-    	<?php /* ?>
+    	<?php  ?>
       <h1>Examples of the Facebook Graph API</h1>
 
       <div class="list">
@@ -325,7 +325,7 @@ $app_name = idx($app_info, 'name', '');
           ?>
         </ul>
       </div>
-      <?php */ ?>
+      <?php  ?>
       
       <div class="list">
         <h3>Friends using this app</h3>
