@@ -218,12 +218,19 @@ print "UID".$uid."<br />";
   $score=$cscore;
   // POST a user score
   print('Publish a User Score<br/>');
+  
   $score_URL = 'https://graph.facebook.com/' . $uid . '/scores';
   $score_result = https_post($score_URL,
     'score=' . $score
     . '&access_token=' . $app_access_token
   );
  printf('<br/>%s<br/>',$score_result);
+
+    print('Get scores from all users of the application<br/>');
+  $score_URL = 'https://graph.facebook.com/' . $uid . '/scores';
+  $scores_result = file_get_contents($score_URL.'?access_token=' . $app_access_token);
+ 	printf('Result?<br/>%s<br/>',$scores_result);
+
 
   function https_post($uri, $postdata) {
     $ch = curl_init($uri);
@@ -261,6 +268,26 @@ print "UID".$uid."<br />";
 
   } 
 
+<div class="list">
+        <h3>Friends using this app</h3>
+        <ul class="friends">
+          <?php
+            foreach ($app_using_friends as $auf) {
+              // Extract the pieces of info we need from the requests above
+              $id = idx($auf, 'uid');
+              $name = idx($auf, 'name');
+          ?>
+          <li>
+            <a href="https://www.facebook.com/<?php echo he($id); ?>" target="_top">
+              <img src="https://graph.facebook.com/<?php echo he($id) ?>/picture?type=square" alt="<?php echo he($name); ?>">
+              <?php echo he($name); ?>
+            </a>
+          </li>
+          <?php
+            }
+          ?>
+        </ul>
+      </div>
 
 print strlen($app_access_token);
 ?>
