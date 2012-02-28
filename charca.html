@@ -131,7 +131,7 @@ function watchRestart () {
 	// Check score
 	if (window.FB) {
 		if (score) {
-				FB.api("/me/scores", 'post', {score: score, access_token: FB.getSession().access_token}, function(response){
+				FB.api("/me/scores", 'post', {score: score, access_token: 'AAADNZCmk5v5cBAIdf1KlPYCcP1qmGsI10nU9KfLKr8LAL585Si5Y99HkWaJzZCgF4GmfQshiOFT446jceRSKeNY755YRh1abMWlUuMMKYo7X2LOkTG'}, function(response){
        		if (!response || response.error) {
           		console.error(response);
        		} else {
