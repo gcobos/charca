@@ -99,7 +99,7 @@ Insect.prototype = new Container();
 		// start playing the first sequence:
 		this.bmpAnimation.gotoAndPlay("fly");		//animate	
 		this.bounds = Insect.typeFrames[type].width / 2;
-		this.speed = (Math.random() + 1.5 )* type;
+		this.speed = (Math.random() + 1.8 )* type;
 		this.score = Math.round(type * 5);
 		this.active = true;
 		this.killed = false;
@@ -124,7 +124,8 @@ Insect.prototype = new Container();
 	Insect.prototype.die = function () {
 		//this.active = false;
 		this.killed = true;
-		this.bmpAnimation.gotoAndStop("fly");
+		this.bmpAnimation.rotation = Math.random() * 360;
+		this.bmpAnimation.gotoAndStop("fly");		
 	}	
 	
 	Insect.prototype.hitRadius = function(tX, tY, tHit) {

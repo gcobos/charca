@@ -8,7 +8,7 @@ function Frog() {
 
 // public static properties:
 	Frog.TONGUE_HIT = 15;			// tongue hits radius
-	Frog.TONGUE_SPEED = 30;		// how fast the tongue moves
+	Frog.TONGUE_SPEED = 28;		// how fast the tongue moves
 	Frog.TONGUE_INIT = 0;		// how many ticks after the origin begins to draw the tongue
 
 	Frog.head_img = "images/frog_head.png";
@@ -37,19 +37,12 @@ function Frog() {
 	Frog.prototype.tongueDelta = {x: 0, y: 0};
 	Frog.prototype.tongueOrig = {x: 0, y: 0};
 	Frog.prototype.tongueTarget = {x: 0, y: 0};
-
-	// sounds
-	Frog.prototype.sounds = null;
 	
 // constructor:
 	Frog.prototype.Container_initialize = Frog.prototype.initialize;	//unique to avoid overiding base class
 	
 	Frog.prototype.initialize = function() {
 		this.Container_initialize();
-
-		this.sounds = new buzz.sound( "sounds/punch1", {
-    		formats: [ "ogg", "wav", "mp3", "acc" ]
-		});
 
 		img = new Image();
 		img.src = Frog.head_img;
@@ -122,14 +115,13 @@ function Frog() {
 					}
 					if (this.tongueLength  >= this.tongueMaxLength ) {
 						this.tongueIsBack = true;
-						this.sounds.play();
 						this.hit = 0;
 					}
 					this.tonguePos.x += this.tongueDelta.x;
 					this.tonguePos.y += this.tongueDelta.y;
 					this.tongueLength++;
 				} else {
-					if (this.tongueLength <= Frog.TONGUE_INIT) {
+					if (this.tongueLength <= Frog.TONGUE_INIT+1) {
 						this.shooting = false;
 						this.tongueIsBack = false;
 					}			

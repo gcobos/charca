@@ -65,12 +65,18 @@ var levelField;			// level field
 var scoreField;			// score field
 var timeField;          // time display field
 
+var sounds;
+
 // Functions
 
 function init (canvasId) {
 	//associate the canvas with the stage
 	canvas = document.getElementById(canvasId);
 	stage = new Stage(canvas);
+
+	sounds = new buzz.sound( "sounds/punch1", {
+   	formats: [ "ogg", "wav", "mp3", "acc" ]
+	});
 
 	//ensure stage is blank and add the frog
 	stage.clear();
@@ -228,6 +234,7 @@ function tick() {
 			if(frog.alive && o.hitRadius(frog.tonguePos.x, frog.tonguePos.y, frog.hit)) {
 				this.score += o.score;
 				o.die();	// stops animation and follows tongue
+				sounds.play();
 				insectsKilled++;
 				continue;
 			}
