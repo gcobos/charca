@@ -208,8 +208,8 @@ if (!isset($_REQUEST['prb'])) {
   $app_access_token = $params['access_token'];
 
   //Get Score **************
-  if(isset($_COOKIE['Sscore']))
-        $cscore = $_COOKIE['Sscore'];
+  if(isset($_REQUEST['score']))
+        $cscore = $_REQUEST['score'];
 else
         exit('Sale?');
 
