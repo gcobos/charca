@@ -230,7 +230,10 @@ print "UID".$uid."<br />";
   $score_URL = 'https://graph.facebook.com/' . AppInfo::appID() . '/scores';
   $scores_result = file_get_contents($score_URL.'?access_token=' . $app_access_token);
  	printf('Result?<br/>%s<br/>',$scores_result);
-
+ 	
+ 	print('Otro intento!<br />');
+	$scores_result = $facebook->api('/'. AppInfo::appID() .'/scores'));
+	 	printf('Result2?<br/>%s<br/>',$scores_result);
 
   function https_post($uri, $postdata) {
     $ch = curl_init($uri);
