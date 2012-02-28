@@ -131,7 +131,7 @@ function watchRestart () {
 	if (score && FB) {
 		FB.api({
 			method  : 'scores',
-         message : $(this).attr('data-message')
+         message : score
       },
       function (response) {
       	console.log(response);
