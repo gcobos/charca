@@ -72,6 +72,7 @@ var sounds;
 function init (canvasId) {
 	//associate the canvas with the stage
 	canvas = document.getElementById(canvasId);
+	canvas.onselectstart = function () { return false; }
 	stage = new Stage(canvas);
 
 	sounds = new buzz.sound( "sounds/punch1", {
