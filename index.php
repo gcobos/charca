@@ -205,10 +205,12 @@ $app_name = idx($app_info, 'name', '');
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script>
-
-    <header class="clearfix">
-      <?php include 'charca.html'; ?>
-   	<fb:like send="true" width="450" show_faces="true" />   
+	<?php include 'charca.html'; ?>
+	<fb:like send="true" width="450" show_faces="true" />
+	<?php /*
+    <header class="clearfix"> 
+      
+   	   
       <?php if (isset($basic)) { ?>
       <p id="picture" style="background-image: url(https://graph.facebook.com/<?php echo he($user_id); ?>/picture?type=normal)"></p>
 
@@ -243,7 +245,7 @@ $app_name = idx($app_info, 'name', '');
       <?php } else { ?>
       <div>
         <h1>Welcome</h1>
-        <div class="fb-login-button" data-scope="user_likes,user_photos"></div>
+       <div class="fb-login-button" data-scope="user_likes,user_photos"></div>
       </div>
       <?php } ?>
     </header>
@@ -346,5 +348,6 @@ $app_name = idx($app_info, 'name', '');
     <?php
       }
     ?>
+    <?php */ ?>
   </body>
 </html>
