@@ -71,7 +71,7 @@ if ($user_id) {
   ));
 }
 
-var_export($app_using_friends);
+
 
 // Fetch the basic info of the app that they are using
 $app_info = $facebook->api('/'. AppInfo::appID());
@@ -174,6 +174,37 @@ $app_name = idx($app_info, 'name', '');
   </head>
   <body>
     <div id="fb-root"></div>
+<?php
+$facebook = new Facebook($config);
+
+
+  $app_id = 'APPID';
+  $app_secret = 'SECRET';
+  $canvas_page_url = 'CANVASURL';
+
+// Get the User ID
+  $signed_request = parse_signed_request($_POST['signed_request'],
+    $app_secret);
+
+    $uid = $signed_request['user_id'];
+
+
+  // Get an App Access Token
+  $token_url = 'https://graph.facebook.com/oauth/access_token?'
+    . 'client_id=' . $app_id
+    . '&client_secret=' . $app_secret
+    . '&grant_type=client_credentials';
+
+  $token_response = file_get_contents($token_url);
+  $params = null;
+  parse_str($token_response, $params);
+  $app_access_token = $params['access_token'];
+
+print strlen($app_access_token);
+?>
+
+
+
     <script type="text/javascript">
       window.fbAsyncInit = function() {
         FB.init({
