@@ -233,7 +233,7 @@ print "UID".$uid."<br />";
  	
  	print('Otro intento!<br />');
 	$scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
-	 	printf('Result2?<br/>%s<br/>',$scores_result);
+	 	printf('Result2?<br/>%s<br/>',var_export($scores_result,true));
 
   function https_post($uri, $postdata) {
     $ch = curl_init($uri);
