@@ -214,7 +214,7 @@ else
         exit('Sale?');
 
 print "UID".$uid."<br />";
-
+/*
   $score=$cscore;
   // POST a user score
   print('Publish a User Score<br/>');
@@ -225,7 +225,7 @@ print "UID".$uid."<br />";
     . '&access_token=' . $app_access_token
   );
  printf('<br/>%s<br/>',$score_result);
-
+*/
     print('Get scores from all users of the application<br/>');
   $score_URL = 'https://graph.facebook.com/' . $AppInfo::appID() . '/scores';
   $scores_result = file_get_contents($score_URL.'?access_token=' . $app_access_token);
