@@ -77,7 +77,7 @@ function Frog() {
 
 		// Relative positions for head and its rotation center
 		this.head.x = 36;
-		this.head.y = -10;
+		this.head.y = -12;
 		this.head.regX = 41;		// rotation center
 		this.head.regY = 45;
 		this.dead.x = -30;
