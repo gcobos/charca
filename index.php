@@ -208,7 +208,7 @@ $app_name = idx($app_info, 'name', '');
 
     <header class="clearfix">
       <?php include 'charca.html'; ?>
-      
+   	<fb:like send="true" width="450" show_faces="true" />   
       <?php if (isset($basic)) { ?>
       <p id="picture" style="background-image: url(https://graph.facebook.com/<?php echo he($user_id); ?>/picture?type=normal)"></p>
 
@@ -247,16 +247,9 @@ $app_name = idx($app_info, 'name', '');
       </div>
       <?php } ?>
     </header>
-        <?php ?>
-    <section id="get-started">
-      <p>Welcome to your Facebook app, running on <span>heroku</span>!</p>
-      <a href="https://devcenter.heroku.com/articles/facebook" target="_top" class="button">Learn How to Edit This App</a>
-    </section>
-
     <?php
       if ($user_id) {
     ?>
-
     <section id="samples" class="clearfix">
       <h1>Examples of the Facebook Graph API</h1>
 

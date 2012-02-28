@@ -127,6 +127,20 @@ function watchRestart () {
 	canvas.onclick = null;
 	canvas.onmousemove = null;
 
+	// Check score
+	if (score) {
+		FB.api({
+			method  : 'scores',
+         message : $(this).attr('data-message')
+      },
+      function (response) {
+         // If response is null the user canceled the dialog
+         if (response != null) {
+       	  logResponse(response);
+         }
+      });
+	}
+
 	playing = false;
 	// watch for clicks
 	stage.addChild(messageField);
