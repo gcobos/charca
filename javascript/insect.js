@@ -66,6 +66,8 @@ Insect.prototype = new Container();
 				this.typeImages[i].src = "images/insect"+i+".png";
 				i++; 
 			}
+		} else {
+			console.log('Ya tengo las imagenes de los insectos cargadas');
 		}
 		this.activate(type);
 	}

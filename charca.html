@@ -181,7 +181,7 @@ function restart() {
 
 	stage.addChild(frog);
 	
-	var insect = new Insect(1);
+	//var insect = new Insect(1);
 	
 	//start game timer
 	Ticker.addListener(window);
@@ -296,6 +296,7 @@ function getInsect (type) {
 	}
 	
 	stage.addChild(insectsCloud[i]);
+	console.log('Added insect to stage');
 	return i;
 }
 
