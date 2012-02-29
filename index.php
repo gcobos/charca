@@ -231,9 +231,12 @@ print "UID".$uid."<br />";
   $scores_result = file_get_contents($score_URL.'?access_token=' . $app_access_token);
  	printf('Result?<br/>%s<br/>',$scores_result);
  	
- 	print('Otro intento!<br />');
+ 	print('<h1>Lista de records:</h1><br />');
 	$scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
-	 	printf('Result2?<br/>%s<br/>',var_export($scores_result,true));
+	if ($scores_result) {
+		foreach ($scores_result as $row) {
+			printf('<h3>User: %s, puntos: %s</h3><br />',$row['user']['name'],$row['scores']);
+		}
 
   function https_post($uri, $postdata) {
     $ch = curl_init($uri);
