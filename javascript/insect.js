@@ -86,7 +86,6 @@ Insect.prototype = new Container();
 		// instead, we append flipped versions of the frames to our sprite sheet
 		// this adds only horizontally flipped frames:
 		//SpriteSheetUtils.addFlippedFrames(spriteSheet, true, false, false);	// Error??		
-
 		
 		this.bmpAnimation = new BitmapAnimation(spriteSheet);
 		
