@@ -62,7 +62,7 @@ $user_id = $facebook->getUser();
 
   $token_response = file_get_contents($token_url);
   $params = null;
-  parse_str($token_response, $params);
+  //parse_str($token_response, $params);
   
    if ($_REQUEST['prb']) {
 		print $token_response;
