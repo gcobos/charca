@@ -55,30 +55,134 @@ if ($user_id) {
   // This fetches some things that you like . 'limit=*" only returns * values.
   // To see the format of the data you are retrieving, use the "Graph API
   // Explorer" which is at https://developers.facebook.com/tools/explorer/
-  $likes = idx($facebook->api('/me/likes?limit=*'), 'data', array());
+  //$likes = idx($facebook->api('/me/likes?limit=*'), 'data', array());
 
   // This fetches 4 of your friends.
-  $friends = idx($facebook->api('/me/friends?limit=4'), 'data', array());
+  //$friends = idx($facebook->api('/me/friends?limit=4'), 'data', array());
 
   // And this returns 16 of your photos.
-  $photos = idx($facebook->api('/me/photos?limit=16'), 'data', array());
+  //$photos = idx($facebook->api('/me/photos?limit=16'), 'data', array());
 
   // Here is an example of a FQL call that fetches all of your friends that are
   // using this app
-  $app_using_friends = $facebook->api(array(
+  /*$app_using_friends = $facebook->api(array(
     'method' => 'fql.query',
     'query' => 'SELECT uid, name FROM user WHERE uid IN(SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1'
-  ));
+  ));*/
 }
 
+if (!isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('gets','sets'))) {
+
+  $app_id = AppInfo::appID();
+  $app_secret = AppInfo::appSecret();
+  $canvas_page_url = AppInfo::getUrl();
+
+	//print "canvas url:". $canvas_page_url."<br />";
+
+// Get the User ID
+/*
+  $signed_request = parse_signed_request($_POST['signed_request'],
+    $app_secret);
+
+    $uid = $signed_request['user_id'];
+*/
+
+  // Get an App Access Token
+  $token_url = 'https://graph.facebook.com/oauth/access_token?'
+    . 'client_id=' . $app_id
+    . '&client_secret=' . $app_secret
+    . '&grant_type=client_credentials';
+
+  $token_response = file_get_contents($token_url);
+  $params = null;
+  parse_str($token_response, $params);
+  $app_access_token = $params['access_token'];
+
+
+  if ($_REQUEST['func']=='scores') {
+  	
+  	 //Get Scores **************
+	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
+	 $result = array();
+	 if (isset($scores_result['data'])) {
+		 //print '<pre>TOTAL'.var_export($scores_result,true).'</pre><br/>';
+		 foreach ($scores_result['data'] as $row) {
+			//print '<pre>'.var_export($row,true).'</pre><br/>';
+			//printf('<h3>User: %s, puntos: %d</h3><br />',$row['user']['name'],$row['score']);
+			$result[$row['user']['id']] = array($row['score'], $row['user']['name']);
+		 }
+
+		 // If param 'v', post the score from user
+	    if (isset($_REQUEST['v'])) {
+	    	$new_score = $_REQUEST['v'];
+	    	
+	    	if (!isset($result[$user_id])) {
+	    		$result[$user_id] = array(0, he(idx($basic, 'name')));
+	    	}
+			// POST the user score only if is bigger
+  			if (($result[$user_id][1] < $new_score)) {
+    			$score_URL = 'https://graph.facebook.com/' . $user_id . '/scores';
+    			$score_result = https_post($score_URL,
+     	 		'score=' . $new_score
+     	 		. '&access_token=' . $app_access_token
+     	 		if ($score_result) {
+     	 			$result[$user_id][0] = $new_score;
+     	 		}
+    		);
+     		//printf('<br/>Resultado %s<br/>',$score_result);
+	 	 }
+	 }
+	 asort($result);
+	 return json_encode($result);
+  }
+
+}
+
+// HELPERS
+  function https_post($uri, $postdata) {
+    $ch = curl_init($uri);
+   // curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    return $result;
+  }
+  function parse_signed_request($signed_request, $secret) {
+    list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
+
+    // decode the data
+    $sig = base64_url_decode($encoded_sig);
+    $data = json_decode(base64_url_decode($payload), true);
+
+    if (strtoupper($data['algorithm']) !== 'HMAC-SHA256') {
+      error_log('Unknown algorithm. Expected HMAC-SHA256');
+      return null;
+    }
+
+    // check sig
+    $expected_sig = hash_hmac('sha256', $payload, $secret, $raw = true);
+    if ($sig !== $expected_sig) {
+      error_log('Bad Signed JSON signature!');
+      return null;
+    }
+
+    return $data;
+  }
+
+  function base64_url_decode($input) {
+    return base64_decode(strtr($input, '-_', '+/'));
+
+  } 
 
 
 // Fetch the basic info of the app that they are using
-$app_info = $facebook->api('/'. AppInfo::appID());
+//$app_info = $facebook->api('/'. AppInfo::appID());
 
-$app_name = idx($app_info, 'name', '');
+//$app_name = idx($app_info, 'name', '');
 
 ?>
+<?php /* ?>
 <!DOCTYPE html>
 <html xmlns:fb="http://ogp.me/ns/fb#" lang="en">
   <head>
@@ -103,7 +207,7 @@ $app_name = idx($app_info, 'name', '');
     <meta property="og:url" content="<?php echo AppInfo::getUrl(); ?>" />
     <meta property="og:image" content="<?php echo AppInfo::getUrl('/logo.png'); ?>" />
     <meta property="og:site_name" content="<?php echo he($app_name); ?>" />
-    <meta property="og:description" content="My first app" />
+    <meta property="og:description" content="Juego de la charca" />
     <meta property="fb:app_id" content="<?php echo AppInfo::appID(); ?>" />
 
     <script type="text/javascript" src="/javascript/jquery-1.7.1.min.js"></script>
@@ -174,130 +278,13 @@ $app_name = idx($app_info, 'name', '');
   </head>
   <body>
     <div id="fb-root"></div>
+    <?php */ ?>
     <?php include 'charca.html'; ?>
 	<fb:like send="false" width="640" show_faces="false" />
-<?php
 
-if (!isset($_REQUEST['prb'])) {
-	echo "</body></html>";
-	exit;
-}
+	<?php exit; ?>
 
-  $app_id = AppInfo::appID();
-  $app_secret = AppInfo::appSecret();
-  $canvas_page_url = AppInfo::getUrl();
-
-	print "canvas url:". $canvas_page_url."<br />";
-
-// Get the User ID
-  $signed_request = parse_signed_request($_POST['signed_request'],
-    $app_secret);
-
-    $uid = $signed_request['user_id'];
-
-
-  // Get an App Access Token
-  $token_url = 'https://graph.facebook.com/oauth/access_token?'
-    . 'client_id=' . $app_id
-    . '&client_secret=' . $app_secret
-    . '&grant_type=client_credentials';
-
-  $token_response = file_get_contents($token_url);
-  $params = null;
-  parse_str($token_response, $params);
-  $app_access_token = $params['access_token'];
-
-  //Get Score **************
-  if(isset($_REQUEST['score']))
-        $cscore = $_REQUEST['score'];
-else
-        exit('Sale?');
-
-print "UID".$uid."<br />";
-
-  $score=$cscore;
-  // POST a user score
-  print('Publish a User Score<br/>');
-  
-  $score_URL = 'https://graph.facebook.com/' . $uid . '/scores';
-  $score_result = https_post($score_URL,
-    'score=' . $score
-    . '&access_token=' . $app_access_token
-  );
- printf('<br/>Resultado %s<br/>',$score_result);
-
-
- 	print('<h1>Lista de records:</h1><br />');
-	$scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
-	if ($scores_result) {
-		//print '<pre>TOTAL'.var_export($scores_result,true).'</pre><br/>';
-		foreach ($scores_result['data'] as $row) {
-			print '<pre>'.var_export($row,true).'</pre><br/>';
-			printf('<h3>User: %s, puntos: %s</h3><br />',$row['user']['name'],$row['scores']);
-		}
-	}
-
-  function https_post($uri, $postdata) {
-    $ch = curl_init($uri);
-   // curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
-    $result = curl_exec($ch);
-    curl_close($ch);
-
-    return $result;
-  }
-  function parse_signed_request($signed_request, $secret) {
-    list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
-
-    // decode the data
-    $sig = base64_url_decode($encoded_sig);
-    $data = json_decode(base64_url_decode($payload), true);
-
-    if (strtoupper($data['algorithm']) !== 'HMAC-SHA256') {
-      error_log('Unknown algorithm. Expected HMAC-SHA256');
-      return null;
-    }
-
-    // check sig
-    $expected_sig = hash_hmac('sha256', $payload, $secret, $raw = true);
-    if ($sig !== $expected_sig) {
-      error_log('Bad Signed JSON signature!');
-      return null;
-    }
-
-    return $data;
-  }
-
-  function base64_url_decode($input) {
-    return base64_decode(strtr($input, '-_', '+/'));
-
-  } 
-?>
-<div class="list">
-        <h3>Friends using this app</h3>
-        <ul class="friends">
-          <?php
-            foreach ($app_using_friends as $auf) {
-              // Extract the pieces of info we need from the requests above
-              $id = idx($auf, 'uid');
-              $name = idx($auf, 'name');
-          ?>
-          <li>
-            <a href="https://www.facebook.com/<?php echo he($id); ?>" target="_top">
-              <img src="https://graph.facebook.com/<?php echo he($id) ?>/picture?type=square" alt="<?php echo he($name); ?>">
-              <?php echo he($name); ?>
-            </a>
-          </li>
-          <?php
-            }
-          ?>
-        </ul>
-      </div>
-<?php
-
-?>
-
-
+    IGNORED FROM HERE
 
     <script type="text/javascript">
       window.fbAsyncInit = function() {
