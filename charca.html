@@ -131,10 +131,10 @@ function watchRestart () {
 	canvas.onmousemove = null;
 
 	// Get scores
-	console.log(window.location.href+'&func=scores&v='+score)
+	//console.log(window.location.href+'&func=scores&v='+score)
 	scoreList = httpGet(window.location.href+'&func=scores&v='+score);
 	if (scoreList && console) {
-		console.log(scoreList);
+		console.log('Score list',scoreList);
 	}
 		
 	// Check score
