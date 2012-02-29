@@ -68,7 +68,7 @@ $user_id = $facebook->getUser();
   $facebook->setAccessToken($app_access_token);
 */
 
-$app_access_token = $facebook->getApplicationAccessToken();
+$app_access_token = $facebook->getAccessToken();
 
 if ($user_id) {
   try {
