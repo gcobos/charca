@@ -11,7 +11,7 @@ Insect.prototype = new Container();
 
 	Insect.types = 4;
 	
-	Insect.typeImages = null;	
+	Insect.typeImages = Array();	
 	
 	Insect.typeFrames = {	// frames for each insect type
 		1: {width:80, height:80, regX:40, regY:40},
@@ -57,7 +57,7 @@ Insect.prototype = new Container();
 	Insect.prototype.initialize = function (type) {
 		this.Container_initialize(); // super call
 
-		if (!Insect.typeImages) {
+		//if (!Insect.typeImages) { // TESTING
 			Insect.typeImages = {};
 		
 			var i = 1;
@@ -66,7 +66,7 @@ Insect.prototype = new Container();
 				Insect.typeImages[i].src = "images/insect"+i+".png";
 				i++; 
 			}
-		}
+		//}
 		this.activate(type);
 	}
 
