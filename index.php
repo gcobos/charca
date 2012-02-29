@@ -120,7 +120,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	    		$result[$user_id] = array(0, he(idx($basic, 'name')));
 	    	}
 			// POST the user score only if is bigger
-  			if (($result[$user_id][1] < $new_score)) {
+  			if (($result[$user_id][0] < $new_score)) {
     			$score_URL = 'https://graph.facebook.com/' . $user_id . '/scores';
     			$score_result = https_post($score_URL,
      	 		'score=' . $new_score
