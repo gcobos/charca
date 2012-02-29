@@ -58,7 +58,6 @@ Insect.prototype = new Container();
 		this.Container_initialize(); // super call
 
 		if (!Insect.typeImages) {
-			console.log('Cargados todos los bichos?');
 			Insect.typeImages = {};
 		
 			var i = 1;
