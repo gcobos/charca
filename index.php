@@ -53,7 +53,7 @@ $user_id = $facebook->getUser();
 
     $uid = $signed_request['user_id'];
 */
-
+/*
   // Get an App Access Token
   $token_url = 'https://graph.facebook.com/oauth/access_token?'
     . 'client_id=' . $app_id
@@ -66,6 +66,9 @@ $user_id = $facebook->getUser();
   $app_access_token = $params['access_token'];
 
   $facebook->setAccessToken($app_access_token);
+*/
+
+$app_access_token = $facebook->getApplicationAccessToken();
 
 if ($user_id) {
   try {
@@ -109,7 +112,6 @@ if ($user_id) {
 }
 
 if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
-
 
 
   if ($_REQUEST['func']=='scores') {
