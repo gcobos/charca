@@ -132,8 +132,10 @@ function watchRestart () {
 
 	// Get scores
 	//console.log(window.location.href+'&func=scores&v='+score)
-	scoreList = httpGet(window.location.href+'&func=scores&v='+score);
-	console.log('Score list',scoreList);
+	if (!frog.alive) {
+		scoreList = httpGet(window.location.href+'&func=scores&v='+score);
+		console.log('Score list',scoreList);
+	}
 
 	playing = false;
 	// watch for clicks
@@ -395,7 +397,7 @@ function handleMouseMove (e)
 </script> 
 </head>
 <body onload="init('stageCanvas', 'canvasWrapper')"> <!-- bgcolor="#769083">-->
-	<div id="canvasWrapper" align="center">
+	<div id="canvasWrapper" align="center" style="width: 640px; height: 480px">
 		<canvas width="640" height="480" id="stageCanvas" class="pantalla"></canvas>
 	</div>
 </body>
