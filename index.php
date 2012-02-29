@@ -134,10 +134,9 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	 }
 	 arsort($result);
 	 //$result = array_slice(array $array, $offset, $length = null, TRUE);
-	 return json_encode($result);
-	 exit;
+	 print(json_encode($result));
   }
-
+  exit;
 }
 
 // HELPERS
