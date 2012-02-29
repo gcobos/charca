@@ -131,9 +131,8 @@ function watchRestart () {
 	canvas.onmousemove = null;
 
 	// Get scores
-	console.log('pilla',window.location.href+'?func=scores&v='+parseInt(score));
 	scoreList = httpGet(window.location.href+'?func=scores&v='+score);
-	if (scoreList) {
+	if (scoreList && console) {
 		console.log(scoreList);
 	}
 		
@@ -316,7 +315,8 @@ function httpGet(theUrl)
     xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", theUrl, false );
     xmlHttp.send( null );
-    return eval(xmlHttp.responseText);
+    //xmlHttp.responseText)
+    return xmlHttp.responseText;
 }
     
 function refreshHeader () {
