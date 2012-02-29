@@ -11,6 +11,8 @@ Insect.prototype = new Container();
 
 	Insect.types = 4;
 	
+	Insect.typeImages = null;	
+	
 	Insect.typeFrames = {	// frames for each insect type
 		1: {width:80, height:80, regX:40, regY:40},
 		2: {width:80, height:80, regX:40, regY:40},
@@ -34,8 +36,6 @@ Insect.prototype = new Container();
 	};
 
 // public properties:
-
-	Insect.prototype.typeImages = null;
 	
 	Insect.prototype.type = 0;		// keeps the type of insect of the instance
 	Insect.prototype.bounds = 0;	// distance to keep from the walls
@@ -57,14 +57,14 @@ Insect.prototype = new Container();
 	Insect.prototype.initialize = function (type) {
 		this.Container_initialize(); // super call
 
-		if (!this.typeImages) {
-			console.log('Cargados todos los bichos?');
-			this.typeImages = {};
+		if (!Insect.typeImages) {
+			//console.log('Cargados todos los bichos?');
+			Insect.typeImages = {};
 		
 			var i = 1;
 			while (i <= Insect.types) {
-				this.typeImages[i] = new Image();
-				this.typeImages[i].src = "images/insect"+i+".png";
+				Insect.typeImages[i] = new Image();
+				Insect.typeImages[i].src = "images/insect"+i+".png";
 				i++; 
 			}
 		}
@@ -81,7 +81,7 @@ Insect.prototype = new Container();
 		this.removeAllChildren();
 		
 		var spriteSheet = new SpriteSheet({
-			images: [this.typeImages[this.type] ],
+			images: [Insect.typeImages[this.type] ],
 			frames: Insect.typeFrames[this.type],				
 			animations: Insect.typeAnimations[this.type],
 		});
