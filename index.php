@@ -50,7 +50,11 @@ if ($user_id) {
     	if (!isset($_REQUEST['reload'])) {
       	header('Location: '. AppInfo::getUrl($_SERVER['REQUEST_URI']."&reload=1"));
       } else {
-      	echo "Please, search this game on Facebook and play from there.";
+      	if (isset($_REQUEST['func'])) {
+      		echo "{}";
+      	} else {
+      		echo "Please, search this game on Facebook and play from there.";
+      	}
       }
       exit();
     }
