@@ -214,7 +214,6 @@ function tick() {
 	// handle insects (nested in one loop to prevent excess loops)
 	aliveInsects = 0;
 	for (insect in insectsCloud) {
-		console.log('Insect', insect);
 		var o = insectsCloud[insect];
 		if(!o || !o.active) { continue; }
 		
