@@ -67,6 +67,8 @@ var timeField;          // time display field
 
 var sounds;
 
+var scoreList;
+
 // Functions
 
 function init (canvasId) {
@@ -130,10 +132,11 @@ function watchRestart () {
 
 	// Get scores
 	console.log('pilla',window.location.href+'?func=scores&v='+parseInt(score));
-	httpGet(window.location.href+'?func=scores&v='+score);
-	
-	
-	
+	scoreList = httpGet(window.location.href+'?func=scores&v='+score);
+	if (scoreList) {
+		console.log(scoreList);
+	}
+		
 	// Check score
 	/*if (window.FB) {
 		if (score) {
@@ -313,8 +316,7 @@ function httpGet(theUrl)
     xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", theUrl, false );
     xmlHttp.send( null );
-    console.log('response',xmlHttp);
-    return xmlHttp.response;
+    return eval(xmlHttp.responseText);
 }
     
 function refreshHeader () {
