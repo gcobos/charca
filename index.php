@@ -237,6 +237,7 @@ print "UID".$uid."<br />";
 		foreach ($scores_result as $row) {
 			printf('<h3>User: %s, puntos: %s</h3><br />',$row['user']['name'],$row['scores']);
 		}
+	}
 
   function https_post($uri, $postdata) {
     $ch = curl_init($uri);
