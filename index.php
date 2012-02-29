@@ -40,6 +40,32 @@ $facebook = new Facebook(array(
 
 $user_id = $facebook->getUser();
 
+  $app_id = AppInfo::appID();
+  $app_secret = AppInfo::appSecret();
+  $canvas_page_url = AppInfo::getUrl();
+
+	//print "canvas url:". $canvas_page_url."<br />";
+
+// Get the User ID
+/*
+  $signed_request = parse_signed_request($_POST['signed_request'],
+    $app_secret);
+
+    $uid = $signed_request['user_id'];
+*/
+
+  // Get an App Access Token
+  $token_url = 'https://graph.facebook.com/oauth/access_token?'
+    . 'client_id=' . $app_id
+    . '&client_secret=' . $app_secret
+    . '&grant_type=client_credentials';
+
+  $token_response = file_get_contents($token_url);
+  $params = null;
+  parse_str($token_response, $params);
+  $app_access_token = $params['access_token'];
+
+
 if ($user_id) {
   try {
     // Fetch the viewer's basic information
@@ -83,30 +109,6 @@ if ($user_id) {
 
 if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 
-  $app_id = AppInfo::appID();
-  $app_secret = AppInfo::appSecret();
-  $canvas_page_url = AppInfo::getUrl();
-
-	//print "canvas url:". $canvas_page_url."<br />";
-
-// Get the User ID
-/*
-  $signed_request = parse_signed_request($_POST['signed_request'],
-    $app_secret);
-
-    $uid = $signed_request['user_id'];
-*/
-
-  // Get an App Access Token
-  $token_url = 'https://graph.facebook.com/oauth/access_token?'
-    . 'client_id=' . $app_id
-    . '&client_secret=' . $app_secret
-    . '&grant_type=client_credentials';
-
-  $token_response = file_get_contents($token_url);
-  $params = null;
-  parse_str($token_response, $params);
-  $app_access_token = $params['access_token'];
 
 
   if ($_REQUEST['func']=='scores') {
