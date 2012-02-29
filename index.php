@@ -132,7 +132,7 @@ if (!isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('gets','sets')
      		//printf('<br/>Resultado %s<br/>',$score_result);
 	 	 }
 	 }
-	 asort($result);
+	 arsort($result);
 	 return json_encode($result);
   }
 
