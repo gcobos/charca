@@ -296,13 +296,17 @@ function getInsect (type) {
 
 function httpGet(theUrl)
 {
-    var xmlHttp = null;
+   var xmlHttp = null;
 
-    xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false );
-    xmlHttp.send( null );
-    //xmlHttp.responseText)
-    return eval('(' + xmlHttp.responseText + ')');
+	xmlHttp = new XMLHttpRequest();
+   xmlHttp.open( "GET", theUrl, false );
+   xmlHttp.send( null );
+   result = {};
+   try {
+   	eval('result=' + xmlHttp.responseText);
+   } catch (e) {
+   }
+   return result;
 }
     
 function refreshHeader () {
