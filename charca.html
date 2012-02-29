@@ -316,7 +316,7 @@ function httpGet(theUrl)
     xmlHttp.open( "GET", theUrl, false );
     xmlHttp.send( null );
     //xmlHttp.responseText)
-    return xmlHttp.responseText;
+    return eval('(' + xmlHttp.responseText + ')');
 }
     
 function refreshHeader () {
