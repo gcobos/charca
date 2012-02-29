@@ -71,7 +71,7 @@ if ($user_id) {
   ));*/
 }
 
-if (!isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('gets','sets'))) {
+if (!isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 
   $app_id = AppInfo::appID();
   $app_secret = AppInfo::appSecret();
@@ -135,6 +135,7 @@ if (!isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('gets','sets')
 	 arsort($result);
 	 //$result = array_slice(array $array, $offset, $length = null, TRUE);
 	 return json_encode($result);
+	 exit;
   }
 
 }
