@@ -69,10 +69,10 @@ $user_id = $facebook->getUser();
 		print $app_access_token;
    }
 
-  $facebook->setAccessToken($token_response);
+  //$facebook->setAccessToken($token_response);
 
 
-$app_access_token = $facebook->getAccessToken();
+//$app_access_token = $facebook->getAccessToken();
   if ($_REQUEST['prb']) {
 		print "Again ".$app_access_token;
    }
