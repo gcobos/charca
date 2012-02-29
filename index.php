@@ -62,14 +62,14 @@ $user_id = $facebook->getUser();
 
   $token_response = file_get_contents($token_url);
   $params = null;
-  //parse_str($token_response, $params);
+  parse_str($token_response, $params);
   
-   if ($_REQUEST['prb']) {
-		print $token_response;
-   }
   $app_access_token = $params['access_token'];
+  if ($_REQUEST['prb']) {
+		print $app_access_token;
+   }
 
-  //$facebook->setAccessToken($app_access_token);
+  $facebook->setAccessToken($token_response);
 
 
 $app_access_token = $facebook->getAccessToken();
