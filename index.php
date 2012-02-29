@@ -47,13 +47,13 @@ $user_id = $facebook->getUser();
 	//print "canvas url:". $canvas_page_url."<br />";
 
 // Get the User ID
-/*
+
   $signed_request = parse_signed_request($_POST['signed_request'],
     $app_secret);
 
     $uid = $signed_request['user_id'];
-*/
-/*
+
+
   // Get an App Access Token
   $token_url = 'https://graph.facebook.com/oauth/access_token?'
     . 'client_id=' . $app_id
@@ -65,8 +65,8 @@ $user_id = $facebook->getUser();
   parse_str($token_response, $params);
   $app_access_token = $params['access_token'];
 
-  $facebook->setAccessToken($app_access_token);
-*/
+  //$facebook->setAccessToken($app_access_token);
+
 
 $app_access_token = $facebook->getAccessToken();
 
