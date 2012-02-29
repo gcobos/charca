@@ -231,6 +231,7 @@ print "UID".$uid."<br />";
 	$scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
 	if ($scores_result) {
 		foreach ($scores_result as $row) {
+			print '<pre>'.var_export($row,true).'</pre><br/>';
 			printf('<h3>User: %s, puntos: %s</h3><br />',$row['user']['name'],$row['scores']);
 		}
 	}
