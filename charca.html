@@ -175,8 +175,6 @@ function restart() {
 
 	stage.addChild(frog);
 	
-	//var insect = new Insect(1);
-	
 	//start game timer
 	Ticker.addListener(window);
 	window.clearInterval(timer);
@@ -216,6 +214,7 @@ function tick() {
 	// handle insects (nested in one loop to prevent excess loops)
 	aliveInsects = 0;
 	for (insect in insectsCloud) {
+		console.log('Insect', insect);
 		var o = insectsCloud[insect];
 		if(!o || !o.active) { continue; }
 		
@@ -252,7 +251,7 @@ function tick() {
 		}
 
 		// handle the end of the level
-		console.log('Alive: '+ aliveInsects, 'Killed: '+insectsKilled, 'In this level: '+levelConfig[level][0]);
+		//console.log('Alive: '+ aliveInsects, 'Killed: '+insectsKilled, 'In this level: '+levelConfig[level][0]);
 		if (insectsKilled >= levelConfig[level][0]) {
 			messageField.text = "¡Has pasado al siguiente nivel!\nPulsa aquí para continuar.";
 			level += 1;
