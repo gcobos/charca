@@ -128,6 +128,10 @@ function watchRestart () {
 	canvas.onclick = null;
 	canvas.onmousemove = null;
 
+	// Get scores
+	
+	
+	
 	// Check score
 	/*if (window.FB) {
 		if (score) {
@@ -155,7 +159,7 @@ function watchRestart () {
 
 // reset all game logic
 function restart() {
-	// hide anything on stage and show the score
+	// hide anything on stage
 	stage.removeAllChildren();
 
 	if (!frog.alive) {
@@ -300,6 +304,17 @@ function getInsect (type) {
 	return i;
 }
 
+function httpGet(theUrl)
+{
+    var xmlHttp = null;
+
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false );
+    xmlHttp.send( null );
+    console.log('response',xmlHttp);
+    return xmlHttp.response;
+}
+    
 function refreshHeader () {
 
 	var now = Math.round(Ticker.getTime() / 1000);
