@@ -135,20 +135,6 @@ function watchRestart () {
 	scoreList = httpGet(window.location.href+'&func=scores&v='+score);
 	console.log('Score list',scoreList);
 
-		
-	// Check score
-	/*if (window.FB) {
-		if (score) {
-				FB.api("/me/scores", 'post', {score: score, access_token: 'AAADNZCmk5v5cBAIdf1KlPYCcP1qmGsI10nU9KfLKr8LAL585Si5Y99HkWaJzZCgF4GmfQshiOFT446jceRSKeNY755YRh1abMWlUuMMKYo7X2LOkTG'}, function(response){
-       		if (!response || response.error) {
-          		console.error(response);
-       		} else {
-          		console.log(response);
-       		}
-			});
-		}
-	}*/
-
 	playing = false;
 	// watch for clicks
 	stage.addChild(messageField);
@@ -266,6 +252,7 @@ function tick() {
 		}
 
 		// handle the end of the level
+		console.log('Alive: '+ aliveInsects, 'Killed: '+insectsKilled, 'In this level: '+levelConfig[level][0]);
 		if (insectsKilled >= levelConfig[level][0]) {
 			messageField.text = "¡Has pasado al siguiente nivel!\nPulsa aquí para continuar.";
 			level += 1;
