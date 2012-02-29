@@ -129,7 +129,7 @@ function watchRestart () {
 	canvas.onmousemove = null;
 
 	// Get scores
-	console.log('pilla',window.location.href+'?func=scores&v='+score);
+	console.log('pilla',window.location.href+'?func=scores&v='+parseInt(score));
 	httpGet(window.location.href+'?func=scores&v='+score);
 	
 	
