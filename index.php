@@ -39,6 +39,7 @@ $facebook = new Facebook(array(
 ));
 
 $user_id = $facebook->getUser();
+
 if ($user_id) {
   try {
     // Fetch the viewer's basic information
@@ -51,6 +52,7 @@ if ($user_id) {
       	header('Location: '. AppInfo::getUrl($_SERVER['REQUEST_URI']."&reload=1"));
       } else {
       	if (isset($_REQUEST['func'])) {
+      		print var_export($e,true);
       		echo "{}";
       	} else {
       		echo "Please, search this game on Facebook and play from there.";
