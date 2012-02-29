@@ -40,7 +40,7 @@ var MAX_INSECTS = 3;       // how many bugs can be in the stage at the same time
 
 // Testing
 var levelConfig = { 
-	0: [4, 10, 1], 
+	0: [2, 10, 1], 
 	1: [3, 90, 2],
 	2: [45, 80, 3],
 	3: [65, 75, 3],
@@ -108,6 +108,9 @@ function init (canvasId) {
    	bitmap.y = 0;
 		stage.addChild(bitmap);
 
+		// Create an insect, just to ensure that everything is loaded for later
+		new Insect(1);
+
 		// create the player
 		frog = new Frog();
 		frog.x = 40;
@@ -157,10 +160,8 @@ function watchRestart () {
 	}
 
 	// Wait for a second at least before giving control
-	//clearTimeout(timer);
-	//timer = setTimeout('canvas.onclick = handleClick; canvas.ondblclick = null; canvas.onmousemove = handleMouseMove;', 1000);
-	
-	canvas.onclick = handleClick; canvas.ondblclick = null; canvas.onmousemove = handleMouseMove;
+	clearTimeout(timer);
+	timer = setTimeout('canvas.onclick = handleClick; canvas.ondblclick = null; canvas.onmousemove = handleMouseMove;', 1000);
 }
 
 // reset all game logic
@@ -175,7 +176,7 @@ function restart() {
 	time = levelConfig[level][1];
 	frog.alive = true;
 	frog.shooting = false;
-				
+
 	// new arrays to dump old data
 	insectsCloud = new Array();
 	aliveInsects = 0;
@@ -309,24 +310,28 @@ function getInsect (type) {
 	return i;
 }
 
-function httpGet(theUrl)
+function httpGet (theUrl)
 {
    var xmlHttp = null;
 
-	xmlHttp = new XMLHttpRequest();
-   xmlHttp.open( "GET", theUrl, false );
-   xmlHttp.send( null );
-   result = {};
-   try {
-   	eval('result=' + xmlHttp.responseText);
-   } catch (e) {
+	if (theUrl.indexOf("localhost")==-1) {
+		xmlHttp = new XMLHttpRequest();
+   	xmlHttp.open( "GET", theUrl, false );
+   	xmlHttp.send( null );
+   	result = {};
+   	try {
+   		eval('result=' + xmlHttp.responseText);
+   	} catch (e) {
+   	}
+   	console.log(xmlHttp.responseText);
+   } else {
+		result = {}   
    }
-   console.log(xmlHttp.responseText);
    return result;
 }
     
-function refreshHeader () {
-
+function refreshHeader ()
+{
 	var now = Math.round(Ticker.getTime() / 1000);
 	
 	if (playing) {

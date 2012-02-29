@@ -56,17 +56,14 @@ Insect.prototype = new Container();
 	
 	Insect.prototype.initialize = function (type) {
 		this.Container_initialize(); // super call
-
-		//if (!Insect.typeImages) { // TESTING
-			Insect.typeImages = {};
+		Insect.typeImages = {};
 		
-			var i = 1;
-			while (i <= Insect.types) {
-				Insect.typeImages[i] = new Image();
-				Insect.typeImages[i].src = "images/insect"+i+".png";
-				i++; 
-			}
-		//}
+		var i = 1;
+		while (i <= Insect.types) {
+			Insect.typeImages[i] = new Image();
+			Insect.typeImages[i].src = "images/insect"+i+".png";
+			i++; 
+		}
 		this.activate(type);
 	}
 
@@ -78,7 +75,6 @@ Insect.prototype = new Container();
 		
 		// Clean previous animation
 		this.removeAllChildren();
-		
 		var spriteSheet = new SpriteSheet({
 			images: [Insect.typeImages[this.type] ],
 			frames: Insect.typeFrames[this.type],				
