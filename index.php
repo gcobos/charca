@@ -73,6 +73,9 @@ $user_id = $facebook->getUser();
 
 
 $app_access_token = $facebook->getAccessToken();
+  if ($_REQUEST['prb']) {
+		print "Again ".$app_access_token;
+   }
 
 if ($user_id) {
   try {
