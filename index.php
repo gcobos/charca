@@ -121,6 +121,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	 $result = array();
 	 if (isset($scores_result['data'])) {
 		 //print '<pre>TOTAL'.var_export($scores_result,true).'</pre><br/>';
+		 $result['pet_rq'] = array('hay', 'datos!!');
 		 foreach ($scores_result['data'] as $row) {
 			//print '<pre>'.var_export($row,true).'</pre><br/>';
 			//printf('<h3>User: %s, puntos: %d</h3><br />',$row['user']['name'],$row['score']);
@@ -136,13 +137,18 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	    	}
 			// POST the user score only if is bigger
   			if (($result[$user_id][0] < $new_score)) {
+  				$result['envio_rq'] = array($new_score, 'puntos');
     			$score_URL = 'https://graph.facebook.com/' . $user_id . '/scores';
     			$score_result = https_post($score_URL,
      	 		'score=' . $new_score
      	 		. '&access_token=' . $app_access_token);
      	 		if ($score_result) {
      	 			$result[$user_id][0] = $new_score;
+     	 		} else {
+     	 			$result['envio_rs'] = array($new_score, 'puntos no result!');
      	 		}
+    		} else {
+    			$result['noenvio_rs'] = array($new_score, 'puntuacion mas baja JAAJAJ');
     		}
      		//printf('<br/>Resultado %s<br/>',$score_result);
 	 	 }
