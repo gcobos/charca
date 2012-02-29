@@ -77,7 +77,7 @@ if (!isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   $app_secret = AppInfo::appSecret();
   $canvas_page_url = AppInfo::getUrl();
 
-	//print "canvas url:". $canvas_page_url."<br />";
+	print "canvas url:". $canvas_page_url."<br />";
 
 // Get the User ID
 /*
