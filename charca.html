@@ -130,13 +130,6 @@ function watchRestart () {
 	canvas.onclick = null;
 	canvas.onmousemove = null;
 
-	// Get scores
-	//console.log(window.location.href+'&func=scores&v='+score)
-	if (!frog.alive) {
-		scoreList = httpGet(window.location.href+'&func=scores&v='+score);
-		console.log('Score list',scoreList);
-	}
-
 	playing = false;
 	// watch for clicks
 	stage.addChild(messageField);
@@ -144,9 +137,18 @@ function watchRestart () {
 	
 	mouse = {x:0,y:0};
 	
+	// Get scores
+	//console.log(window.location.href+'&func=scores&v='+score)
+	if (!frog.alive) {
+		scoreList = httpGet(window.location.href+'&func=scores&v='+score);
+		console.log('Score list',scoreList);
+	}
+
 	// Wait for a second at least before giving control
-	clearTimeout(timer);
-	timer = setTimeout('canvas.onclick = handleClick; canvas.ondblclick = null; canvas.onmousemove = handleMouseMove;', 1000);
+	//clearTimeout(timer);
+	//timer = setTimeout('canvas.onclick = handleClick; canvas.ondblclick = null; canvas.onmousemove = handleMouseMove;', 1000);
+	
+	canvas.onclick = handleClick; canvas.ondblclick = null; canvas.onmousemove = handleMouseMove;
 }
 
 // reset all game logic

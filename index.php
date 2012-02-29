@@ -82,8 +82,8 @@ if ($user_id) {
       	header('Location: '. AppInfo::getUrl($_SERVER['REQUEST_URI']."&reload=1"));
       } else {
       	if (isset($_REQUEST['func'])) {
-      		print var_export($e,true);
-      		echo "{}";
+      		//print var_export($e,true);
+      		echo "{something:'went wrong.'}";
       	} else {
       		echo "Please, search this game on Facebook and play from there.";
       	}
@@ -146,6 +146,8 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
     		}
      		//printf('<br/>Resultado %s<br/>',$score_result);
 	 	 }
+	 } else {
+	 	$result['something'] = array('went','wrong?');
 	 }
 	 arsort($result);
 	 //$result = array_slice(array $array, $offset, $length = null, TRUE);
