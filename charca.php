@@ -1,19 +1,29 @@
+<?php 
+
+if (in_array($_SERVER['SERVER_ADDR'], array('::1','127.0.0.1'))) {
+	$server = 'localhost';
+} else {
+	$server = $_SERVER['SERVER_ADDR'];
+}
+$base_url = 'http://'.$server.dirname($_SERVER['REQUEST_URI'])."/";
+print $base_url;
+?>
 <!DOCTYPE html>
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="en">
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# game: http://ogp.me/ns/game#">
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="shortcut icon" href="images/favicon.ico">
 	<meta charset="utf-8">
- 
 	<meta name="author" content="Gonzalo Cobos" > 
 	<meta name="keywords" content="html5, game, charca, rana, insectos">  
 	<meta name="robots" content="index,follow">
-	<meta property="og:title" content="<?php echo he($app_name); ?>" />
-   <meta property="og:type" content="website" />
-   <meta property="og:url" content="<?php echo AppInfo::getUrl(); ?>" />
-   <meta property="og:image" content="<?php echo AppInfo::getUrl('/logo.png'); ?>" />
-   <meta property="og:site_name" content="<?php echo he($app_name); ?>" />
-   <meta property="og:description" content="Juego de la charca" />
-   <meta property="fb:app_id" content="<?php echo AppInfo::appID(); ?>" />
- 	
+	
+ 	<meta property="og:title" content="Charca!" />
+ 	<meta property="fb:app_id" content="226492570779543" />
+ 	<meta property="og:image" content="<?php echo $base_url ?>/logo.png" />
+   <meta property="og:type"        content="game" /> 
+   <meta property="og:url"         content="<?php echo $base_url ?>" /> 
+   <meta property="og:description" content="Ayuda a esta rana a mantener la charca limpia de insectos y a pegarse un atracón padre" /> 
  
 	<title>Charca - Juego canvas HTML5</title>
 	<style>
@@ -31,14 +41,14 @@
 		}
 		
 		.highscores {
-			margin: 220px auto;
+			margin: 205px auto;
 			vertical-align: center;
 			text-align: center;
 		}
 		
 		.highscores li {
 			text-align: right;
-			font: 30px "Sans-serif";
+			font: 28px "Sans-serif";
 			text-shadow: #104030 1px -1px;
 			color: #6394bB;
 		}
@@ -69,7 +79,7 @@ var MAX_INSECTS = 15;       // how many bugs can be in the stage at the same tim
 
 // Configuration for every level  [ number of insects, time, difficulty (max type of insect to generate) ]
 var levelConfig = { 
-	0: [15, 10, 1], //15 100 1 
+	0: [15, 100, 1], //15 100 1 
 	1: [25, 90, 2],
 	2: [45, 80, 3],
 	3: [65, 75, 3],
@@ -180,7 +190,7 @@ function init (canvasId, canvasWrapper, overlayBlock) {
 		messageField = new Text("Pulsa aquí para jugar", "bold 24px Arial", "#343814");
 		messageField.textAlign = "center";
 		messageField.x = canvas.width / 2;
-		messageField.y = canvas.height / 2.5;
+		messageField.y = canvas.height / 2.6;
 
 		watchRestart();
 	
@@ -188,7 +198,9 @@ function init (canvasId, canvasWrapper, overlayBlock) {
 }
 
 function watchRestart () {
-	canvas.onclick = null;
+	overlay.onclick = null;
+	canvas.onclick = null;	
+	canvas.ondblclick = null;
 	canvas.onmousemove = null;
 
 	playing = false;
@@ -201,14 +213,18 @@ function watchRestart () {
 	// Get scores
 	//console.log(window.location.href+'&func=scores&v='+score)
 	if (!frog.alive) {
-		scoreList = httpGet(window.location.href+'&func=scores&v='+score);
+		scoreList = httpGet('<?php echo $base_url ?>'+'?func=scores&v='+score);
 		console.log('Score list',scoreList);
 		showHighScores();
 	}
 
-	// Wait for a second at least before giving control
+	// Wait before giving control
 	clearTimeout(timer);
-	timer = setTimeout('overlay.onclick = handleClick; canvas.onclick = handleClick; canvas.ondblclick = null; canvas.onmousemove = handleMouseMove;', 1000);
+	var wait = 100;
+	if (score) {
+		wait = 1500;
+	}
+	timer = setTimeout('overlay.onclick = handleClick; canvas.onclick = handleClick; canvas.ondblclick = null; canvas.onmousemove = handleMouseMove;', 2000);
 }
 
 // reset all game logic
@@ -365,17 +381,22 @@ function httpGet (theUrl)
 {
    var xmlHttp = null;
 
-	if (theUrl.indexOf("localhost")==-1) {
+	//if (theUrl.indexOf("localhost")==-1) {
+		var result = {};
 		xmlHttp = new XMLHttpRequest();
-   	xmlHttp.open( "GET", theUrl, false );
+   	xmlHttp.open( "GET", theUrl, true);
+   	xmlHttp.onreadystatechange=function() {
+  			if (xmlHttp.readyState==4) {
+   			try {
+   				eval('result = ' + xmlHttp.responseText);
+   			} catch (e) {
+   				console.log('Failed to set high score!');
+   			}
+  			}
+ 		}
    	xmlHttp.send( null );
-   	result = {};
-   	try {
-   		eval('result = ' + xmlHttp.responseText);
-   	} catch (e) {
-   	}
    	//console.log(xmlHttp.responseText);
-   } else {
+   /*} else {
    		result = [
    			[9999,'Gonza Cob', 'id1'],
    			[5999,'JaimeCob', 'id2'],
@@ -385,7 +406,7 @@ function httpGet (theUrl)
    			[599,'Así vamos3', 'id6'],
    			[199,'Así vamos4', 'id7'],
    		]
-   }
+   }*/
    return result;
 }
     

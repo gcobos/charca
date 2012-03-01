@@ -12,8 +12,12 @@
 // Defined in 'AppInfo.php'
 require_once('AppInfo.php');
 
+if ($_REQUEST['prb']) {
+  print "que es?".$_SERVER['REMOTE_ADDR']."<br />";
+}
+
 // Enforce https on production
-if (substr(AppInfo::getUrl(), 0, 8) != 'https://' && $_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
+if (substr(AppInfo::getUrl(), 0, 8) != 'https://' && !in_array($_SERVER['REMOTE_ADDR'],array( '127.0.0.1','::1'))) {
   header('Location: https://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
   exit();
 }
@@ -121,8 +125,6 @@ if ($user_id) {
 }
 
 if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
-
-
   if ($_REQUEST['func']=='scores') {
   	
   	 //Get Scores **************
@@ -163,6 +165,9 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	 	 }
 	 } else {
 	 	$result['something'] = array('went','wrong?','something');
+	 }
+	 if ($_REQUEST['prb']) {
+	 	print "Puntuacion despues de añadir el nuevo record:" . var_export($result,true)."<br />";
 	 }
 	 rsort($result);
 	 print(json_encode(array_values(array_slice($result, 0, 10))));
