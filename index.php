@@ -12,6 +12,11 @@
 // Defined in 'AppInfo.php'
 require_once('AppInfo.php');
 
+if ($_REQUEST['signed_request']) {
+	error_log(var_export($_REQUEST, true));	
+	exit;
+}
+
 if ($_REQUEST['prb']) {
 	error_reporting(-1);
 	print '<pre>'.var_export($_SERVER,true).'</pre>';
