@@ -58,21 +58,16 @@ if ($_REQUEST['signed_request']) {
   $signed_request = parse_signed_request($_POST['signed_request'],$app_secret);
   error_log("Esto!".var_export($signed_request,true));
   exit;
-      $uid = $signed_request['user_id'];
 }
-
-
-
 
 $app_user_access_token = $facebook->getAccessToken();
 
-if ($_REQUEST['prb']) print "Access token?".$app_user_access_token.'<br />';
+error_log( "Access token?".$app_user_access_token.'<br />');
 $user_id = $facebook->getUser();
-  $canvas_page_url = AppInfo::getUrl();
+$canvas_page_url = AppInfo::getUrl();
 
-	//print "canvas url:". $canvas_page_url."<br />";
-
-
+/*
+error_log('Haciendo la peticion de access token');
   // Get an App Access Token
   $token_url = 'https://graph.facebook.com/oauth/access_token?'
     . 'client_id=' . $app_id
@@ -85,7 +80,7 @@ $user_id = $facebook->getUser();
   }
   $params = null;
   parse_str($token_response, $params);
-  
+
   $app_access_token = $params['access_token'];
 
 if ($_REQUEST['prb']) {
@@ -95,7 +90,7 @@ if ($_REQUEST['prb']) {
 if ($_REQUEST['prb']) {
 	echo "User token?". $app_user_access_token."<bt />";	
 }
-
+*/
 if ($user_id) {
   try {
     // Fetch the viewer's basic information
@@ -104,16 +99,16 @@ if ($user_id) {
     // If the call fails we check if we still have a user. The user will be
     // cleared if the error is because of an invalid accesstoken
     if (!$facebook->getUser()) {
-    	if (!isset($_REQUEST['reload'])) {
+    	//if (!isset($_REQUEST['reload'])) {
       	header('Location: '. AppInfo::getUrl($_SERVER['REQUEST_URI']."&reload=1"));
-      } else {
+      /*} else {
       	if (isset($_REQUEST['func'])) {
       		//print var_export($e,true);
       		echo "{something:'went wrong.'}";
       	} else {
       		echo "Please, search this game on Facebook and play from there.";
       	}
-      }
+      }*/
       exit();
     }
   }
