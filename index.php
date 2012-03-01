@@ -153,7 +153,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
     			$score_URL = 'https://graph.facebook.com/' . $user_id . '/scores';
     			$score_result = https_post($score_URL,
      	 		'score=' . $new_score
-     	 		. '&access_token=' . $app_access_token);
+     	 		. '&access_token=' . $app_user_access_token);
      	 		if ($score_result) {
      	 			$result[$user_id][0] = $new_score;
      	 		} else {
@@ -194,14 +194,14 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
     $data = json_decode(base64_url_decode($payload), true);
 
     if (strtoupper($data['algorithm']) !== 'HMAC-SHA256') {
-      error_log('Unknown algorithm. Expected HMAC-SHA256');
+      print('Unknown algorithm. Expected HMAC-SHA256');
       return null;
     }
 
     // check sig
     $expected_sig = hash_hmac('sha256', $payload, $secret, $raw = true);
     if ($sig !== $expected_sig) {
-      error_log('Bad Signed JSON signature!');
+      print('Bad Signed JSON signature!');
       return null;
     }
 
