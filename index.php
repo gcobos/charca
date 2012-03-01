@@ -133,7 +133,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	 $result = array();
 	 if (isset($scores_result['data'])) {
 		 //print '<pre>TOTAL'.var_export($scores_result,true).'</pre><br/>';
-		 $result['pet_rq'] = array('hay', 'datos!!');
+		 //$result['pet_rq'] = array('hay', 'datos!!');
 		 foreach ($scores_result['data'] as $row) {
 			//print '<pre>'.var_export($row,true).'</pre><br/>';
 			//printf('<h3>User: %s, puntos: %d</h3><br />',$row['user']['name'],$row['score']);

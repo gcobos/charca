@@ -377,18 +377,19 @@ function getInsect (type) {
 	return i;
 }
 
-function httpGet (theUrl)
+function httpGet (theUrl, callback)
 {
    var xmlHttp = null;
 
 	//if (theUrl.indexOf("localhost")==-1) {
-		var result = {};
 		xmlHttp = new XMLHttpRequest();
    	xmlHttp.open( "GET", theUrl, true);
    	xmlHttp.onreadystatechange=function() {
   			if (xmlHttp.readyState==4) {
    			try {
+   				var result = []
    				eval('result = ' + xmlHttp.responseText);
+   				callback(result);
    			} catch (e) {
    				console.log('Failed to set high score!');
    			}
