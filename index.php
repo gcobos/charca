@@ -164,6 +164,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
      	 		'score=' . $new_score
      	 		. '&access_token=' . $app_user_access_token);
      	 		if ($score_result) {
+     	 			error_log('Listado de puntos real: '.var_export($score_result,true));
      	 			error_log("Bien, sobreescribe el record en el array y devuelve toda la lista");
      	 			$result[$user_id][0] = $new_score;
      	 		} else {
