@@ -17,9 +17,10 @@ if ($_REQUEST['signed_request']) {
   $signed_request = parse_signed_request($_POST['signed_request'],$app_secret);
   error_log("Esto!".var_export($signed_request,true));
   error_log('JUASSSSSSSS');
-  exit;
+//  exit;
 }
-
+$_SESSION['fc_vars'] = $signed_request; 
+$app_user_access_token = $signed_request['oauth_token'];
 
 // Provides access to app specific values such as your app id and app secret.
 // Defined in 'AppInfo.php'
@@ -132,8 +133,8 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   if ($_REQUEST['func']=='scores') {
 
 
-	  $app_user_access_token = $facebook->getAccessToken();
-	  error_log( "Access token?".$app_user_access_token.'<br />');	
+	  //$app_user_access_token = $facebook->getAccessToken();
+	  //error_log( "Access token?".$app_user_access_token.'<br />');	
   	
   	 //Get Scores **************
 	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
@@ -147,7 +148,6 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 			//printf('<h3>User: %s, puntos: %d</h3><br />',$row['user']['name'],$row['score']);
 			$result[$row['user']['id']] = array($row['score'], $row['user']['name']);
 		 }
-
 
 		 // If param 'v', post the score from user
 	    if (isset($_REQUEST['v'])) {
