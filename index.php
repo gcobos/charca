@@ -148,7 +148,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	    	}
 			// POST the user score only if is bigger
   			if (($result[$user_id][0] < $new_score)) {
-  				$result['envio_rq'] = array($new_score, 'puntos','envio_rq');
+  				if ($_REQUEST['prb'])$result['envio_rq'] = array($new_score, 'puntos','envio_rq');
     			$score_URL = 'https://graph.facebook.com/' . $user_id . '/scores';
     			$score_result = https_post($score_URL,
      	 		'score=' . $new_score
@@ -156,15 +156,15 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
      	 		if ($score_result) {
      	 			$result[$user_id][0] = $new_score;
      	 		} else {
-     	 			$result['envio_rs'] = array($new_score, 'puntos no result!','envio_rs');
+     	 			if ($_REQUEST['prb'])$result['envio_rs'] = array($new_score, 'puntos no result!','envio_rs');
      	 		}
     		} else {
-    			$result['noenvio_rs'] = array($new_score, 'puntuacion mas baja JAAJAJ','noenvio_rs');
+    			if ($_REQUEST['prb'])$result['noenvio_rs'] = array($new_score, 'puntuacion mas baja JAAJAJ','noenvio_rs');
     		}
      		//printf('<br/>Resultado %s<br/>',$score_result);
 	 	 }
 	 } else {
-	 	$result['something'] = array('went','wrong?','something');
+	 	if ($_REQUEST['prb'])$result['something'] = array('went','wrong?','something');
 	 }
 	 if ($_REQUEST['prb']) {
 	 	print "Puntuacion despues de añadir el nuevo record:" . var_export($result,true)."<br />";
