@@ -99,8 +99,11 @@ if ($user_id) {
       	}
       }
       exit();
-    }
-  }
+  }  
+}
+
+error_log("Tenemos user? ".$user_id);
+error_log("Tenemos basic? ".var_export($basic,true));
 
   // This fetches some things that you like . 'limit=*" only returns * values.
   // To see the format of the data you are retrieving, use the "Graph API
@@ -115,11 +118,11 @@ if ($user_id) {
 
   // Here is an example of a FQL call that fetches all of your friends that are
   // using this app
-  $app_using_friends = $facebook->api(array(
-    'method' => 'fql.query',
-    'query' => 'SELECT uid, name FROM user WHERE uid IN(SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1'
-  ));
-}
+  //$app_using_friends = $facebook->api(array(
+  //  'method' => 'fql.query',
+  //  'query' => 'SELECT uid, name FROM user WHERE uid IN(SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1'
+  //));
+
 
 error_log('Despues de las llamadas de marras');
 
