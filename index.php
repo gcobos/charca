@@ -89,7 +89,7 @@ if ($user_id) {
     // cleared if the error is because of an invalid accesstoken
     if (!$facebook->getUser()) {
     	//if (!isset($_REQUEST['reload'])) {
-      	header('Location: '. AppInfo::getUrl($_SERVER['REQUEST_URI']."&reload=1"));
+      	header('Location: '. AppInfo::getUrl($_SERVER['REQUEST_URI']."?reload=1"));
       } else {
       	if (isset($_REQUEST['func'])) {
       		//print var_export($e,true);
@@ -137,7 +137,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   	
   	 //Get Scores **************
 	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
-	 error_log("puntos ". $scores_result);
+	 error_log("puntos ". var_export($scores_result,true));
 	 $result = array();
 	 if (isset($scores_result['data'])) {
 		 //print '<pre>TOTAL'.var_export($scores_result,true).'</pre><br/>';
@@ -156,15 +156,19 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	    		$result[$user_id] = array(0, he(idx($basic, 'name')));
 	    	}
 			// POST the user score only if is bigger
-  			if (($result[$user_id][0] < $new_score)) {
+  			if ($result[$user_id][0] < $new_score) {
   				if ($_REQUEST['prb'])$result['envio_rq'] = array($new_score, 'puntos','envio_rq');
     			$score_URL = 'https://graph.facebook.com/' . $app_id . '/scores';
+    			error_log('Apunto de enviar la puntuacion nueva con '.$score_URL.' y ' .$new_score);
     			$score_result = https_post($score_URL,
      	 		'score=' . $new_score
      	 		. '&access_token=' . $app_user_access_token);
      	 		if ($score_result) {
+     	 			error_log("Bien, sobreescribe el record en el array y devuelve toda la lista");
      	 			$result[$user_id][0] = $new_score;
      	 		} else {
+     	 			error_log("Mal! puntos no enviados");
+     	 			error_log("Mal! puntos no enviados");
      	 			if ($_REQUEST['prb'])$result['envio_rs'] = array($new_score, 'puntos no result!','envio_rs');
      	 		}
     		} else {
