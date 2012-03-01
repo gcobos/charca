@@ -137,7 +137,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   	
   	 //Get Scores **************
 	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
-	 error_log("puntos ". var_export($scores_result,true));
+	 error_log("puntos para la aplicacion". var_export($scores_result,true));
 	 $result = array();
 	 if (isset($scores_result['data'])) {
 		 //print '<pre>TOTAL'.var_export($scores_result,true).'</pre><br/>';
@@ -159,7 +159,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   			if ($result[$user_id][0] < $new_score) {
   				if ($_REQUEST['prb'])$result['envio_rq'] = array($new_score, 'puntos','envio_rq');
     			$score_URL = 'https://graph.facebook.com/' . $app_id . '/scores';
-    			error_log('Apunto de enviar la puntuacion nueva con '.$score_URL.' y ' .$new_score);
+    			error_log('Apunto de enviar la puntuacion nueva a '.$score_URL.' de ' .$new_score);
     			$score_result = https_post($score_URL,
      	 		'score=' . $new_score
      	 		. '&access_token=' . $app_user_access_token);
@@ -177,13 +177,14 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
      		//printf('<br/>Resultado %s<br/>',$score_result);
 	 	 }
 	 } else {
+	 	error_log("Algo fue mal intentando coger la lista de records de la aplicacion".var_export($scores_result,true));
 	 	if ($_REQUEST['prb'])$result['something'] = array('went','wrong?','something');
 	 }
 	 if ($_REQUEST['prb']) {
 	 	print "Puntuacion despues de añadir el nuevo record:" . var_export($result,true)."<br />";
 	 }
 	 rsort($result);
-	 print(json_encode(array_values(array_slice($result, 0, 10))));
+	 print(json_encode(array_values(array_slice($result, 0, 7))));
   }
   exit;
 }
