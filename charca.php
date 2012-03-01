@@ -1,5 +1,5 @@
 <?php 
-
+print var_export($_SERVER,true);
 if (in_array($_SERVER['SERVER_ADDR'], array('::1','127.0.0.1'))) {
 	$server = 'localhost';
 } else {
