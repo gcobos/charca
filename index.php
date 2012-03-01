@@ -77,7 +77,9 @@ $canvas_page_url = AppInfo::getUrl();
 
 	error_log( "User token?". $app_access_token."<bt />");
 
-/*
+
+error_log('Antes de las llamadas de marras');
+
 if ($user_id) {
   try {
     // Fetch the viewer's basic information
@@ -117,14 +119,18 @@ if ($user_id) {
     'method' => 'fql.query',
     'query' => 'SELECT uid, name FROM user WHERE uid IN(SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1'
   ));
-}*/
+}
+
+error_log('Despues de las llamadas de marras');
 
 if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   if ($_REQUEST['func']=='scores') {
 
-
+	
 	  $access_token = $facebook->getAccessToken();
-	  //error_log( "Access token?".$app_user_access_token.'<br />');	
+	  error_log( "Access token por facebook?".$access_token.'<br />');	
+  	
+		error_log("Tokens:\nToken 1: $access_token\n\nToken 2: $app_access_token\n\n");  	
   	
   	 //Get Scores **************
 	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
