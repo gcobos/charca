@@ -26,10 +26,10 @@ $app_user_access_token = $signed_request['oauth_token'];
 // Defined in 'AppInfo.php'
 require_once('AppInfo.php');
 
-error_log("Llamada con".var_export($_REQUEST, true));	
-
-
-
+//error_log("Llamada con".var_export($_REQUEST, true));	
+$base_url = 'https://'.$server.dirname($_SERVER['REQUEST_URI']);
+error_log("Base url ".$base_url);
+error_log("Url segun appinfo ".AppInfo::getUrl());
 // Enforce https on production
 if (substr(AppInfo::getUrl(), 0, 8) != 'https://') {
   header('Location: https://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
