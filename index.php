@@ -66,7 +66,7 @@ $user_id = $facebook->getUser();
 
   $token_response = file_get_contents($token_url);
   if ($_REQUEST['prb']) {
-  		print("resp: ".$token_response);
+  		print("<br />resp raw: ".$token_response."<br />");
   }
   $params = null;
   parse_str($token_response, $params);
@@ -74,14 +74,13 @@ $user_id = $facebook->getUser();
   $app_access_token = $params['access_token'];
 
 if ($_REQUEST['prb']) {
-  echo "content resp: ".file_get_contents("https://graph.facebook.com/me/games.high_score?access_token=AAADNZCmk5v5cBADZAGZCmjzG0NP3NzvLFLSZAJELdfOZC8GHVc0lFj57iCObIWQTdzA0g9GqFrbkKKfnKIzqJG3vFsZBbDbYZC3D2aWSmJ1X1MTXYhe1IXe");
+  echo "<br />content resp con curl: ".file_get_contents("https://graph.facebook.com/me/games.high_score?access_token=AAADNZCmk5v5cBADZAGZCmjzG0NP3NzvLFLSZAJELdfOZC8GHVc0lFj57iCObIWQTdzA0g9GqFrbkKKfnKIzqJG3vFsZBbDbYZC3D2aWSmJ1X1MTXYhe1IXe")."<br />";
 }
- 
- 
-  //$facebook->setAccessToken($token_response);
 
-
-//$app_access_token = $facebook->getAccessToken();
+$app_user_access_token = $facebook->getAccessToken();
+if ($_REQUEST['prb']) {
+	echo "User token?". $app_user_access_token."<bt />";	
+}
 
 if ($user_id) {
   try {
