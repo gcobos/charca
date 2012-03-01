@@ -133,7 +133,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   if ($_REQUEST['func']=='scores') {
 
 
-	  //$app_user_access_token = $facebook->getAccessToken();
+	  $access_token = $facebook->getAccessToken();
 	  //error_log( "Access token?".$app_user_access_token.'<br />');	
   	
   	 //Get Scores **************
