@@ -8,6 +8,8 @@
  * to learn more about the resources available to you
  */
 
+error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+error_log("Llamada con".var_export($_REQUEST, true));
 $app_id = "226492570779543"; //AppInfo::appID();
 $app_secret = "ab358907f19ce19e0e15695e2c42b412"; //AppInfo::appSecret();
 
@@ -26,7 +28,7 @@ $app_user_access_token = $signed_request['oauth_token'];
 // Defined in 'AppInfo.php'
 require_once('AppInfo.php');
 
-//error_log("Llamada con".var_export($_REQUEST, true));
+
 // Enforce https on production
 if (substr(AppInfo::getUrl(), 0, 8) != 'https://') {
   header('Location: https://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
