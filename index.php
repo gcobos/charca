@@ -14,6 +14,7 @@ require_once('AppInfo.php');
 
 if ($_REQUEST['prb']) {
 	error_reporting(-1);
+	print '<pre>'.var_export($_SERVER,true).'</pre>';
   print "que es?".$_SERVER['REMOTE_ADDR']."<br />";
 }
 
