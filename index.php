@@ -59,9 +59,6 @@ if ($_REQUEST['signed_request']) {
   exit;
 }
 
-$app_user_access_token = $facebook->getAccessToken();
-
-error_log( "Access token?".$app_user_access_token.'<br />');
 $user_id = $facebook->getUser();
 $canvas_page_url = AppInfo::getUrl();
 
@@ -134,6 +131,12 @@ if ($user_id) {
 
 if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   if ($_REQUEST['func']=='scores') {
+
+
+	  $app_user_access_token = $facebook->getAccessToken();
+	  error_log( "Access token?".$app_user_access_token.'<br />');
+
+	 $facebook->getUserToken();  	
   	
   	 //Get Scores **************
 	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
