@@ -213,7 +213,8 @@ function watchRestart () {
 	// Get scores
 	//console.log(window.location.href+'&func=scores&v='+score)
 	if (!frog.alive) {
-		httpGet('<?php echo $base_url ?>'+'?func=scores&v='+score, function (scoreList) {
+		httpGet('<?php echo $base_url ?>'+'?func=scores&v='+score, function (scores) {
+			scoreList = scores;
 			console.log('Score list',scoreList);
 			showHighScores();	
 		});
@@ -435,6 +436,7 @@ function refreshHeader ()
 
 function showHighScores ()
 {
+	console.log('printing high scores');
 	content = '<ul class="highscores">';
 	for (i in scoreList) {
 		content += '<li><div class="score">'+scoreList[i][0]+'</div><div class="name">'+scoreList[i][1]+'</div></li>';
