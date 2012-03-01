@@ -56,7 +56,7 @@ $app_secret = AppInfo::appSecret();
 
 if ($_REQUEST['signed_request']) {
   $signed_request = parse_signed_request($_POST['signed_request'],$app_secret);
-  error_log(var_export($signed_request,true));
+  error_log("Esto!".var_export($signed_request,true));
   exit;
       $uid = $signed_request['user_id'];
 }
