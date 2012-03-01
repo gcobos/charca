@@ -395,7 +395,7 @@ function httpGet (theUrl, callback)
    				console.log('Failed to set high score!');
    				console.log(e);
    			}*/
-   			eval('result = ' + xmlHttp.responseText);
+   			result = eval(xmlHttp.responseText);
    			callback(result);
   			}
  		}
