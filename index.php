@@ -26,14 +26,11 @@ $app_user_access_token = $signed_request['oauth_token'];
 // Defined in 'AppInfo.php'
 require_once('AppInfo.php');
 
-//error_log("Llamada con".var_export($_REQUEST, true));	
-$base_url = 'https://'.$server.dirname($_SERVER['REQUEST_URI']);
-error_log("Base url ".$base_url);
-error_log("Url segun appinfo ".AppInfo::getUrl());
+//error_log("Llamada con".var_export($_REQUEST, true));
 // Enforce https on production
 if (substr(AppInfo::getUrl(), 0, 8) != 'https://') {
   header('Location: https://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-  error_log('Redireccion y  a la mierda?');
+  error_log('Redireccion y  a la mierda?\n\nPos vaya\n');
   exit();
 }
 
@@ -62,8 +59,8 @@ $facebook = new Facebook(array(
 $user_id = $facebook->getUser();
 $canvas_page_url = AppInfo::getUrl();
 
-/*
-error_log('Haciendo la peticion de access token');
+
+  error_log('Haciendo la peticion de access token');
   // Get an App Access Token
   $token_url = 'https://graph.facebook.com/oauth/access_token?'
     . 'client_id=' . $app_id
@@ -71,22 +68,15 @@ error_log('Haciendo la peticion de access token');
     . '&grant_type=client_credentials';
 
   $token_response = file_get_contents($token_url);
-  if ($_REQUEST['prb']) {
-  		print("<br />resp raw: ".$token_response."<br />");
-  }
+  error_log("<br />resp raw: ".$token_response."<br />");
+  
   $params = null;
   parse_str($token_response, $params);
 
   $app_access_token = $params['access_token'];
 
-if ($_REQUEST['prb']) {
-  //echo "<br />content resp con curl: ".file_get_contents("https://graph.facebook.com/me/games.high_score?access_token=AAADNZCmk5v5cBADZAGZCmjzG0NP3NzvLFLSZAJELdfOZC8GHVc0lFj57iCObIWQTdzA0g9GqFrbkKKfnKIzqJG3vFsZBbDbYZC3D2aWSmJ1X1MTXYhe1IXe")."<br />";
-}
+	error_log( "User token?". $app_access_token."<bt />");
 
-if ($_REQUEST['prb']) {
-	echo "User token?". $app_user_access_token."<bt />";	
-}
-*/
 /*
 if ($user_id) {
   try {
