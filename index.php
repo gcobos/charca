@@ -95,9 +95,9 @@ if ($user_id) {
       } else {
       	if (isset($_REQUEST['func'])) {
       		//print var_export($e,true);
-      		echo "{something:'went wrong.'}";
+      		error_log("{something:'went wrong.'}");
       	} else {
-      		echo "Please, search this game on Facebook and play from there.";
+      		error_log( "Please, search this game on Facebook and play from there.");
       	}
       }
       exit();
@@ -128,7 +128,7 @@ error_log("Tenemos basic? ".var_export($basic,true));
 
 error_log('Despues de las llamadas de marras');
 
-$hs_path_file = 'hscores.txt';
+$hs_path_file = '/tmp/hscores.txt';
 
 if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   if ($_REQUEST['func']=='scores') {
@@ -145,7 +145,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	 error_log("puntos para la aplicacion". var_export($scores_result,true));
 	 $result = array();
 	 if (true || isset($scores_result['data'])) {
-	 	 if (isset($scores_result['data'])) {
+	 	 if (false && isset($scores_result['data'])) {
 		 	//print '<pre>TOTAL'.var_export($scores_result,true).'</pre><br/>';
 		 	//$result['pet_rq'] = array('hay', 'datos!!');
 		 	foreach ($scores_result['data'] as $row) {
@@ -197,7 +197,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	 	if ($_REQUEST['prb'])$result['something'] = array('went','wrong?','something');
 	 }
 	 if ($_REQUEST['prb']) {
-	 	print "Puntuacion despues de añadir el nuevo record:" . var_export($result,true)."<br />";
+	 	error_log("Puntuacion despues de añadir el nuevo record:" . var_export($result,true)."<br />");
 	 }
 	 rsort($result);
 	 print(json_encode(array_values(array_slice($result, 0, 7))));
