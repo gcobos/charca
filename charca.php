@@ -392,6 +392,7 @@ function httpGet (theUrl, callback)
    				callback(result);
    			} catch (e) {
    				console.log('Failed to set high score!');
+   				console.log(e)
    			}
   			}
  		}
