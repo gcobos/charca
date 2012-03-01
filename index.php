@@ -90,6 +90,7 @@ if ($_REQUEST['prb']) {
 	echo "User token?". $app_user_access_token."<bt />";	
 }
 */
+/*
 if ($user_id) {
   try {
     // Fetch the viewer's basic information
@@ -111,7 +112,7 @@ if ($user_id) {
       exit();
     }
   }
-
+*/
   // This fetches some things that you like . 'limit=*" only returns * values.
   // To see the format of the data you are retrieving, use the "Graph API
   // Explorer" which is at https://developers.facebook.com/tools/explorer/
@@ -129,7 +130,7 @@ if ($user_id) {
     'method' => 'fql.query',
     'query' => 'SELECT uid, name FROM user WHERE uid IN(SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1'
   ));*/
-}
+//}
 
 if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   if ($_REQUEST['func']=='scores') {
