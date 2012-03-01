@@ -79,7 +79,7 @@ $user_id = $facebook->getUser();
   $app_access_token = $params['access_token'];
 
 if ($_REQUEST['prb']) {
-  echo "<br />content resp con curl: ".file_get_contents("https://graph.facebook.com/me/games.high_score?access_token=AAADNZCmk5v5cBADZAGZCmjzG0NP3NzvLFLSZAJELdfOZC8GHVc0lFj57iCObIWQTdzA0g9GqFrbkKKfnKIzqJG3vFsZBbDbYZC3D2aWSmJ1X1MTXYhe1IXe")."<br />";
+  //echo "<br />content resp con curl: ".file_get_contents("https://graph.facebook.com/me/games.high_score?access_token=AAADNZCmk5v5cBADZAGZCmjzG0NP3NzvLFLSZAJELdfOZC8GHVc0lFj57iCObIWQTdzA0g9GqFrbkKKfnKIzqJG3vFsZBbDbYZC3D2aWSmJ1X1MTXYhe1IXe")."<br />";
 }
 
 if ($_REQUEST['prb']) {
