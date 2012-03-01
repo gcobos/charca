@@ -385,8 +385,8 @@ function httpGet (theUrl, callback)
 	//if (theUrl.indexOf("localhost")==-1) {
 		xmlHttp = new XMLHttpRequest();
    	xmlHttp.open( "GET", theUrl, true);
-   	xmlHttp.onreadystatechange=function() {
-  			if (xmlHttp.readyState==4) {
+   	xmlHttp.onreadystatechange = function() {
+  			if (xmlHttp.readyState==4 && xmlHttp.status==200) {
    			try {
    				console.log('Lo que tengo ',xmlHttp.responseText);
    				var result = []
