@@ -1,9 +1,9 @@
 <?php 
-print var_export($_SERVER,true);
-if (in_array($_SERVER['SERVER_ADDR'], array('::1','127.0.0.1'))) {
+//print var_export($_SERVER,true);
+if (in_array($_SERVER['HTTP_HOST'], array('::1','127.0.0.1'))) {
 	$server = 'localhost';
 } else {
-	$server = $_SERVER['SERVER_ADDR'];
+	$server = $_SERVER['HTTP_HOST'];
 }
 $base_url = 'https://'.$server.dirname($_SERVER['REQUEST_URI']);
 if ($_REQUEST['prb'])print $base_url;
