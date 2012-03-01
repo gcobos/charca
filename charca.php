@@ -213,9 +213,10 @@ function watchRestart () {
 	// Get scores
 	//console.log(window.location.href+'&func=scores&v='+score)
 	if (!frog.alive) {
-		scoreList = httpGet('<?php echo $base_url ?>'+'?func=scores&v='+score);
-		console.log('Score list',scoreList);
-		showHighScores();
+		scoreList = httpGet('<?php echo $base_url ?>'+'?func=scores&v='+score, function () {
+			console.log('Score list',scoreList);
+			showHighScores();	
+		});
 	}
 
 	// Wait before giving control
