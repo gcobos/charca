@@ -44,6 +44,9 @@ $facebook = new Facebook(array(
   'secret' => AppInfo::appSecret(),
 ));
 
+$app_user_access_token = $facebook->getAccessToken();
+
+if ($_REQUEST['prb']) print "Access token?".$app_user_access_token.'<br />';
 $user_id = $facebook->getUser();
 
   $app_id = AppInfo::appID();
@@ -79,7 +82,6 @@ if ($_REQUEST['prb']) {
   echo "<br />content resp con curl: ".file_get_contents("https://graph.facebook.com/me/games.high_score?access_token=AAADNZCmk5v5cBADZAGZCmjzG0NP3NzvLFLSZAJELdfOZC8GHVc0lFj57iCObIWQTdzA0g9GqFrbkKKfnKIzqJG3vFsZBbDbYZC3D2aWSmJ1X1MTXYhe1IXe")."<br />";
 }
 
-$app_user_access_token = $facebook->getAccessToken();
 if ($_REQUEST['prb']) {
 	echo "User token?". $app_user_access_token."<bt />";	
 }
