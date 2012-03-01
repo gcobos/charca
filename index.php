@@ -153,7 +153,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
     			$score_URL = 'https://graph.facebook.com/' . $user_id . '/scores';
     			$score_result = https_post($score_URL,
      	 		'score=' . $new_score
-     	 		. '&access_token=' . $app_user_access_token);
+     	 		. '&access_token=' . $app_access_token);
      	 		if ($score_result) {
      	 			$result[$user_id][0] = $new_score;
      	 		} else {
