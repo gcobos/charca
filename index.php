@@ -138,6 +138,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 		error_log("Tokens:\nToken 1: $access_token\n\nToken 2: $app_access_token\n\n");  	
   	
   	 //Get Scores **************
+  	 error_log('PIDE LISTADO DE PUNTOS');
 	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
 	 error_log("puntos para la aplicacion". var_export($scores_result,true));
 	 $result = array();
@@ -172,8 +173,8 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   				if ($_REQUEST['prb'])$result['envio_rq'] = array($new_score, 'puntos','envio_rq');
     			$score_URL = 'https://graph.facebook.com/' . $app_id . '/scores';
     			error_log('Apunto de enviar la puntuacion nueva a '.$score_URL.' de ' .$new_score);
-    			$score_result = https_post($score_URL,
-     	 		'score=' . $new_score
+    			$score_result = file_get_contents($score_URL.
+     	 		'&score=' . $new_score
      	 		. '&access_token=' . $app_user_access_token);
      	 		if ($score_result) {
      	 			error_log('Listado de puntos real: '.var_export($score_result,true));
