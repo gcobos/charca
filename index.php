@@ -12,10 +12,10 @@
 // Defined in 'AppInfo.php'
 require_once('AppInfo.php');
 
-if ($_REQUEST['signed_request']) {
+/*if ($_REQUEST['signed_request']) {
 	error_log(var_export($_REQUEST, true));	
 	exit;
-}
+}*/
 
 if ($_REQUEST['prb']) {
 	error_reporting(-1);
@@ -49,24 +49,28 @@ $facebook = new Facebook(array(
   'secret' => AppInfo::appSecret(),
 ));
 
+
+$app_id = AppInfo::appID();
+$app_secret = AppInfo::appSecret();
+
+
+if ($_REQUEST['signed_request']) {
+  $signed_request = parse_signed_request($_POST['signed_request'],$app_secret);
+  error_log(var_export($signed_request,true));
+  exit;
+}
+    $uid = $signed_request['user_id'];
+*/
+
+
 $app_user_access_token = $facebook->getAccessToken();
 
 if ($_REQUEST['prb']) print "Access token?".$app_user_access_token.'<br />';
 $user_id = $facebook->getUser();
-
-  $app_id = AppInfo::appID();
-  $app_secret = AppInfo::appSecret();
   $canvas_page_url = AppInfo::getUrl();
 
 	//print "canvas url:". $canvas_page_url."<br />";
 
-// Get the User ID
-/*
-  $signed_request = parse_signed_request($_POST['signed_request'],
-    $app_secret);
-
-    $uid = $signed_request['user_id'];
-*/
 
   // Get an App Access Token
   $token_url = 'https://graph.facebook.com/oauth/access_token?'
