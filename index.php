@@ -126,6 +126,8 @@ error_log("Tenemos basic? ".var_export($basic,true));
 
 error_log('Despues de las llamadas de marras');
 
+$hs_path_file = 'hscores.txt';
+
 if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   if ($_REQUEST['func']=='scores') {
 
@@ -139,13 +141,19 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
 	 error_log("puntos para la aplicacion". var_export($scores_result,true));
 	 $result = array();
-	 if (isset($scores_result['data'])) {
-		 //print '<pre>TOTAL'.var_export($scores_result,true).'</pre><br/>';
-		 //$result['pet_rq'] = array('hay', 'datos!!');
-		 foreach ($scores_result['data'] as $row) {
-			//print '<pre>'.var_export($row,true).'</pre><br/>';
-			//printf('<h3>User: %s, puntos: %d</h3><br />',$row['user']['name'],$row['score']);
-			$result[$row['user']['id']] = array($row['score'], $row['user']['name']);
+	 if (true || isset($scores_result['data'])) {
+	 	 if (isset($scores_result['data'])) {
+		 	//print '<pre>TOTAL'.var_export($scores_result,true).'</pre><br/>';
+		 	//$result['pet_rq'] = array('hay', 'datos!!');
+		 	foreach ($scores_result['data'] as $row) {
+				//print '<pre>'.var_export($row,true).'</pre><br/>';
+				//printf('<h3>User: %s, puntos: %d</h3><br />',$row['user']['name'],$row['score']);
+				$result[$row['user']['id']] = array($row['score'], $row['user']['name']);
+		 	}
+		 } else {
+		 	error_log("PUES LEO DEL FICHERO");
+		 	$result = unserialize(file_get_contents($hs_path_file));
+		 	error_log("LEIDO DEL FICHERO".var_export($result,true));
 		 }
 
 		 // If param 'v', post the score from user
@@ -157,6 +165,10 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	    	}
 			// POST the user score only if is bigger
   			if ($result[$user_id][0] < $new_score) {
+  				$result[$user_id][0] = $new_score;
+				error_log("ESCRIBO LOS RECORDS EN FICHERO");
+				file_put_contents($hs_path_file, serialize($result));  				
+  				error_log("ESCRITOS LOS RECORDS EN FICHERO".var_export($result,true));
   				if ($_REQUEST['prb'])$result['envio_rq'] = array($new_score, 'puntos','envio_rq');
     			$score_URL = 'https://graph.facebook.com/' . $app_id . '/scores';
     			error_log('Apunto de enviar la puntuacion nueva a '.$score_URL.' de ' .$new_score);
@@ -166,7 +178,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
      	 		if ($score_result) {
      	 			error_log('Listado de puntos real: '.var_export($score_result,true));
      	 			error_log("Bien, sobreescribe el record en el array y devuelve toda la lista");
-     	 			$result[$user_id][0] = $new_score;
+     	 			
      	 		} else {
      	 			error_log("Mal! puntos no enviados");
      	 			error_log("Mal! puntos no enviados");
