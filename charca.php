@@ -410,7 +410,6 @@ function httpGet (theUrl, callback)
    			[199,'Así vamos4', 'id7'],
    		]
    }*/
-   return result;
 }
     
 function refreshHeader ()
