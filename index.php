@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 /**
  * This sample app is provided to kickstart your experience using Facebook's
  * resources for developers.  This sample app provides examples of several
@@ -29,6 +27,19 @@ if (substr(AppInfo::getUrl(), 0, 8) != 'https://' && !in_array($_SERVER['REMOTE_
   exit();
 }
 
+$app_id = "226492570779543"; //AppInfo::appID();
+$app_secret = "ab358907f19ce19e0e15695e2c42b412"; //AppInfo::appSecret();
+
+
+if ($_REQUEST['signed_request']) {
+  error_log('Antes del parseo!!!!!!!!!!!!!!!!!');	
+  $signed_request = parse_signed_request($_POST['signed_request'],$app_secret);
+  error_log("Esto!".var_export($signed_request,true));
+  exit;
+}
+
+
+
 // This provides access to helper functions defined in 'utils.php'
 require_once('utils.php');
 
@@ -49,17 +60,6 @@ $facebook = new Facebook(array(
   'secret' => AppInfo::appSecret(),
 ));
 
-
-$app_id = AppInfo::appID();
-$app_secret = AppInfo::appSecret();
-
-
-if ($_REQUEST['signed_request']) {
-  error_log('Antes del parseo!!!!!!!!!!!!!!!!!');	
-  $signed_request = parse_signed_request($_POST['signed_request'],$app_secret);
-  error_log("Esto!".var_export($signed_request,true));
-  exit;
-}
 
 $user_id = $facebook->getUser();
 $canvas_page_url = AppInfo::getUrl();
@@ -329,8 +329,8 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   <body>
     <div id="fb-root"></div>
     <?php */ ?>
-    <?php include 'charca.php'; ?>
-	<fb:like send="false" width="640" show_faces="false" />
+    <?php if (!isset($_REQUEST['func'])) include 'charca.php'; ?>
+	<!--<fb:like send="false" width="640" show_faces="false" />-->
 
 	<?php exit; ?>
 
