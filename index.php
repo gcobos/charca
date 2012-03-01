@@ -8,25 +8,6 @@
  * to learn more about the resources available to you
  */
 
-// Provides access to app specific values such as your app id and app secret.
-// Defined in 'AppInfo.php'
-require_once('AppInfo.php');
-
-error_log("Llamada con".var_export($_REQUEST, true));	
-
-
-if ($_REQUEST['prb']) {
-	error_reporting(-1);
-	print '<pre>'.var_export($_SERVER,true).'</pre>';
-  print "que es?".$_SERVER['REMOTE_ADDR']."<br />";
-}
-
-// Enforce https on production
-if (substr(AppInfo::getUrl(), 0, 8) != 'https://' && !in_array($_SERVER['REMOTE_ADDR'],array( '127.0.0.1','::1'))) {
-  header('Location: https://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-  exit();
-}
-
 $app_id = "226492570779543"; //AppInfo::appID();
 $app_secret = "ab358907f19ce19e0e15695e2c42b412"; //AppInfo::appSecret();
 
@@ -35,9 +16,25 @@ if ($_REQUEST['signed_request']) {
   error_log('Antes del parseo!!!!!!!!!!!!!!!!!');	
   $signed_request = parse_signed_request($_POST['signed_request'],$app_secret);
   error_log("Esto!".var_export($signed_request,true));
+  error_log('JUASSSSSSSS');
   exit;
 }
 
+
+// Provides access to app specific values such as your app id and app secret.
+// Defined in 'AppInfo.php'
+require_once('AppInfo.php');
+
+error_log("Llamada con".var_export($_REQUEST, true));	
+
+
+
+// Enforce https on production
+if (substr(AppInfo::getUrl(), 0, 8) != 'https://') {
+  header('Location: https://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+  error_log('Redireccion y  a la mierda?');
+  exit();
+}
 
 
 // This provides access to helper functions defined in 'utils.php'
@@ -199,6 +196,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
     return $result;
   }
   function parse_signed_request($signed_request, $secret) {
+  	 error_log('Que se supone que puedo hacer?');
     list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
 
     // decode the data
