@@ -151,6 +151,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 			$result[$row['user']['id']] = array($row['score'], $row['user']['name']);
 		 }
 
+
 		 // If param 'v', post the score from user
 	    if (isset($_REQUEST['v'])) {
 	    	$new_score = $_REQUEST['v'];
