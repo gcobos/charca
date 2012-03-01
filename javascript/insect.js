@@ -11,7 +11,7 @@ Insect.prototype = new Container();
 
 	Insect.types = 4;
 	
-	Insect.typeImages = [];	
+	Insect.typeImages = {};	
 	
 	Insect.typeFrames = {	// frames for each insect type
 		1: {width:80, height:80, regX:40, regY:40},
@@ -56,9 +56,7 @@ Insect.prototype = new Container();
 	
 	Insect.prototype.initialize = function (type) {
 		this.Container_initialize(); // super call
-		if (!Insect.typeImages) {
-			Insect.typeImages = [];
-		
+		if (!Object.keys(Insect.typeImages).length) {
 			var i = 1;
 			while (i <= Insect.types) {
 				Insect.typeImages[i] = new Image();
