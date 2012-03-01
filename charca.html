@@ -22,6 +22,41 @@
 			padding: 0;
 			border: 0;
 		}
+		
+		#canvasOverlay {
+			position: absolute;
+			display: none;
+			margin: 0 auto;
+			text-align: center;
+		}
+		
+		.highscores {
+			margin: 220px auto;
+			vertical-align: center;
+			text-align: center;
+		}
+		
+		.highscores li {
+			text-align: right;
+			font: 30px "Sans-serif";
+			text-shadow: #104030 1px -1px;
+			color: #6394bB;
+		}
+		
+		.highscores li div.score {
+			width: 100px;
+			display: inline-block;
+			text-align: right;
+		}
+		
+		.highscores li div.name {
+			width: 350px;
+			overflow: hidden;
+			padding-left: 40px;
+			text-align: left;
+			display: inline-block;
+		}
+		
 	</style>
 	<script src="javascript/easel.js"></script>
 	<script src="javascript/buzz.js"></script>
@@ -63,6 +98,7 @@ var levelConfig = {
 
 var canvas;			      // main canvas
 var stage;			      // main display stage
+var overlay;				// canvas overlay
 var mouse;					// mouse position
 
 var splash;					// splash image 
@@ -85,7 +121,6 @@ var messageField;		   // message display field
 var levelField;			// level field
 var scoreField;			// score field
 var timeField;          // time display field
-var highScoreBlock;		// Top 10 players
 
 var sounds;
 
@@ -93,9 +128,10 @@ var scoreList;
 
 // Functions
 
-function init (canvasId) {
+function init (canvasId, canvasWrapper, overlayBlock) {
 	//associate the canvas with the stage
 	canvas = document.getElementById(canvasId);
+	overlay = document.getElementById(overlayBlock);
 	canvas.onselectstart = function () { return false; }
 	stage = new Stage(canvas);
 
@@ -146,12 +182,6 @@ function init (canvasId) {
 		messageField.x = canvas.width / 2;
 		messageField.y = canvas.height / 2.5;
 
-		highScoreBlock = new Text("Aqui!","bold 24px Arial","#000000");
-		highScoreBlock.textAlign = "center";
-		//highScoreBlock.width= "640";
-		highScoreBlock.x = 100;
-		highScoreBlock.y = 30;
-	
 		watchRestart();
 	
 	}
@@ -178,7 +208,7 @@ function watchRestart () {
 
 	// Wait for a second at least before giving control
 	clearTimeout(timer);
-	timer = setTimeout('canvas.onclick = handleClick; canvas.ondblclick = null; canvas.onmousemove = handleMouseMove;', 1000);
+	timer = setTimeout('overlay.onclick = handleClick; canvas.onclick = handleClick; canvas.ondblclick = null; canvas.onmousemove = handleMouseMove;', 1000);
 }
 
 // reset all game logic
@@ -209,8 +239,12 @@ function restart() {
 
 	stage.addChild(frog);
 	
-	//start game timer
+	// Remove overlay
+	overlay.style.display = 'none';
+	
 	Ticker.addListener(window);
+	
+	//start game timer
 	window.clearInterval(timer);
 	baseTime = time + Math.round(Ticker.getTime() / 1000);
 	timer = setInterval("refreshHeader();", 250);	
@@ -379,13 +413,11 @@ function showHighScores ()
 {
 	content = '<ul class="highscores">';
 	for (i in scoreList) {
-		content += '<li><div class="score">'+scoreList[i][0]+'</span><span class="name">'+scoreList[i][1]+'</span></li>';
+		content += '<li><div class="score">'+scoreList[i][0]+'</div><div class="name">'+scoreList[i][1]+'</div></li>';
 	}
 	content += '</ul>';
-	//highScoreBlock.innerHTML = content;
-	console.log('Before',highScoreBlock);
-	console.log(content);
-	stage.addChild(highScoreBlock);
+	overlay.innerHTML = content;
+	overlay.style.display = 'block';
 }
 
 function outOfBounds (o, bounds) 
@@ -438,7 +470,6 @@ function handleClick (e) {
 	 		frog.shoot(mouse);
 		}
 	} else {
-		//canvas.onclick = null;
 		stage.removeChild(messageField);
 		restart();
 	}
@@ -454,9 +485,10 @@ function handleMouseMove (e)
 
 </script> 
 </head>
-<body onload="init('stageCanvas', 'canvasWrapper')"> <!-- bgcolor="#769083">-->
+<body onload="init('stageCanvas', 'canvasWrapper','canvasOverlay')"> <!-- bgcolor="#769083">-->
 	<div id="canvasWrapper" align="center" style="width: 640px; height: 480px">
-		<canvas width="640" height="480" id="stageCanvas" class="pantalla"></canvas>
+		<div id="canvasOverlay" style="width: 640px; height: 480px"></div>
+		<canvas width="640" height="480" id="stageCanvas" class="pantalla"></canvas>		
 	</div>
 </body>
 </html>

@@ -58,9 +58,12 @@ $user_id = $facebook->getUser();
   $token_url = 'https://graph.facebook.com/oauth/access_token?'
     . 'client_id=' . $app_id
     . '&client_secret=' . $app_secret
-    . '&grant_type=client_credentials';
+    . '&grant_type=user_games_activity';
 
   $token_response = file_get_contents($token_url);
+  if ($_REQUEST['prb']) {
+  		print("resp: ".$token_response);
+  }
   $params = null;
   parse_str($token_response, $params);
   
