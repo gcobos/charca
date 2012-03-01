@@ -13,6 +13,7 @@
 require_once('AppInfo.php');
 
 if ($_REQUEST['prb']) {
+	error_reporting(-1);
   print "que es?".$_SERVER['REMOTE_ADDR']."<br />";
 }
 
