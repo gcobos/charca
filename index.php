@@ -316,7 +316,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   <body>
     <div id="fb-root"></div>
     <?php */ ?>
-    <?php include 'charca.html'; ?>
+    <?php include 'charca.php'; ?>
 	<fb:like send="false" width="640" show_faces="false" />
 
 	<?php exit; ?>
