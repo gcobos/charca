@@ -5,8 +5,8 @@ if (in_array($_SERVER['SERVER_ADDR'], array('::1','127.0.0.1'))) {
 } else {
 	$server = $_SERVER['SERVER_ADDR'];
 }
-$base_url = 'http://'.$server.dirname($_SERVER['REQUEST_URI'])."/";
-print $base_url;
+$base_url = 'https://'.$server.dirname($_SERVER['REQUEST_URI']);
+if ($_REQUEST['prb'])print $base_url;
 ?>
 <!DOCTYPE html>
 <html lang="en">
