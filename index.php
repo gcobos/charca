@@ -12,10 +12,8 @@
 // Defined in 'AppInfo.php'
 require_once('AppInfo.php');
 
-/*if ($_REQUEST['signed_request']) {
-	error_log(var_export($_REQUEST, true));	
-	exit;
-}*/
+error_log("Llamada con".var_export($_REQUEST, true));	
+
 
 if ($_REQUEST['prb']) {
 	error_reporting(-1);
