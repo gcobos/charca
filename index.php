@@ -137,6 +137,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   	
   	 //Get Scores **************
 	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
+	 error_log("puntos ". $scores_result);
 	 $result = array();
 	 if (isset($scores_result['data'])) {
 		 //print '<pre>TOTAL'.var_export($scores_result,true).'</pre><br/>';
@@ -157,7 +158,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 			// POST the user score only if is bigger
   			if (($result[$user_id][0] < $new_score)) {
   				if ($_REQUEST['prb'])$result['envio_rq'] = array($new_score, 'puntos','envio_rq');
-    			$score_URL = 'https://graph.facebook.com/' . $user_id . '/scores';
+    			$score_URL = 'https://graph.facebook.com/' . $app_id . '/scores';
     			$score_result = https_post($score_URL,
      	 		'score=' . $new_score
      	 		. '&access_token=' . $app_user_access_token);
