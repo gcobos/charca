@@ -387,14 +387,16 @@ function httpGet (theUrl, callback)
    	xmlHttp.open( "GET", theUrl, true);
    	xmlHttp.onreadystatechange=function() {
   			if (xmlHttp.readyState==4) {
-   			try {
+   			/*try {
    				var result = []
    				eval('result = ' + xmlHttp.responseText);
    				callback(result);
    			} catch (e) {
    				console.log('Failed to set high score!');
-   				console.log(e)
-   			}
+   				console.log(e);
+   			}*/
+   			eval('result = ' + xmlHttp.responseText);
+   			callback(result);
   			}
  		}
    	xmlHttp.send( null );
