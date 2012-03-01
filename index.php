@@ -134,9 +134,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 
 
 	  $app_user_access_token = $facebook->getAccessToken();
-	  error_log( "Access token?".$app_user_access_token.'<br />');
-
-	 $facebook->getUserToken();  	
+	  error_log( "Access token?".$app_user_access_token.'<br />');	
   	
   	 //Get Scores **************
 	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
