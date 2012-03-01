@@ -206,17 +206,17 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
     $data = json_decode(base64_url_decode($payload), true);
 
     if (strtoupper($data['algorithm']) !== 'HMAC-SHA256') {
-      if ($_REQUEST['prb']) print('Unknown algorithm. Expected HMAC-SHA256');
+      error_log('Unknown algorithm. Expected HMAC-SHA256');
       return null;
     }
 
     // check sig
     $expected_sig = hash_hmac('sha256', $payload, $secret, $raw = true);
     if ($sig !== $expected_sig) {
-      if ($_REQUEST['prb']) print('Bad Signed JSON signature!');
+      error_log('Bad Signed JSON signature!');
       return null;
     }
-
+	  error_log('Joder');
     return $data;
   }
 
