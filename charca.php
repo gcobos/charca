@@ -512,6 +512,7 @@ function handleMouseMove (e)
 </script> 
 </head>
 <body onload="init('stageCanvas', 'canvasWrapper','canvasOverlay')"> <!-- bgcolor="#769083">-->
+Aún no funcionan los records, así que no os matéis a superarme xD
 	<div id="canvasWrapper" align="center" style="width: 640px; height: 480px">
 		<div id="canvasOverlay" style="width: 640px; height: 480px"></div>
 		<canvas width="640" height="480" id="stageCanvas" class="pantalla"></canvas>		
