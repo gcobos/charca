@@ -169,11 +169,12 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	    		$result[$user_id] = array(0, he(idx($basic, 'name')));
 	    	}
 			// POST the user score only if is bigger
-  			if ($result[$user_id][0] < $new_score) {
+  			if (true || $result[$user_id][0] < $new_score) {
   				$result[$user_id][0] = $new_score;
-				error_log("ESCRIBO LOS RECORDS EN FICHERO");
+				/*error_log("ESCRIBO LOS RECORDS EN FICHERO");
 				file_put_contents($hs_path_file, serialize($result));  				
   				error_log("ESCRITOS LOS RECORDS EN FICHERO".var_export($result,true));
+  				*/
   				if ($_REQUEST['prb'])$result['envio_rq'] = array($new_score, 'puntos','envio_rq');
     			$score_URL = 'https://graph.facebook.com/' . $app_id . '/scores';
     			error_log('Apunto de enviar la puntuacion nueva a '.$score_URL.' de ' .$new_score);
