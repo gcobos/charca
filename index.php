@@ -128,7 +128,7 @@ error_log("Tenemos basic? ".var_export($basic,true));
 
 error_log('Despues de las llamadas de marras');
 
-$hs_path_file = '/tmp/hscores.txt';
+$hs_path_file = 'hscores.txt';
 
 if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   if ($_REQUEST['func']=='scores') {
