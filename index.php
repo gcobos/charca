@@ -140,12 +140,14 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 		error_log("Tokens:\nToken 1: $access_token\n\nToken 2: $app_access_token\n\n");  	
   	
   	 //Get Scores **************
+  	 /*
   	 error_log('PIDE LISTADO DE PUNTOS');
 	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
 	 error_log("puntos para la aplicacion". var_export($scores_result,true));
+	 */
 	 $result = array();
-	 if (true || isset($scores_result['data'])) {
-	 	 if (false && isset($scores_result['data'])) {
+	 if (isset($scores_result['data'])) {		// true ||
+	 	 if (isset($scores_result['data'])) {	// false &&
 		 	//print '<pre>TOTAL'.var_export($scores_result,true).'</pre><br/>';
 		 	//$result['pet_rq'] = array('hay', 'datos!!');
 		 	foreach ($scores_result['data'] as $row) {
