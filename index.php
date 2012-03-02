@@ -7,16 +7,21 @@
   $app_secret = "ab358907f19ce19e0e15695e2c42b412";
   $canvas_page_url = 'http://charca.herokuapp.com';
   
+// The Achievement URL
+  $achievement = 'YOUR_ACHIEVEMENT_URL';
+  $achievement_display_order = 1;
+
+  // The Score
+  $score = '30';
+
   // Authenticate the user
   session_start();
   if(isset($_REQUEST["code"])) {
      $code = $_REQUEST["code"];
-     
   }
 
   if(empty($code) && !isset($_REQUEST['error'])) {
     $_SESSION['state'] = md5(uniqid(rand(), TRUE)); //CSRF protection
-    error_log('No code and no error? Request autentification');
     $dialog_url = 'https://www.facebook.com/dialog/oauth?' 
       . 'client_id=' . $app_id
       . '&redirect_uri=' . urlencode($canvas_page_url)
@@ -27,32 +32,64 @@
     exit;
   } else if(isset($_REQUEST['error'])) { 
     // The user did not authorize the app
-    error_log("Error en auth. Descripcion: ".$_REQUEST['error_description']);
+    print($_REQUEST['error_description']);
     exit;
   };
 
   // Get the User ID
-  error_log('Procedemos a parsear el signed request que es ');
-  error_log(var_export($signed_request,true));
   $signed_request = parse_signed_request($_POST['signed_request'],
     $app_secret);
-  
   $uid = $signed_request['user_id'];
-  echo 'Welcome User: ' . $uid;
 
   // Get an App Access Token
-  error_log('Se supone que aqui pedimos el access token');
   $token_url = 'https://graph.facebook.com/oauth/access_token?'
     . 'client_id=' . $app_id
     . '&client_secret=' . $app_secret
     . '&grant_type=client_credentials';
 
   $token_response = file_get_contents($token_url);
-  error_log('Respuesta con el access token? '.var_export($token_response,true));
   $params = null;
   parse_str($token_response, $params);
   $app_access_token = $params['access_token'];
-  error_log('Y ya tengo app_access_token!'. $app_access_token);
+/*
+  // Register an Achievement for the app
+  print('Register Achievement:<br/>');
+  $achievement_registration_URL = 'https://graph.facebook.com/' 
+    . $app_id . '/achievements';
+  $achievement_registration_result=https_post($achievement_registration_URL,
+    'achievement=' . $achievement
+      . '&display_order=' . $achievement_display_order
+      . '&access_token=' . $app_access_token
+  );
+  print('<br/><br/>');
+
+  // POST a user achievement
+  print('Publish a User Achievement<br/>');
+  $achievement_URL = 'https://graph.facebook.com/' . $uid . '/achievements';
+  $achievement_result = https_post($achievement_URL,
+    'achievement=' . $achievement
+    . '&access_token=' . $app_access_token
+  );
+  print('<br/><br/>');
+*/
+  // POST a user score
+  print('Publish a User Score<br/>');
+  $score_URL = 'https://graph.facebook.com/' . $uid . '/scores';
+  $score_result = https_post($score_URL,
+    'score=' . $score
+    . '&access_token=' . $app_access_token
+  );
+  print('<br/><br/>');
+
+  function https_post($uri, $postdata) {
+    $ch = curl_init($uri);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    return $result;
+  }
 
   function parse_signed_request($signed_request, $secret) {
     list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
