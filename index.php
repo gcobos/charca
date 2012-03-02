@@ -24,13 +24,13 @@
     $_SESSION['state'] = md5(uniqid(rand(), TRUE)); //CSRF protection
     $dialog_url = 'https://www.facebook.com/dialog/oauth?' 
       . 'client_id=' . $app_id
-      . '&redirect_uri=' . urlencode($canvas_page_url)
+      //. '&redirect_uri=' . urlencode($canvas_page_url)
       . '&state=' . $_SESSION['state']
       . '&scope=publish_actions';
 
-	 error_log('Redireccion y fuera');
-    print('<script> top.location.href=\'' . $dialog_url . '\'</script>');
-    exit;
+	 error_log('Redireccion y fuera?');
+    //print('<script> top.location.href=\'' . $dialog_url . '\'</script>');
+    //exit;
   } else if(isset($_REQUEST['error'])) { 
     error_log('Error (dicen) y fuera');
     // The user did not authorize the app
@@ -55,27 +55,7 @@
   $app_access_token = $params['access_token'];
   
   error_log('Tengo app access token! '.$app_access_token);
-/*
-  // Register an Achievement for the app
-  print('Register Achievement:<br/>');
-  $achievement_registration_URL = 'https://graph.facebook.com/' 
-    . $app_id . '/achievements';
-  $achievement_registration_result=https_post($achievement_registration_URL,
-    'achievement=' . $achievement
-      . '&display_order=' . $achievement_display_order
-      . '&access_token=' . $app_access_token
-  );
-  print('<br/><br/>');
 
-  // POST a user achievement
-  print('Publish a User Achievement<br/>');
-  $achievement_URL = 'https://graph.facebook.com/' . $uid . '/achievements';
-  $achievement_result = https_post($achievement_URL,
-    'achievement=' . $achievement
-    . '&access_token=' . $app_access_token
-  );
-  print('<br/><br/>');
-*/
   // POST a user score
   error_log('Publish a User Score<br/>');
   $score_URL = 'https://graph.facebook.com/' . $uid . '/scores';
