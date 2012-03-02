@@ -2,7 +2,7 @@
 
   $app_id = "226492570779543"; //AppInfo::appID();
   $app_secret = "ab358907f19ce19e0e15695e2c42b412"; //AppInfo::appSecret(); 
-  $canvas_page_url = 'https://charca.herokuapp.com';
+  $canvas_page_url = 'http://charca.herokuapp.com';
   
   // Authenticate the user
   session_start();
