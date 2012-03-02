@@ -28,9 +28,11 @@
       . '&state=' . $_SESSION['state']
       . '&scope=publish_actions';
 
+	 error_log('Redireccion y fuera');
     print('<script> top.location.href=\'' . $dialog_url . '\'</script>');
     exit;
   } else if(isset($_REQUEST['error'])) { 
+    error_log('Error (dicen) y fuera');
     // The user did not authorize the app
     print($_REQUEST['error_description']);
     exit;
@@ -51,6 +53,8 @@
   $params = null;
   parse_str($token_response, $params);
   $app_access_token = $params['access_token'];
+  
+  error_log('Tengo app access token! '.$app_access_token);
 /*
   // Register an Achievement for the app
   print('Register Achievement:<br/>');
@@ -73,13 +77,12 @@
   print('<br/><br/>');
 */
   // POST a user score
-  print('Publish a User Score<br/>');
+  error_log('Publish a User Score<br/>');
   $score_URL = 'https://graph.facebook.com/' . $uid . '/scores';
   $score_result = https_post($score_URL,
     'score=' . $score
     . '&access_token=' . $app_access_token
   );
-  print('<br/><br/>');
 
   function https_post($uri, $postdata) {
     $ch = curl_init($uri);
