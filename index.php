@@ -30,7 +30,7 @@
 
 	 error_log('Redireccion y fuera?');
     print('<script> top.location.href=\'' . $dialog_url . '\'</script>');
-    exit;
+    //exit;
   } else if(isset($_REQUEST['error'])) { 
     error_log('Error (dicen) y fuera');
     // The user did not authorize the app
