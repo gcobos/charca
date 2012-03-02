@@ -138,7 +138,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   
   exit;
 } else {
-	include 'charcha.php';
+	include 'charca.php';
 	error_log('Voy a salir pero tengo esto en el request: '.var_export($_REQUEST,true));
 	exit;
 }
