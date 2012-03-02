@@ -1,17 +1,22 @@
 <?php
 
-  $app_id = "226492570779543"; //AppInfo::appID();
-  $app_secret = "ab358907f19ce19e0e15695e2c42b412"; //AppInfo::appSecret(); 
+  error_log('Entrada--------------------------------------------------------------------');
+  error_log(var_export($_REQUEST,true));
+
+  $app_id = "226492570779543";
+  $app_secret = "ab358907f19ce19e0e15695e2c42b412";
   $canvas_page_url = 'http://charca.herokuapp.com';
   
   // Authenticate the user
   session_start();
   if(isset($_REQUEST["code"])) {
      $code = $_REQUEST["code"];
+     
   }
 
   if(empty($code) && !isset($_REQUEST['error'])) {
     $_SESSION['state'] = md5(uniqid(rand(), TRUE)); //CSRF protection
+    error_log('No code and no error? Request autentification');
     $dialog_url = 'https://www.facebook.com/dialog/oauth?' 
       . 'client_id=' . $app_id
       . '&redirect_uri=' . urlencode($canvas_page_url)
@@ -22,28 +27,32 @@
     exit;
   } else if(isset($_REQUEST['error'])) { 
     // The user did not authorize the app
-    print($_REQUEST['error_description']);
+    error_log("Error en auth. Descripcion: ".$_REQUEST['error_description']);
     exit;
   };
 
   // Get the User ID
+  error_log('Procedemos a parsear el signed request que es ');
+  error_log(var_export($signed_request,true));
   $signed_request = parse_signed_request($_POST['signed_request'],
     $app_secret);
-
-  error_log(var_export($signed_request,true));
+  
   $uid = $signed_request['user_id'];
   echo 'Welcome User: ' . $uid;
 
   // Get an App Access Token
+  error_log('Se supone que aqui pedimos el access token');
   $token_url = 'https://graph.facebook.com/oauth/access_token?'
     . 'client_id=' . $app_id
     . '&client_secret=' . $app_secret
     . '&grant_type=client_credentials';
 
   $token_response = file_get_contents($token_url);
+  error_log('Respuesta con el access token? '.var_export($token_response,true));
   $params = null;
   parse_str($token_response, $params);
   $app_access_token = $params['access_token'];
+  error_log('Y ya tengo app_access_token!'. $app_access_token);
 
   function parse_signed_request($signed_request, $secret) {
     list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
