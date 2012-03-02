@@ -178,7 +178,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   				if ($_REQUEST['prb'])$result['envio_rq'] = array($new_score, 'puntos','envio_rq');
     			$score_URL = 'https://graph.facebook.com/' . $app_id . '/scores';
     			error_log('Apunto de enviar la puntuacion nueva a '.$score_URL.' de ' .$new_score);
-    			$score_result = http_post($score_URL,
+    			$score_result = https_post($score_URL,
      	 		'score=' . $new_score
      	 		. '&access_token=' . $app_user_access_token);
      	 		if ($score_result) {
