@@ -155,7 +155,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 				//printf('<h3>User: %s, puntos: %d</h3><br />',$row['user']['name'],$row['score']);
 				$result[$row['user']['id']] = array($row['score'], $row['user']['name']);
 		 	}
-		 	error_log('------Leida y Compuesta ',var_export($result,true));
+		 	error_log('------Leida y Compuesta '.var_export($result,true));
 		 } else {
 		 	error_log("PUES LEO DEL FICHERO");
 		 	$result = unserialize(file_get_contents($hs_path_file));
