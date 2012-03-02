@@ -137,7 +137,9 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	  $access_token = $facebook->getAccessToken();
 	  error_log( "Access token por facebook?".$access_token.'<br />');	
   	
-		error_log("Tokens:\nToken 1: $access_token\n\nToken 2: $app_access_token\n\n");  	
+		error_log("Token 1: $access_token");
+		error_log("Token 2: $app_access_token");
+		error_log("Token 3: $app_user_access_token");  	
   	
   	 //Get Scores **************
   	 
@@ -177,8 +179,10 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   				error_log("ESCRITOS LOS RECORDS EN FICHERO".var_export($result,true));
   				*/
   				if ($_REQUEST['prb'])$result['envio_rq'] = array($new_score, 'puntos','envio_rq');
-    			$score_URL = 'https://graph.facebook.com/' . $user_id . '/scores';
+    			$score_URL = 'https://graph.facebook.com/' . $app_id . '/scores';
     			error_log('Apunto de enviar la puntuacion nueva a '.$score_URL.' de ' .$new_score);
+    			error_log("Los parametros del post son ".'score=' . $new_score
+     	 		. '&access_token=' . $app_user_access_token);
     			$score_result = https_post($score_URL,
      	 		'score=' . $new_score
      	 		. '&access_token=' . $app_user_access_token);
