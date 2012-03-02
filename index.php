@@ -79,7 +79,7 @@ $canvas_page_url = AppInfo::getUrl();
 
 	error_log( "User token?". $app_access_token."<bt />");
 
-/*
+
 error_log('Antes de las llamadas de marras');
 
 if ($user_id) {
@@ -127,7 +127,7 @@ error_log("Tenemos basic? ".var_export($basic,true));
 
 
 error_log('Despues de las llamadas de marras');
-*/
+
 $hs_path_file = 'hscores.txt';
 
 if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
