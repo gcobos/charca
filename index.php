@@ -70,9 +70,8 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   	 
   	 error_log('PIDE LISTADO DE PUNTOS');
 	 //$scores_result = $facebook->api('/'. AppInfo::appID() .'/scores?access_token='.$$app_access_token);
-	 $scores_URL = 'https://graph.facebook.com/' . $uid . '/scores';
-	 $scores_result = https_post($scores_URL,'?score=' . $score . '&access_token=' . $app_access_token;
-	 $score_list = file_get_contents($scores_result);
+	 $scores_URL = 'https://graph.facebook.com/' . $app_id . '/scores' . '&access_token=' . $app_access_token;
+	 $scores_result = json_decode(file_get_contents($scores_result));
 	 error_log("puntos para la aplicacion". var_export($scores_result,true));
 	 
 	 $result = array();
