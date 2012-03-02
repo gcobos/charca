@@ -212,16 +212,16 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 
 // HELPERS
   function https_post($uri, $postdata) {
+  	ob_start();
     $ch = curl_init($uri);
    // curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
     $result = curl_exec($ch);
     curl_close($ch);
-
+	ob_get_clean();
     return $result;
   }
   function parse_signed_request($signed_request, $secret) {
-  	 error_log('Que se supone que puedo hacer?');
     list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
 
     // decode the data
@@ -239,7 +239,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
       error_log('Bad Signed JSON signature!');
       return null;
     }
-	  error_log('Joder');
+	  error_log('Joder********************');
     return $data;
   }
 
