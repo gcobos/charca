@@ -5,7 +5,7 @@
 
   $app_id = "226492570779543";
   $app_secret = "ab358907f19ce19e0e15695e2c42b412";
-  $canvas_page_url = 'http://charca.herokuapp.com';
+  $canvas_page_url = 'https://apps.facebook.com/htmlgame_charca';
   
 // The Achievement URL
   $achievement = 'YOUR_ACHIEVEMENT_URL';
