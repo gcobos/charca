@@ -7,12 +7,10 @@
   $app_secret = "ab358907f19ce19e0e15695e2c42b412";
   $canvas_page_url = 'https://apps.facebook.com/htmlgame_charca';
   
-// The Achievement URL
-  $achievement = 'YOUR_ACHIEVEMENT_URL';
-  $achievement_display_order = 1;
+  $func = $_REQUEST['func'];
 
   // The Score
-  $score = '30';
+  $score = $_REQUEST['v'];
 
   // Authenticate the user
   session_start();
@@ -56,13 +54,90 @@
   
   error_log('Tengo app access token! '.$app_access_token);
 
-  // POST a user score
+
+if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
+  if ($_REQUEST['func']=='scores') {
+		//ob_start();
+	
+	  //$access_token = $facebook->getAccessToken();
+	  //error_log( "Access token por facebook?".$access_token.'<br />');	
+  	
+		//error_log("Token 1: $access_token");
+		//error_log("Token 2: $app_access_token");
+		//error_log("Token 3: $app_user_access_token");  	
+  	
+  	 //Get Scores **************
+  	 
+  	 error_log('PIDE LISTADO DE PUNTOS');
+	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores?access_token='.$$app_access_token);
+	 error_log("puntos para la aplicacion". var_export($scores_result,true));
+	 
+	 $result = array();
+	 if (isset($scores_result['data'])) {		// true ||
+	 	 if (isset($scores_result['data'])) {	// false &&
+		 	//print '<pre>TOTAL'.var_export($scores_result,true).'</pre><br/>';
+		 	//$result['pet_rq'] = array('hay', 'datos!!');
+		 	foreach ($scores_result['data'] as $row) {
+				//print '<pre>'.var_export($row,true).'</pre><br/>';
+				//printf('<h3>User: %s, puntos: %d</h3><br />',$row['user']['name'],$row['score']);
+				$result[$row['user']['id']] = array($row['score'], $row['user']['name']);
+		 	}
+		 	error_log('------Leida y Compuesta '.var_export($result,true));
+		 } else {
+		 	error_log("PUES LEO DEL FICHERO");
+		 	$result = unserialize(file_get_contents($hs_path_file));
+		 	error_log("LEIDO DEL FICHERO".var_export($result,true));
+		 }
+
+		 // If param 'v', post the score from user
+	    if (isset($_REQUEST['v'])) {
+	    	$new_score = $_REQUEST['v'];
+	    
+	    	if (!isset($result[$user_id])) {
+	    		$result[$user_id] = array(0, he(idx($basic, 'name')));
+	    	}
+			// POST the user score only if is bigger
+  			if ($result[$user_id][0] < $new_score) {
+  				$result[$user_id][0] = $new_score;
+  				if ($_REQUEST['prb'])$result['envio_rq'] = array($new_score, 'puntos','envio_rq');
+  				
+// POST a user score
   error_log('Publish a User Score<br/>');
   $score_URL = 'https://graph.facebook.com/' . $uid . '/scores';
   $score_result = https_post($score_URL,
     'score=' . $score
     . '&access_token=' . $app_access_token
-  );
+  );  				
+  				
+     	 		if ($score_result) {
+     	 			error_log('Listado de puntos real: '.var_export($result,true));
+     	 		} else {
+     	 			error_log("Mal! puntos no enviados");
+     	 			error_log("Mal! puntos no enviados");
+     	 			if ($_REQUEST['prb'])$result['envio_rs'] = array($new_score, 'puntos no result!','envio_rs');
+     	 		}
+    		} else {
+    			if ($_REQUEST['prb'])$result['noenvio_rs'] = array($new_score, 'puntuacion mas baja JAAJAJ','noenvio_rs');
+    		}
+     		//printf('<br/>Resultado %s<br/>',$score_result);
+	 	 }
+	 } else {
+	 	error_log("Algo fue mal intentando coger la lista de records de la aplicacion".var_export($scores_result,true));
+	 	if ($_REQUEST['prb'])$result['something'] = array('went','wrong?','something');
+	 }
+	 if ($_REQUEST['prb']) {
+	 	error_log("Puntuacion despues de añadir el nuevo record:" . var_export($result,true)."<br />");
+	 }
+	 rsort($result);
+	 error_log('------Compuesta con el nuevo record si hubo alguno '.var_export($result,true));
+	 $result_str = json_encode(array_values(array_slice($result, 0, 7)));
+	 error_log("---------Result encodeado ".var_export($result_str,true));
+	 //ob_get_clean();
+	 echo $result_str;
+  }
+  
+  exit;
+}
 
   function https_post($uri, $postdata) {
     $ch = curl_init($uri);
@@ -99,87 +174,3 @@
   function base64_url_decode($input) {
     return base64_decode(strtr($input, '-_', '+/'));
   }
-
-/*
-if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
-  if ($_REQUEST['func']=='scores') {
-		ob_start();
-	
-	  $access_token = $facebook->getAccessToken();
-	  error_log( "Access token por facebook?".$access_token.'<br />');	
-  	
-		error_log("Token 1: $access_token");
-		error_log("Token 2: $app_access_token");
-		error_log("Token 3: $app_user_access_token");  	
-  	
-  	 //Get Scores **************
-  	 
-  	 error_log('PIDE LISTADO DE PUNTOS');
-	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores?access_token='.$access_token);
-	 error_log("puntos para la aplicacion". var_export($scores_result,true));
-	 
-	 $result = array();
-	 if (isset($scores_result['data'])) {		// true ||
-	 	 if (isset($scores_result['data'])) {	// false &&
-		 	//print '<pre>TOTAL'.var_export($scores_result,true).'</pre><br/>';
-		 	//$result['pet_rq'] = array('hay', 'datos!!');
-		 	foreach ($scores_result['data'] as $row) {
-				//print '<pre>'.var_export($row,true).'</pre><br/>';
-				//printf('<h3>User: %s, puntos: %d</h3><br />',$row['user']['name'],$row['score']);
-				$result[$row['user']['id']] = array($row['score'], $row['user']['name']);
-		 	}
-		 	error_log('------Leida y Compuesta '.var_export($result,true));
-		 } else {
-		 	error_log("PUES LEO DEL FICHERO");
-		 	$result = unserialize(file_get_contents($hs_path_file));
-		 	error_log("LEIDO DEL FICHERO".var_export($result,true));
-		 }
-
-		 // If param 'v', post the score from user
-	    if (isset($_REQUEST['v'])) {
-	    	$new_score = $_REQUEST['v'];
-	    
-	    	if (!isset($result[$user_id])) {
-	    		$result[$user_id] = array(0, he(idx($basic, 'name')));
-	    	}
-			// POST the user score only if is bigger
-  			if ($result[$user_id][0] < $new_score) {
-  				$result[$user_id][0] = $new_score;
-  				if ($_REQUEST['prb'])$result['envio_rq'] = array($new_score, 'puntos','envio_rq');
-    			$score_URL = 'https://graph.facebook.com/' . $app_id . '/scores';
-    			error_log('Apunto de enviar la puntuacion nueva a '.$score_URL.' de ' .$new_score);
-    			error_log("Los parametros del post son ".'score=' . $new_score
-     	 		. '&access_token=' . $app_user_access_token);
-    			$score_result = https_post($score_URL,
-     	 		'score=' . $new_score
-     	 		. '&access_token=' . $app_user_access_token);
-     	 		if ($score_result) {
-     	 			error_log('Listado de puntos real: '.var_export($result,true));
-     	 		} else {
-     	 			error_log("Mal! puntos no enviados");
-     	 			error_log("Mal! puntos no enviados");
-     	 			if ($_REQUEST['prb'])$result['envio_rs'] = array($new_score, 'puntos no result!','envio_rs');
-     	 		}
-    		} else {
-    			if ($_REQUEST['prb'])$result['noenvio_rs'] = array($new_score, 'puntuacion mas baja JAAJAJ','noenvio_rs');
-    		}
-     		//printf('<br/>Resultado %s<br/>',$score_result);
-	 	 }
-	 } else {
-	 	error_log("Algo fue mal intentando coger la lista de records de la aplicacion".var_export($scores_result,true));
-	 	if ($_REQUEST['prb'])$result['something'] = array('went','wrong?','something');
-	 }
-	 if ($_REQUEST['prb']) {
-	 	error_log("Puntuacion despues de añadir el nuevo record:" . var_export($result,true)."<br />");
-	 }
-	 rsort($result);
-	 error_log('------Compuesta con el nuevo record si hubo alguno '.var_export($result,true));
-	 $result_str = json_encode(array_values(array_slice($result, 0, 7)));
-	 error_log("---------Result encodeado ".var_export($result_str,true));
-	 ob_get_clean();
-	 echo $result_str;
-  }
-  
-  exit;
-}
-*/
