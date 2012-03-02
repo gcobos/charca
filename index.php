@@ -79,7 +79,7 @@ $canvas_page_url = AppInfo::getUrl();
 
 	error_log( "User token?". $app_access_token."<bt />");
 
-
+/*
 error_log('Antes de las llamadas de marras');
 
 if ($user_id) {
@@ -127,7 +127,7 @@ error_log("Tenemos basic? ".var_export($basic,true));
 
 
 error_log('Despues de las llamadas de marras');
-
+*/
 $hs_path_file = 'hscores.txt';
 
 if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
@@ -155,6 +155,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 				//printf('<h3>User: %s, puntos: %d</h3><br />',$row['user']['name'],$row['score']);
 				$result[$row['user']['id']] = array($row['score'], $row['user']['name']);
 		 	}
+		 	error_log('------Leida y Compuesta ',var_export($result,true));
 		 } else {
 		 	error_log("PUES LEO DEL FICHERO");
 		 	$result = unserialize(file_get_contents($hs_path_file));
@@ -182,9 +183,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
      	 		'score=' . $new_score
      	 		. '&access_token=' . $app_user_access_token);
      	 		if ($score_result) {
-     	 			error_log('Listado de puntos real: '.var_export($score_result,true));
-     	 			error_log("Bien, sobreescribe el record en el array y devuelve toda la lista");
-     	 			
+     	 			error_log('Listado de puntos real: '.var_export($result,true));
      	 		} else {
      	 			error_log("Mal! puntos no enviados");
      	 			error_log("Mal! puntos no enviados");
@@ -203,7 +202,10 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	 	error_log("Puntuacion despues de añadir el nuevo record:" . var_export($result,true)."<br />");
 	 }
 	 rsort($result);
-	 print(json_encode(array_values(array_slice($result, 0, 7))));
+	 error_log('------Compuesta con el nuevo record si hubo alguno '.var_export($result,true));
+	 $result_str = json_encode(array_values(array_slice($result, 0, 7)));
+	 error_log("---------Result encodeado ".var_export($result_str,true));
+	 echo $result_str;
   }
   exit;
 }
