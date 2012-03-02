@@ -132,7 +132,7 @@ $hs_path_file = 'hscores.txt';
 
 if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   if ($_REQUEST['func']=='scores') {
-
+		ob_start();
 	
 	  $access_token = $facebook->getAccessToken();
 	  error_log( "Access token por facebook?".$access_token.'<br />');	
@@ -205,20 +205,22 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	 error_log('------Compuesta con el nuevo record si hubo alguno '.var_export($result,true));
 	 $result_str = json_encode(array_values(array_slice($result, 0, 7)));
 	 error_log("---------Result encodeado ".var_export($result_str,true));
+	 ob_get_clean();
 	 echo $result_str;
   }
+  
   exit;
 }
 
 // HELPERS
   function https_post($uri, $postdata) {
-  	ob_start();
+  	
     $ch = curl_init($uri);
    // curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
     $result = curl_exec($ch);
     curl_close($ch);
-	ob_get_clean();
+	
     return $result;
   }
   function parse_signed_request($signed_request, $secret) {
