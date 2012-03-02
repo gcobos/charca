@@ -170,7 +170,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	    		$result[$user_id] = array(0, he(idx($basic, 'name')));
 	    	}
 			// POST the user score only if is bigger
-  			if (true || $result[$user_id][0] < $new_score) {
+  			if ($result[$user_id][0] < $new_score) {
   				$result[$user_id][0] = $new_score;
 				/*error_log("ESCRIBO LOS RECORDS EN FICHERO");
 				file_put_contents($hs_path_file, serialize($result));  				
