@@ -62,15 +62,15 @@ $user_id = $facebook->getUser();
 $canvas_page_url = AppInfo::getUrl();
 
 $code = $_REQUEST['code'];
-error_log("MIRA TENGO UN CODE!! ".$code);
+error_log("MIRA TENGO UN CODE!!!!!!!!!!!!!! $code");
 
 
-  error_log('******************Haciendo la peticion de access token');
+  error_log('Haciendo la peticion de access token');
   // Get an App Access Token
   $token_url = 'https://graph.facebook.com/oauth/access_token?'
     . 'client_id=' . $app_id
     . '&client_secret=' . $app_secret
-    . '&code='. $code;
+    . '&grant_type=client_credentials';
 
   $token_response = file_get_contents($token_url);
   error_log("<br />resp raw: ".$token_response."<br />");
