@@ -140,11 +140,11 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 		error_log("Tokens:\nToken 1: $access_token\n\nToken 2: $app_access_token\n\n");  	
   	
   	 //Get Scores **************
-  	 /*
+  	 
   	 error_log('PIDE LISTADO DE PUNTOS');
 	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
 	 error_log("puntos para la aplicacion". var_export($scores_result,true));
-	 */
+	 
 	 $result = array();
 	 if (isset($scores_result['data'])) {		// true ||
 	 	 if (isset($scores_result['data'])) {	// false &&
