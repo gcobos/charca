@@ -142,7 +142,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   	 //Get Scores **************
   	 
   	 error_log('PIDE LISTADO DE PUNTOS');
-	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores');
+	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores?access_token='.$access_token);
 	 error_log("puntos para la aplicacion". var_export($scores_result,true));
 	 
 	 $result = array();
