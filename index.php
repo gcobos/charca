@@ -162,13 +162,14 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 				$score_URL = 'https://graph.facebook.com/' . $app_id . '/scores';
   				$score_result = https_post($score_URL,'score=' . $score . '&access_token=' . $_SESSION['fb_app_user_access_token']);  				
      	 		if ($score_result) {
-     	 			error_log('Listado de puntos real: '.var_export($result,true));
+     	 			error_log('Resultado del posteo de puntos?: '.var_export($score_result,true));
      	 		} else {
      	 			error_log("Mal! puntos no enviados");
      	 			error_log("Mal! puntos no enviados");
      	 			if ($_REQUEST['prb'])$result['envio_rs'] = array($new_score, 'puntos no result!','envio_rs');
      	 		}
     		} else {
+    			error_log('Puntuación más baja. Puntos no reenviados');
     			if ($_REQUEST['prb'])$result['noenvio_rs'] = array($new_score, 'puntuacion mas baja JAAJAJ','noenvio_rs');
     		}
      		//printf('<br/>Resultado %s<br/>',$score_result);
@@ -177,9 +178,8 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	 	error_log("Algo fue mal intentando coger la lista de records de la aplicacion".var_export($scores_result,true));
 	 	if ($_REQUEST['prb'])$result['something'] = array('went','wrong?','something');
 	 }
-	 if ($_REQUEST['prb']) {
-	 	error_log("Puntuacion despues de añadir el nuevo record:" . var_export($result,true)."<br />");
-	 }
+	 error_log('Listado de puntos a devolver!: '.var_export($result,true));
+	 
 	 rsort($result);
 	 error_log('------Compuesta con el nuevo record si hubo alguno '.var_export($result,true));
 	 $result_str = json_encode(array_values(array_slice($result, 0, 7)));
