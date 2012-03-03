@@ -437,7 +437,7 @@ function refreshHeader ()
 
 function showHighScores ()
 {
-	console.log('printing high scores');
+	//console.log('printing high scores');
 	content = '<ul class="highscores">';
 	for (i in scoreList) {
 		content += '<li><div class="score">'+scoreList[i][0]+'</div><div class="name">'+scoreList[i][1]+'</div></li>';
@@ -445,6 +445,8 @@ function showHighScores ()
 	content += '</ul>';
 	overlay.innerHTML = content;
 	overlay.style.display = 'block';
+	console.log('Content',content);
+	console.log(overlay)
 }
 
 function outOfBounds (o, bounds) 
