@@ -67,6 +67,7 @@
   	 error_log('Tengo user access token! '.$app_user_access_token);
   } 
 
+require_once('utils.php');
 
 if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   if ($_REQUEST['func']=='scores') {
@@ -82,7 +83,6 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   	 //Get Scores **************
   	 /*
   	 require_once('AppInfo.php');
-  	 require_once('utils.php');
 	 require_once('sdk/src/facebook.php');
 
 	 $facebook = new Facebook(array(
