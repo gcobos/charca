@@ -215,7 +215,7 @@ function watchRestart () {
 	if (!frog.alive) {
 		httpGet('<?php echo $base_url ?>'+'?func=scores&v='+score, function (scores) {
 			scoreList = scores;
-			console.log('Score list',scoreList);
+			//console.log('Score list',scoreList);
 			showHighScores();	
 		});
 	}
@@ -389,13 +389,14 @@ function httpGet (theUrl, callback)
    	xmlHttp.onreadystatechange = function() {
   			if (xmlHttp.readyState==4 && xmlHttp.status==200) {
    			try {
-   				console.log('Lo que tengo ',xmlHttp.responseText);
+   				//console.log('Lo que tengo ',xmlHttp.responseText);
    				var result = []
    				eval('result=' + xmlHttp.responseText);
    				callback(result);
    			} catch (e) {
-   				console.log('Failed to set high score!');
-   				console.log(e);
+   				alert('Failed to se High-score!');
+   				//console.log('Failed to set high score!');
+   				//console.log(e);
    			}
   			}
  		}
@@ -512,7 +513,7 @@ function handleMouseMove (e)
 </script> 
 </head>
 <body onload="init('stageCanvas', 'canvasWrapper','canvasOverlay')"> <!-- bgcolor="#769083">-->
-Aún no funcionan los records, así que no os matéis a superarme xD
+En pruebas :)
 	<div id="canvasWrapper" align="center" style="width: 640px; height: 480px">
 		<div id="canvasOverlay" style="width: 640px; height: 480px"></div>
 		<canvas width="640" height="480" id="stageCanvas" class="pantalla"></canvas>		
