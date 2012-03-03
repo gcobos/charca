@@ -215,7 +215,7 @@ function watchRestart () {
 	if (!frog.alive) {
 		httpGet('<?php echo $base_url ?>'+'?func=scores&v='+score, function (scores) {
 			scoreList = scores;
-			console.log('Score list',scores);
+			//console.log('Score list',scores);
 			showHighScores();	
 		});
 	}
