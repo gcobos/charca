@@ -97,6 +97,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	 ));
 	 
 	 error_log('PIDE EL USUSARIO');
+	 $user_id=$_SESSION['fb_user_id'];
 	 if ($user_id) {
 	   try {
         // Fetch the viewer's basic information
