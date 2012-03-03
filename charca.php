@@ -389,9 +389,13 @@ function httpGet (theUrl, callback)
    	xmlHttp.onreadystatechange = function() {
   			if (xmlHttp.readyState==4 && xmlHttp.status==200) {
    			try {
-   				//console.log('Lo que tengo ',xmlHttp.responseText);
+   				console.log('Lo que tengo ',xmlHttp.responseText);
    				var result = []
+   				
    				eval('result=' + xmlHttp.responseText);
+   				console.log('Lo que tengo 1',result);
+   				result = eval(xmlHttp.responseText);
+   				console.log('Lo que tengo 2',result);
    				callback(result);
    			} catch (e) {
    				alert('Failed to se High-score!');
