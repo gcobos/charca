@@ -149,6 +149,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   				$result[$user_id][0] = $new_score;
   				if ($_REQUEST['prb'])$result['envio_rq'] = array($new_score, 'puntos','envio_rq');
   				
+  				 error_log('Publica los puntos del usuario!!!');
 // POST a user score
 /* Esto funciona al menos!!
   error_log('Publish a User Score<br/>');
