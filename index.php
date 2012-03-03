@@ -128,7 +128,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 		 error_log('----------Leida y Compuesta '.var_export($result,true));
 
 		 // If param 'v', post the score from user
-	    if (isset($_REQUEST['v'] && $_REQUEST['v'])) {
+	    if (isset($_REQUEST['v']) && $_REQUEST['v']) {
 	    	$new_score = $_REQUEST['v'];
 	    	error_log("********************* LA ULTIMA PUNTUTACION DE ".he(idx($basic, 'name')).' ES: '.$new_score." **********************");
 	    

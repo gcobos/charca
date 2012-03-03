@@ -52,10 +52,16 @@ Insect.prototype = new Container();
 	Insect.prototype.score = 0;		//score value
 		
 	Insect.prototype.active = false;	//is it active
-
 	Insect.prototype.power = 0			// Every more power, adds some new capability :)	
 	
 	Insect.prototype.killed = false;	// true when it's trapped by the tongue
+	
+	Insect.prototype.action = 0;		// Number of action performing (0 means just flying)
+	
+	Insect.prototype.step = 0;			// Number of step in the action (from 0 to 1000) or when action goes back to 0	
+
+	Insect.prototype.vX = 0;			// delta advance in X
+	Insect.prototype.vY = 0;			// delta advance in Y
 	
 // constructor:
 	Insect.prototype.Container_initialize = Insect.prototype.initialize;	//unique to avoid overiding base class
@@ -112,8 +118,11 @@ Insect.prototype = new Container();
 	//handle what a Insect does to itself every frame
 	Insect.prototype.tick = function () {
 		if (!this.killed && this.active) {
-			this.x += (Math.random()-0.5) * this.speed;
-			this.y += (Math.random()-0.5) * this.speed;
+			this.x += this.vX + (Math.random()-0.5) * this.speed;
+			this.y += this.vY + (Math.random()-0.5) * this.speed;
+			if (this.action) {
+				this.performStep();
+			}
 		}			
 	}
 	
@@ -143,6 +152,52 @@ Insect.prototype = new Container();
 		
 		//now do the circle distance test
 		return this.hit + tHit > Math.sqrt(Math.pow(Math.abs(this.x - tX), 2) + Math.pow(Math.abs(this.y - tY), 2));
+	}
+	
+	// this insect initiates an action 
+	Insect.prototype.perform = function (action) {
+		if (!this.action && !this.killed) {
+			if (action < 0) action = 0;
+			this.action = action;
+			this.step = 0;			
+		}
+	}
+	
+	// stop actial action
+	Insect.prototype.stop = function()
+	{
+		this.action = 0;
+		this.step = 0;
+	}
+	
+	// Performs a step in the action if any
+	Insect.prototype.performStep = function()
+	{
+		if (this.action && !this.killed) {
+			if (this.step < 1000) {
+				switch (this.type) {
+				case 1:	// Se mueve rápido y efectua 3 cambios de dirección
+					if (this.step%250 == 0) {
+						this.step+=200;
+						//console.log('Cambio!');
+						this.vX = 2 * (Math.random()-0.5);
+						this.vY = 2 * (Math.random()-0.5);
+						//console.log('Un paso!');
+					}				
+				case 2:
+					
+				case 3:
+					
+				case 4:
+				
+				default:
+				
+				}
+				this.step++;
+			} else {
+				this.stop();
+			}
+		}	
 	}
 
 window.Insect = Insect;

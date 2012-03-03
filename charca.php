@@ -79,15 +79,16 @@ var MAX_INSECTS = 15;       // how many bugs can be in the stage at the same tim
 
 // Configuration for every level  [ number of insects, time, difficulty (max type of insect to generate) ]
 var levelConfig = { 
-	0: [15, 100, 1],
-	1: [25, 90, 2],
-	2: [45, 80, 3],
-	3: [65, 75, 3],
-	4: [75, 70, 3],
-	5: [85, 65, 3],
-	6: [95, 60, 3],
-	7: [100,55, 4],
-	8: [105,50, 4],
+	0: [15, 100, 1],   // 15
+	1: [25, 95, 2],	// 25
+	2: [45, 90, 3],	// 45
+	3: [65, 80, 3],	// 65
+	4: [75, 70, 3],	// 75
+	5: [85, 65, 3],	// 85
+	6: [95, 60, 3],	// 95
+	7: [100,55, 4],	// 100
+	8: [105,50, 4],	// 105
+	9: [105,50, 5],	// 105
 };
 
 /*
@@ -135,6 +136,8 @@ var timeField;          // time display field
 var sounds;
 
 var scoreList;
+
+var d;						// debug shapes
 
 // Functions
 
@@ -194,7 +197,6 @@ function init (canvasId, canvasWrapper, overlayBlock) {
 		messageField.y = canvas.height / 2.6;
 
 		watchRestart();
-	
 	}
 }
 
@@ -235,7 +237,7 @@ function watchRestart () {
 function restart() {
 	// hide anything on stage
 	stage.removeAllChildren();
-
+	
 	if (!frog.alive) {
 		level = 0;
 		score = 0;
@@ -258,6 +260,9 @@ function restart() {
 	stage.addChild(bitmap);
 
 	stage.addChild(frog);
+
+	d = new Shape();
+	stage.addChild(d);
 	
 	// Remove overlay
 	overlay.style.display = 'none';
@@ -288,7 +293,7 @@ function tick() {
 			if (frog.alive) {
 				var type = 1+ Math.floor(Math.random() * levelConfig[level][2]);	// Difficulty
 				//console.log('new bug type', type);
-				var power = (level + Math.round(Math.random()*2)) - type - 2; 
+				var power = (level - (type+1) + Math.round((Math.random()-0.5)*2)); 
 				var index = getInsect(type, power);
 				insectsCloud[index].floatOnScreen(canvas.width, canvas.height);
 			}
@@ -300,7 +305,7 @@ function tick() {
 		}		
 	}
 	
-	// handle insects (nested in one loop to prevent excess loops)
+	// handle insects
 	aliveInsects = 0;
 	for (insect in insectsCloud) {
 		var o = insectsCloud[insect];
@@ -310,6 +315,20 @@ function tick() {
 		if(outOfBounds(o, o.bounds)) {
 			placeInBounds(o, o.bounds);
 		}
+		if (!o.action && !o.killed) {
+			var nextAction = Math.round(((Math.random()-0.8)*5) * o.power);
+			if (nextAction > 0) {
+				o.perform(nextAction);
+				//console.log('Insect '+insect+' performing action '+nextAction );
+			}
+		} else if (o.action) {
+			/*var g = d.graphics;
+			g.beginStroke("#ff0000");
+			g.setStrokeStyle(8)
+			g.drawCircle(o.x,o.y, 1);
+			//g.moveTo(o.x,o.y);*/
+		}	
+		
 		if (o.killed && frog.tongueIsBack) {
 			o.x = frog.tonguePos.x;
 			o.y = frog.tonguePos.y;
@@ -442,7 +461,7 @@ function showHighScores ()
 function outOfBounds (o, bounds) 
 {
 	//is it visibly off screen
-	return o.x < bounds || o.y < bounds || o.x > canvas.width-bounds || o.y > canvas.height-bounds;
+	return o.x < bounds + canvas.width*0.4 || o.y < bounds || o.x > canvas.width-bounds || o.y > canvas.height-bounds;
 }
 
 function placeInBounds (o, bounds)
@@ -450,8 +469,8 @@ function placeInBounds (o, bounds)
 	//if its visual bounds are entirely off screen place it off screen on the other side
 	if(o.x > canvas.width-bounds) {
 		o.x = canvas.width-bounds;
-	} else if(o.x < bounds) {
-		o.x = bounds;
+	} else if (o.x < bounds + canvas.width * 0.4) {
+		o.x = bounds + canvas.width * 0.4;
 	}
 	
 	//if its visual bounds are entirely off screen place it off screen on the other side
