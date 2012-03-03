@@ -150,13 +150,16 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   				if ($_REQUEST['prb'])$result['envio_rq'] = array($new_score, 'puntos','envio_rq');
   				
 // POST a user score
+/* Esto funciona al menos!!
   error_log('Publish a User Score<br/>');
   $score_URL = 'https://graph.facebook.com/' . $uid . '/scores';
   $score_result = https_post($score_URL,
     'score=' . $score
     . '&access_token=' . $app_access_token
   );  				
-  				
+*/				
+				$score_URL = 'https://graph.facebook.com/' . $app_id . '/scores';
+  				$score_result = https_post($score_URL,'score=' . $score . '&access_token=' . $_SESSION['fb_app_user_access_token']);  				
      	 		if ($score_result) {
      	 			error_log('Listado de puntos real: '.var_export($result,true));
      	 		} else {
