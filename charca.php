@@ -79,7 +79,7 @@ var MAX_INSECTS = 15;       // how many bugs can be in the stage at the same tim
 
 // Configuration for every level  [ number of insects, time, difficulty (max type of insect to generate) ]
 var levelConfig = { 
-	0: [15, 100, 1], //15 100 1 
+	0: [15, 10, 1], //15 100 1 
 	1: [25, 90, 2],
 	2: [45, 80, 3],
 	3: [65, 75, 3],
@@ -389,13 +389,13 @@ function httpGet (theUrl, callback)
    	xmlHttp.onreadystatechange = function() {
   			if (xmlHttp.readyState==4 && xmlHttp.status==200) {
    			try {
-   				console.log('Lo que tengo ',xmlHttp.responseText);
+   				//console.log('Lo que tengo ',xmlHttp.responseText);
    				var result = []
    				
    				eval('result=' + xmlHttp.responseText);
-   				console.log('Lo que tengo 1',result);
-   				result = eval(xmlHttp.responseText);
-   				console.log('Lo que tengo 2',result);
+   				//console.log('Lo que tengo 1',result);
+   				//result = eval(xmlHttp.responseText);
+   				//console.log('Lo que tengo 2',result);
    				callback(result);
    			} catch (e) {
    				alert('Failed to se High-score!');
@@ -441,7 +441,7 @@ function refreshHeader ()
 
 function showHighScores ()
 {
-	console.log('printing high scores',scoreList);
+	//console.log('printing high scores',scoreList);
 	content = '<ul class="highscores">';
 	for (i in scoreList) {
 		content += '<li><div class="score">'+scoreList[i][0]+'</div><div class="name">'+scoreList[i][1]+'</div></li>';
@@ -449,8 +449,8 @@ function showHighScores ()
 	content += '</ul>';
 	overlay.innerHTML = content;
 	overlay.style.display = 'block';
-	console.log('Content',content);
-	console.log(overlay)
+	//console.log('Content',content);
+	//console.log(overlay)
 }
 
 function outOfBounds (o, bounds) 
