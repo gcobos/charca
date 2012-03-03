@@ -146,7 +146,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	    	}
 			// POST the user score only if is bigger
   			if ($result[$user_id][0] < $new_score) {
-  				$result[$user_id][0] = $new_score;
+  				$result[$user_id][0] = (int)$new_score;
   				if ($_REQUEST['prb'])$result['envio_rq'] = array($new_score, 'puntos','envio_rq');
   				
   				 error_log('Publica los puntos del usuario!!!');
@@ -183,7 +183,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	 rsort($result);
 	 error_log('------Compuesta con el nuevo record si hubo alguno '.var_export($result,true));
 	 $result_str = json_encode(array_values(array_slice($result, 0, 7)));
-	 error_log("---------Result encodeado ".var_export($result_str,true));
+	 error_log("---------Result encodeado ".$result_str);
 	 //ob_get_clean();
 	 echo $result_str;
   }
