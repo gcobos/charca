@@ -96,7 +96,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
         }
       }  
     }
-	 $user_access_token = $this->getUserAccessToken();
+	 $user_access_token = $facebook->getUserAccessToken();
 	 
   	 error_log('PIDE LISTADO DE PUNTOS');
 	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores?access_token='.$user_access_token);
