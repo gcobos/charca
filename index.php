@@ -66,6 +66,11 @@
   	 $_SESSION['fb_app_user_access_token'] = $app_user_access_token;
   	 error_log('Tengo user access token! '.$app_user_access_token);
   } 
+  $user_id = $signed_request['user_id']; 
+  if ($user_id) {
+  	 $_SESSION['fb_user_id'] = $user_id;
+  	 error_log('Tengo user id! '.$user_id);
+  } 
 
 require_once('utils.php');
 
@@ -96,6 +101,8 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	   try {
         // Fetch the viewer's basic information
         $basic = $facebook->api('/me');
+        error_log('Tenemos about me! '.var_export($basic,true));
+        
       } catch (FacebookApiException $e) {
         // If the call fails we check if we still have a user. The user will be
         // cleared if the error is because of an invalid accesstoken
@@ -105,7 +112,6 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
         }
       }  
     }
-    
     
 	 $user_access_token = $facebook->getAccessToken();
 	 error_log('El access token que obtengo de Facebook '.$user_access_token);
