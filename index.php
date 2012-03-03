@@ -96,6 +96,9 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   		'secret' => AppInfo::appSecret(),
 	 ));
 	 
+	 // Establece access
+	 $facebook->setAccessToken($_SESSION['fb_app_user_access_token']); 	 
+	 
 	 error_log('PIDE EL USUSARIO');
 	 $user_id=$_SESSION['fb_user_id'];
 	 if ($user_id) {
