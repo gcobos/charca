@@ -79,7 +79,7 @@ var MAX_INSECTS = 15;       // how many bugs can be in the stage at the same tim
 
 // Configuration for every level  [ number of insects, time, difficulty (max type of insect to generate) ]
 var levelConfig = { 
-	0: [15, 10, 1], //15 100 1 
+	0: [15, 100, 1], //15 100 1 
 	1: [25, 90, 2],
 	2: [45, 80, 3],
 	3: [65, 75, 3],
@@ -519,7 +519,6 @@ function handleMouseMove (e)
 </script> 
 </head>
 <body onload="init('stageCanvas', 'canvasWrapper','canvasOverlay')"> <!-- bgcolor="#769083">-->
-En pruebas :)
 	<div id="canvasWrapper" align="center" style="width: 640px; height: 480px">
 		<div id="canvasOverlay" style="width: 640px; height: 480px"></div>
 		<canvas width="640" height="480" id="stageCanvas" class="pantalla"></canvas>		
