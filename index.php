@@ -69,6 +69,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 		//error_log("Token 3: $app_user_access_token");  	
   	
   	 //Get Scores **************
+  	 require_once('AppInfo.php');
   	 require_once('utils.php');
 	 require_once('sdk/src/facebook.php');
 
