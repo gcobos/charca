@@ -11,20 +11,18 @@ if (in_array($_SERVER['HTTP_HOST'], array('localhost','::1','127.0.0.1'))) {
 $base_url = $proto.$server.'/'.dirname($_SERVER['REQUEST_URI']);
 ?>
 <!DOCTYPE html>
-<html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
+<html lang="en">
   <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# game: http://ogp.me/ns/game#">
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="shortcut icon" href="images/favicon.ico">
 	<meta charset="utf-8">
-	<meta name="author" content="Gonzalo Cobos" > 
+	<meta name="author" content="Gonzalo Cobos, Jaime Cobos" >
 	<meta name="keywords" content="html5, game, charca, rana, insectos, swamp, bugs">  
 	<meta name="robots" content="index,follow">
- 	<meta property="og:title" content="Charca" />
- 	<meta property="og:type"        content="game" />
+ 	<meta property="game:title" content="Charca" />
+ 	<meta property="og:type" content="game" />
  	<meta property="fb:app_id" content="226492570779543" />
- 	<meta property="fb:admins" content="1236628420" />
  	<meta property="og:image" content="images/title.jpg" /> 
-	<meta property="og:url" content="https://apps.facebook.com/htmlgame_charca" />
    <meta property="og:description" content="Ayuda a esta rana a mantener la charca limpia de insectos y a pegarse un atracón padre" />  
  
 	<title>Charca - Juego canvas HTML5</title>
