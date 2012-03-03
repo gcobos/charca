@@ -130,6 +130,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 		 // If param 'v', post the score from user
 	    if (isset($_REQUEST['v'])) {
 	    	$new_score = $_REQUEST['v'];
+	    	error_log("********************* LA ULTIMA PUNTUTACION DE ".he(idx($basic, 'name')).' ES: '.$new_score." **********************");
 	    
 	    	if (!isset($result[$user_id])) {
 	    		$result[$user_id] = array(0, he(idx($basic, 'name')));
