@@ -1,23 +1,25 @@
 <?php 
 //print var_export($_SERVER,true);
-if (in_array($_SERVER['HTTP_HOST'], array('::1','127.0.0.1'))) {
+if (in_array($_SERVER['HTTP_HOST'], array('localhost','::1','127.0.0.1'))) {
 	$server = 'localhost';
+	$proto = 'http://';
 } else {
 	$server = $_SERVER['HTTP_HOST'];
+	$proto = 'https://';
 }
-$base_url = 'https://'.$server.dirname($_SERVER['REQUEST_URI']);
-if ($_REQUEST['prb'])print $base_url;
+
+$base_url = $proto.$server.'/'.dirname($_SERVER['REQUEST_URI']);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
   <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# game: http://ogp.me/ns/game#">
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="shortcut icon" href="images/favicon.ico">
 	<meta charset="utf-8">
 	<meta name="author" content="Gonzalo Cobos" > 
-	<meta name="keywords" content="html5, game, charca, rana, insectos">  
-	<meta name="robots" content="index,follow">
 	
+	<meta name="keywords" content="html5, game, charca, rana, insectos, swamp, bugs">  
+	<meta name="robots" content="index,follow">
  	<meta property="og:title" content="Charca!" />
  	<meta property="fb:app_id" content="226492570779543" />
  	<meta property="og:image" content="<?php echo $base_url ?>/logo.png" />
@@ -79,15 +81,15 @@ var MAX_INSECTS = 15;       // how many bugs can be in the stage at the same tim
 
 // Configuration for every level  [ number of insects, time, difficulty (max type of insect to generate) ]
 var levelConfig = { 
-	0: [15, 100, 1], //15 100 1 
+	0: [15, 100, 1],
 	1: [25, 90, 2],
 	2: [45, 80, 3],
 	3: [65, 75, 3],
-	4: [80, 70, 3],
-	5: [90, 65, 3],
-	6: [100,60, 3],
-	7: [120,55, 4],
-	8: [130,50, 4],
+	4: [75, 70, 3],
+	5: [85, 65, 3],
+	6: [95, 60, 3],
+	7: [100,55, 4],
+	8: [105,50, 4],
 };
 
 /*
@@ -123,7 +125,7 @@ var aliveInsects;			// Alive insects in any moment
 var playing;				// true when in game mode 
 var score = 0;				// actual score
 var level = 0; 			// actual level
-var time;					// actual time left
+var time = 0;				// actual time left
 var timer;
 var baseTime;
 
@@ -143,6 +145,7 @@ function init (canvasId, canvasWrapper, overlayBlock) {
 	canvas = document.getElementById(canvasId);
 	overlay = document.getElementById(overlayBlock);
 	canvas.onselectstart = function () { return false; }
+	overlay.onselectstart = function () { return false; }
 	stage = new Stage(canvas);
 
 	sounds = new buzz.sound( "sounds/punch1", {
@@ -165,7 +168,7 @@ function init (canvasId, canvasWrapper, overlayBlock) {
 		stage.addChild(bitmap);
 
 		// Create an insect, just to ensure that everything is loaded for later
-		new Insect(1);
+		new Insect(1, 0);
 
 		// create the player
 		frog = new Frog();
@@ -199,6 +202,7 @@ function init (canvasId, canvasWrapper, overlayBlock) {
 
 function watchRestart () {
 	overlay.onclick = null;
+	overlay.onmousemove = null;
 	canvas.onclick = null;	
 	canvas.ondblclick = null;
 	canvas.onmousemove = null;
@@ -226,7 +230,7 @@ function watchRestart () {
 	if (score) {
 		wait = 1500;
 	}
-	timer = setTimeout('overlay.onclick = handleClick; canvas.onclick = handleClick; canvas.ondblclick = null; canvas.onmousemove = handleMouseMove;', 2000);
+	timer = setTimeout('overlay.onclick = handleClick; canvas.onmousemove = handleMouseMove; overlay.onmousemove = handleMouseMove; canvas.onclick = handleClick; canvas.ondblclick = null', 2000);
 }
 
 // reset all game logic
@@ -286,7 +290,8 @@ function tick() {
 			if (frog.alive) {
 				var type = 1+ Math.floor(Math.random() * levelConfig[level][2]);	// Difficulty
 				//console.log('new bug type', type);
-				var index = getInsect(type);
+				var power = (level + Math.round(Math.random()*2)) - type - 2; 
+				var index = getInsect(type, power);
 				insectsCloud[index].floatOnScreen(canvas.width, canvas.height);
 			}
 		}	
@@ -353,17 +358,19 @@ function tick() {
 
 // Helper functions
 
-function getInsect (type) {
+function getInsect (type, power) {
 	var i = 0;
 	var len = insectsCloud.length;
+	if (power<0) power = 0;
 	
+	//console.log('Genera bicho tipo '+type+' con poder '+power);
 	//pooling approach
 	while(i <= len){
 		if(!insectsCloud[i]) {
-			insectsCloud[i] = new Insect(type);
+			insectsCloud[i] = new Insect(type, power);
 			break;
 		} else if(!insectsCloud[i].active) {
-			insectsCloud[i].activate(type);
+			insectsCloud[i].activate(type, power);
 			break;
 		} else {
 			i++;
@@ -371,7 +378,7 @@ function getInsect (type) {
 	}
 	
 	if(len == 0) {
-		insectsCloud[0] = new Insect(type);
+		insectsCloud[0] = new Insect(type, power);
 	}
 	
 	stage.addChild(insectsCloud[i]);
@@ -389,34 +396,16 @@ function httpGet (theUrl, callback)
    	xmlHttp.onreadystatechange = function() {
   			if (xmlHttp.readyState==4 && xmlHttp.status==200) {
    			try {
-   				//console.log('Lo que tengo ',xmlHttp.responseText);
-   				var result = []
-   				
+   				var result = []				
    				eval('result=' + xmlHttp.responseText);
-   				//console.log('Lo que tengo 1',result);
-   				//result = eval(xmlHttp.responseText);
-   				//console.log('Lo que tengo 2',result);
    				callback(result);
    			} catch (e) {
-   				alert('Failed to se High-score!');
-   				//console.log('Failed to set high score!');
-   				//console.log(e);
+   				alert('Failed to set High-Score!');
    			}
   			}
  		}
    	xmlHttp.send( null );
-   	//console.log(xmlHttp.responseText);
-   /*} else {
-   		result = [
-   			[9999,'Gonza Cob', 'id1'],
-   			[5999,'JaimeCob', 'id2'],
-   			[3999,'Otro jugador', 'id3'],
-   			[1999,'Así vamos', 'id4'],
-   			[999,'Así vamos2', 'id5'],
-   			[599,'Así vamos3', 'id6'],
-   			[199,'Así vamos4', 'id7'],
-   		]
-   }*/
+
 }
     
 function refreshHeader ()
@@ -519,9 +508,19 @@ function handleMouseMove (e)
 </script> 
 </head>
 <body onload="init('stageCanvas', 'canvasWrapper','canvasOverlay')"> <!-- bgcolor="#769083">-->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+   var js, fjs = d.getElementsByTagName(s)[0];
+   if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1&appId=226492570779543";
+    fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+   </script>
 	<div id="canvasWrapper" align="center" style="width: 640px; height: 480px">
 		<div id="canvasOverlay" style="width: 640px; height: 480px"></div>
-		<canvas width="640" height="480" id="stageCanvas" class="pantalla"></canvas>		
+		<canvas width="640" height="480" id="stageCanvas" class="pantalla"></canvas>
+		<fb:like href="https://apps.facebook.com/htmlgame_charca" send="true" width="640" show_faces="true" colorscheme="dark" font="trebuchet ms"></fb:like>		
 	</div>
 </body>
 </html>

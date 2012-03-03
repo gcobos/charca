@@ -76,18 +76,8 @@ require_once('utils.php');
 
 if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   if ($_REQUEST['func']=='scores') {
-		//ob_start();
-	
-	  //$access_token = $facebook->getAccessToken();
-	  //error_log( "Access token por facebook?".$access_token.'<br />');	
-  	
-		//error_log("Token 1: $access_token");
-		//error_log("Token 2: $app_access_token");
-		//error_log("Token 3: $app_user_access_token");  	
-  	
+
   	 //Get Scores **************
-
-
   	 require_once('AppInfo.php');
 	 require_once('sdk/src/facebook.php');
 
@@ -148,35 +138,12 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   			if ($result[$user_id][0] < $new_score) {
   				$result[$user_id][0] = (int)$new_score;
   				if ($_REQUEST['prb'])$result['envio_rq'] = array($new_score, 'puntos','envio_rq');
-  				
   				 error_log('Publica los puntos del usuario!!!');
-// POST a user score
-/* Esto funciona al menos!!
-  error_log('Publish a User Score<br/>');
-  $score_URL = 'https://graph.facebook.com/' . $uid . '/scores';
-  $score_result = https_post($score_URL,
-    'score=' . $score
-    . '&access_token=' . $app_access_token
-  );  				
-*/				
-
-/*
-*user,app_user_access
-user,app_access
-user,access_token
-
-app,app_user_access
-app,app_access
-app,access_token
-
-*/
-
 				$score_URL = 'https://graph.facebook.com/' . $user_id . '/scores';
   				$score_result = https_post($score_URL,'score=' . $score . '&access_token=' . $_SESSION['fb_app_access_token']);  				
      	 		if ($score_result) {
      	 			error_log('Resultado del posteo de puntos?: '.var_export($score_result,true));
      	 		} else {
-     	 			error_log("Mal! puntos no enviados");
      	 			error_log("Mal! puntos no enviados");
      	 			if ($_REQUEST['prb'])$result['envio_rs'] = array($new_score, 'puntos no result!','envio_rs');
      	 		}

@@ -1,8 +1,8 @@
 (function(window) {
 
 //
-function Insect(type) {
-	this.initialize(type);
+function Insect(type, power) {
+	this.initialize(type, power);
 }
 
 Insect.prototype = new Container();
@@ -18,6 +18,7 @@ Insect.prototype = new Container();
 		2: {width:80, height:80, regX:40, regY:40},
 		3: {width:80, height:80, regX:40, regY:40},
 		4: {width:58, height:47, regX:25, regY:24},
+		5: {width:180, height:180, regX:90, regY:90},
 	};		
 	
 	Insect.typeAnimations = {	// animations for every insect type
@@ -33,6 +34,9 @@ Insect.prototype = new Container();
 		4:	{ 
 				fly: [0,2, "fly"],	//attack: [20,39,"fly"],
 			}, 
+		5:	{ 
+				fly: [0,2, "fly"], attack: [3, 3, 3, "fly"],
+			}, 
 	};
 
 // public properties:
@@ -45,16 +49,18 @@ Insect.prototype = new Container();
 	Insect.prototype.hit = 30;		//average radial disparity
 	
 	Insect.prototype.speed = 0;		//speed ammount
-	Insect.prototype.score = 0;	//score value
+	Insect.prototype.score = 0;		//score value
 		
 	Insect.prototype.active = false;	//is it active
+
+	Insect.prototype.power = 0			// Every more power, adds some new capability :)	
 	
 	Insect.prototype.killed = false;	// true when it's trapped by the tongue
 	
 // constructor:
 	Insect.prototype.Container_initialize = Insect.prototype.initialize;	//unique to avoid overiding base class
 	
-	Insect.prototype.initialize = function (type) {
+	Insect.prototype.initialize = function (type, power) {
 		this.Container_initialize(); // super call
 		if (!Object.keys(Insect.typeImages).length) {
 			var i = 1;
@@ -64,14 +70,15 @@ Insect.prototype = new Container();
 				i++; 
 			}
 		}
-		this.activate(type);
+		this.activate(type, power);
 	}
 
 // public methods:
 	
 	//handle reinit for poolings sake
-	Insect.prototype.activate = function (type) {
+	Insect.prototype.activate = function (type, power) {
 		this.type = type;
+		this.power = power;
 		
 		// Clean previous animation
 		this.removeAllChildren();
@@ -88,21 +95,21 @@ Insect.prototype = new Container();
 		//SpriteSheetUtils.addFlippedFrames(spriteSheet, true, false, false);	// Error??		
 		
 		this.bmpAnimation = new BitmapAnimation(spriteSheet);
-		
+
 		this.addChild(this.bmpAnimation);
 
 		// start playing the first sequence:
 		this.bmpAnimation.gotoAndPlay("fly");		//animate	
-		this.bounds = Insect.typeFrames[type].width / 2;
-		this.speed = (Math.random() + 1.8 )* type;
-		this.score = Math.round(type * 5);
+		this.bounds = Insect.typeFrames[this.type].width / 2;
+		this.speed = (Math.random() + 1.8 )* this.type;
+		this.score = Math.round(this.type * 4.6 + this.power * 1.3);
 		this.active = true;
 		this.killed = false;
 	}
 	
 	//handle what a Insect does to itself every frame
 	Insect.prototype.tick = function () {
-		if (!this.killed) {
+		if (!this.killed && this.active) {
 			this.x += (Math.random()-0.5) * this.speed;
 			this.y += (Math.random()-0.5) * this.speed;
 		}			
