@@ -22,6 +22,8 @@
 
   if(empty($code) && !isset($_REQUEST['error'])) {
     $_SESSION['state'] = md5(uniqid(rand(), TRUE)); //CSRF protection
+    // Enforce https on production
+
     $dialog_url = 'https://www.facebook.com/dialog/oauth?' 
       . 'client_id=' . $app_id
       //. '&redirect_uri=' . urlencode($canvas_page_url)
@@ -79,7 +81,22 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
   		'appId'  => AppInfo::appID(),
   		'secret' => AppInfo::appSecret(),
 	 ));
-	 $user_access_token = $signed_request['oauth_token'];
+	 
+	 error_log('PIDE EL USUSARIO');
+	 if ($user_id) {
+	   try {
+        // Fetch the viewer's basic information
+        $basic = $facebook->api('/me');
+      } catch (FacebookApiException $e) {
+        // If the call fails we check if we still have a user. The user will be
+        // cleared if the error is because of an invalid accesstoken
+        if (!$facebook->getUser()) {
+          header('Location: '. AppInfo::getUrl($_SERVER['REQUEST_URI']."?reload=1"));
+          exit();
+        }
+      }  
+    }
+	 $user_access_token = $this->getUserAccessToken();
 	 
   	 error_log('PIDE LISTADO DE PUNTOS');
 	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores?access_token='.$user_access_token);
