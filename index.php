@@ -57,7 +57,9 @@
   $params = null;
   parse_str($token_response, $params);
   $app_access_token = $params['access_token'];
-  $app_user_access_token = $signed_request['oauth_token'];
+  $_SESSION['fb_app_access_token'] = $app_access_token;
+  $app_user_access_token = $signed_request['oauth_token']; 
+  $_SESSION['fb_app_user_access_token'] = $app_user_access_token; 
   
   error_log('Tengo app access token! '.$app_access_token);
   error_log('Tengo user access token! '.$app_user_access_token);
@@ -101,6 +103,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
     
     
 	 $user_access_token = $facebook->getAccessToken();
+	 error_log('El access token que obtengo de Facebook '.$user_access_token);
 	 
 	 error_log('Lo que tengo antes de la primera peticion');
 	 error_log('Session'.var_export($_SESSION,true));
