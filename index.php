@@ -69,11 +69,19 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 		//error_log("Token 3: $app_user_access_token");  	
   	
   	 //Get Scores **************
-  	 
+  	 require_once('utils.php');
+	 require_once('sdk/src/facebook.php');
+
+	 $facebook = new Facebook(array(
+  		'appId'  => AppInfo::appID(),
+  		'secret' => AppInfo::appSecret(),
+	 ));
+	 $user_access_token = $facebook->getAccessToken();
+	 
   	 error_log('PIDE LISTADO DE PUNTOS');
-	 //$scores_result = $facebook->api('/'. AppInfo::appID() .'/scores?access_token='.$$app_access_token);
-	 $scores_URL = 'https://graph.facebook.com/' . $app_id . '/scores?access_token=' . $app_access_token;
-	 $scores_result = file_get_contents($scores_URL);
+	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores?access_token='.$$app_access_token);
+	 //$scores_URL = 'https://graph.facebook.com/' . $app_id . '/scores?access_token=' . $app_access_token;
+	 //$scores_result = file_get_contents($scores_URL);
 	 error_log("puntos para la aplicacion". var_export($scores_result,true));
 	 
 	 $result = array();
