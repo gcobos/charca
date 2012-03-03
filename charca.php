@@ -22,10 +22,11 @@ $base_url = $proto.$server.'/'.dirname($_SERVER['REQUEST_URI']);
 	<meta name="robots" content="index,follow">
  	<meta property="og:title" content="Charca!" />
  	<meta property="fb:app_id" content="226492570779543" />
- 	<meta property="og:image" content="<?php echo $base_url ?>/images/title.jpg" />
+ 	<meta property="fb:admins" content="1236628420" />
+ 	<meta property="og:image" content="https://charca.herokuapp.com/images/title.jpg" />
    <meta property="og:type"        content="game" /> 
-   <meta property="og:url"         content="<?php echo $base_url ?>" /> 
-   <meta property="og:description" content="Ayuda a esta rana a mantener la charca limpia de insectos y a pegarse un atracón padre" /> 
+	<meta property="og:url" content="https://apps.facebook.com/htmlgame_charca" />
+   <meta property="og:description" content="Ayuda a esta rana a mantener la charca limpia de insectos y a pegarse un atracón padre" />  
  
 	<title>Charca - Juego canvas HTML5</title>
 	<style>
