@@ -57,8 +57,10 @@
   $params = null;
   parse_str($token_response, $params);
   $app_access_token = $params['access_token'];
+  $app_user_access_token = $signed_request['oauth_token'];
   
   error_log('Tengo app access token! '.$app_access_token);
+  error_log('Tengo user access token! '.$app_user_access_token);
 
 
 if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
@@ -96,10 +98,16 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
         }
       }  
     }
-	 $user_access_token = $facebook->getUserAccessToken();
+    
+    
+	 $user_access_token = $facebook->getAccessToken();
+	 
+	 error_log('Lo que tengo antes de la primera peticion');
+	 error_log('Session'.var_export($_SESSION,true));
+	 error_log('Request'.var_export($_REQUEST,true));
 	 
   	 error_log('PIDE LISTADO DE PUNTOS');
-	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores?access_token='.$user_access_token);
+	 $scores_result = $facebook->api('/'. AppInfo::appID() .'/scores?access_token='.$app_user_access_token);
 	 //$scores_URL = 'https://graph.facebook.com/' . $app_id . '/scores?access_token=' . $app_access_token;
 	 //$scores_result = file_get_contents($scores_URL);
 	 error_log("puntos para la aplicacion". var_export($scores_result,true));
