@@ -117,7 +117,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
       }  
     }
     
-	 $user_access_token = $facebook->getAccessToken();
+	 $access_token = $facebook->getAccessToken();
 	 error_log('El access token que obtengo de Facebook '.$user_access_token);
 	 
 	 error_log('Lo que tengo antes de la primera peticion');
@@ -159,7 +159,19 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
     . '&access_token=' . $app_access_token
   );  				
 */				
-				$score_URL = 'https://graph.facebook.com/' . $app_id . '/scores';
+
+/*
+user,app_user_access
+user,app_access
+user,access_token
+
+app,app_user_access
+app,app_access
+app,access_token
+
+*/
+
+				$score_URL = 'https://graph.facebook.com/' . $user_id . '/scores';
   				$score_result = https_post($score_URL,'score=' . $score . '&access_token=' . $_SESSION['fb_app_user_access_token']);  				
      	 		if ($score_result) {
      	 			error_log('Resultado del posteo de puntos?: '.var_export($score_result,true));
@@ -198,7 +210,12 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 
   function https_post($uri, $postdata) {
     $ch = curl_init($uri);
+    error_log('Enviando a '.$uri);
+    error_log('Params: '.$postdata);
     curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_FAILONERROR,1);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION,1);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
     $result = curl_exec($ch);
     curl_close($ch);
