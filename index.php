@@ -115,7 +115,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
 	 */
   	 error_log('PIDE LISTADO DE PUNTOS');
 	 $scores_URL = 'https://graph.facebook.com/' . $app_id . '/scores?access_token=' . $_SESSION['fb_app_user_access_token'];
-	 $scores_result = file_get_contents($scores_URL);
+	 $scores_result = json_decode(file_get_contents($scores_URL));
 	 error_log("puntos para la aplicacion". var_export($scores_result,true));
 	 
 	 $result = array();
