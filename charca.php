@@ -520,7 +520,7 @@ function handleMouseMove (e)
 	<div id="canvasWrapper" align="center" style="width: 640px; height: 480px">
 		<div id="canvasOverlay" style="width: 640px; height: 480px"></div>
 		<canvas width="640" height="480" id="stageCanvas" class="pantalla"></canvas>
-		<fb:like send="false" width="640" show_faces="true" font="trebuchet ms"></fb:like>		
+		<fb:like href="https://apps.facebook.com/htmlgame_charca/?fb_action_ids=2841822004793&fb_action_types=games.plays&fb_source=other_multiline" send="false" width="640" show_faces="true" font="trebuchet ms"></fb:like>		
 	</div>
 </body>
 </html>
