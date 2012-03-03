@@ -9,7 +9,7 @@ Insect.prototype = new Container();
 
 // static properties:
 
-	Insect.types = 4;
+	Insect.types = 5;
 	
 	Insect.typeImages = {};	
 	
@@ -77,6 +77,8 @@ Insect.prototype = new Container();
 	
 	//handle reinit for poolings sake
 	Insect.prototype.activate = function (type, power) {
+		if (power<0) power = 0;
+		if (type >= Insect.types) type = 0;
 		this.type = type;
 		this.power = power;
 		

@@ -16,13 +16,13 @@ $base_url = $proto.$server.'/'.dirname($_SERVER['REQUEST_URI']);
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="shortcut icon" href="images/favicon.ico">
 	<meta charset="utf-8">
-	<meta name="author" content="Gonzalo Cobos, Jaime Cobos" >
+	<meta name="author" content="Gonzalo Cobos" >
 	<meta name="keywords" content="html5, game, charca, rana, insectos, swamp, bugs">  
 	<meta name="robots" content="index,follow">
  	<meta property="game:title" content="Charca" />
  	<meta property="og:type" content="game" />
  	<meta property="fb:app_id" content="226492570779543" />
- 	<meta property="og:image" content="images/title.jpg" /> 
+ 	<meta property="og:image" content="https://charca.herokuapp.com/images/title.jpg" /> 
    <meta property="og:description" content="Ayuda a esta rana a mantener la charca limpia de insectos y a pegarse un atracón padre" />  
  
 	<title>Charca - Juego canvas HTML5</title>
@@ -359,7 +359,6 @@ function tick() {
 function getInsect (type, power) {
 	var i = 0;
 	var len = insectsCloud.length;
-	if (power<0) power = 0;
 	
 	//console.log('Genera bicho tipo '+type+' con poder '+power);
 	//pooling approach
@@ -518,7 +517,7 @@ function handleMouseMove (e)
 	<div id="canvasWrapper" align="center" style="width: 640px; height: 480px">
 		<div id="canvasOverlay" style="width: 640px; height: 480px"></div>
 		<canvas width="640" height="480" id="stageCanvas" class="pantalla"></canvas>
-		<fb:like send="false" width="640" show_faces="true" font="trebuchet ms"></fb:like>		
+		<fb:like href="https://apps.facebook.com/htmlgame_charca" send="false" width="640" show_faces="true" font="trebuchet ms"></fb:like>		
 	</div>
 </body>
 </html>
