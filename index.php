@@ -108,6 +108,7 @@ if (isset($_REQUEST['func']) && in_array($_REQUEST['func'],array('scores'))) {
         // If the call fails we check if we still have a user. The user will be
         // cleared if the error is because of an invalid accesstoken
         if (!$facebook->getUser()) {
+        	 $_SESSION = array();	// Borra todo!!
           header('Location: '. AppInfo::getUrl($_SERVER['REQUEST_URI']."?reload=1"));
           exit();
         }
