@@ -127,7 +127,7 @@ Insect.prototype = new Container();
 	}
 	
 	//position the Insect so it floats on screen
-	Insect.prototype.floatOnScreen = function(width, height) {
+	Insect.prototype.floatOnScreen = function (width, height) {
 		//base bias on real estate and pick a side or top/bottom
 		this.x = width * 0.5 + Math.random() * width * 0.4;
 		this.y = height * 0.1 + Math.random() * height * 0.8;
@@ -179,13 +179,33 @@ Insect.prototype = new Container();
 				case 1:	// Se mueve rápido y efectua 3 cambios de dirección
 					if (this.step%250 == 0) {
 						this.step+=200;
-						//console.log('Cambio!');
 						this.vX = 2 * (Math.random()-0.5);
 						this.vY = 2 * (Math.random()-0.5);
-						//console.log('Un paso!');
-					}				
-				case 2:
+					}	
+					break;			
+				case 5:
+					//console.log(this.step);
+					if (this.step == 0) {
+						var w = this.parent.canvas.width;
+						var h = this.parent.canvas.height;
+						//this.vX = Math.cos(300 - this.x);
+						//this.vY = Math.asin(400 - this.y);
+						this.x = 120;
+						this.y = 370;
+						//console.log(this.x, this.y);
+						
+						//this.vY = (((h*0.1)+(h*0.8)) - this.y)*0.005;
+						//console.log('Lalalaa',this.vX,this.vY);	
+					}
 					
+					if (this.step == 500) {
+						//console.log(this.x, this.y);
+						var w = this.parent.canvas.width*0.4;
+						var h = this.parent.canvas.height*0.8;
+						//this.vX = ((0.5+Math.random())*w)*0.01;
+						//this.vY = ((0.1+Math.random())*h)*0.01;
+					}
+					break;
 				case 3:
 					
 				case 4:

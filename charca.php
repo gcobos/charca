@@ -16,7 +16,7 @@ $base_url = $proto.$server.'/'.dirname($_SERVER['REQUEST_URI']);
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="shortcut icon" href="images/favicon.ico">
 	<meta charset="utf-8">
-	<meta name="author" content="Gonzalo Cobos" >
+	<meta name="author" content="Gonzalo Cobos, Jaime Cobos" >
 	<meta name="keywords" content="html5, game, charca, rana, insectos, swamp, bugs">  
 	<meta name="robots" content="index,follow">
  	<meta property="game:title" content="Charca" />
@@ -69,7 +69,7 @@ $base_url = $proto.$server.'/'.dirname($_SERVER['REQUEST_URI']);
 		
 	</style>
 	<script src="javascript/easel.js"></script>
-	<script src="javascript/buzz.js"></script>
+	<script src="javascript/sound.js"></script>
    <script src="javascript/frog.js"></script>
    <script src="javascript/insect.js"></script>
 <script>
@@ -82,7 +82,7 @@ var levelConfig = {
 	0: [15, 100, 1],   // 15
 	1: [25, 95, 2],	// 25
 	2: [45, 90, 3],	// 45
-	3: [65, 80, 3],	// 65
+	3: [4, 80, 3],	// 65
 	4: [75, 70, 3],	// 75
 	5: [85, 65, 3],	// 85
 	6: [95, 60, 3],	// 95
@@ -149,9 +149,13 @@ function init (canvasId, canvasWrapper, overlayBlock) {
 	overlay.onselectstart = function () { return false; }
 	stage = new Stage(canvas);
 
-	sounds = new buzz.sound( "sounds/punch1", {
-   	formats: [ "ogg", "wav", "mp3", "acc" ]
-	});
+	// List of samples
+	var list = [
+		{name:"punch", src:["sounds/punch1.ogg"], instances:1},
+	];
+	SoundJS.addBatch(list);
+
+	// TODO: Maybe do something with iOS for the sound	
 
 	//ensure stage is blank and add the frog
 	stage.clear();
@@ -321,12 +325,11 @@ function tick() {
 				o.perform(nextAction);
 				//console.log('Insect '+insect+' performing action '+nextAction );
 			}
-		} else if (o.action) {
-			/*var g = d.graphics;
+		} else if (o.action && o.type==1) {
+			var g = d.graphics;
 			g.beginStroke("#ff0000");
-			g.setStrokeStyle(8)
+			g.setStrokeStyle(1)
 			g.drawCircle(o.x,o.y, 1);
-			//g.moveTo(o.x,o.y);*/
 		}	
 		
 		if (o.killed && frog.tongueIsBack) {
@@ -350,7 +353,7 @@ function tick() {
 			if(frog.alive && o.hitRadius(frog.tonguePos.x, frog.tonguePos.y, frog.hit)) {
 				this.score += o.score;
 				o.die();	// stops animation and follows tongue
-				sounds.play();
+				SoundJS.play("punch");
 				insectsKilled++;
 				continue;
 			}
@@ -460,8 +463,9 @@ function showHighScores ()
 
 function outOfBounds (o, bounds) 
 {
+	return false;
 	//is it visibly off screen
-	return o.x < bounds + canvas.width*0.4 || o.y < bounds || o.x > canvas.width-bounds || o.y > canvas.height-bounds;
+	return o.x < bounds + canvas.width*0.2 || o.y < bounds || o.x > canvas.width-bounds || o.y > canvas.height-bounds;
 }
 
 function placeInBounds (o, bounds)
@@ -469,8 +473,8 @@ function placeInBounds (o, bounds)
 	//if its visual bounds are entirely off screen place it off screen on the other side
 	if(o.x > canvas.width-bounds) {
 		o.x = canvas.width-bounds;
-	} else if (o.x < bounds + canvas.width * 0.4) {
-		o.x = bounds + canvas.width * 0.4;
+	} else if (o.x < bounds + canvas.width * 0.2) {
+		o.x = bounds + canvas.width * 0.2;
 	}
 	
 	//if its visual bounds are entirely off screen place it off screen on the other side
