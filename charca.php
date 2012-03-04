@@ -265,8 +265,8 @@ function restart() {
 
 	stage.addChild(frog);
 
-	d = new Shape();
-	stage.addChild(d);
+	//d = new Shape();
+	//stage.addChild(d);
 	
 	// Remove overlay
 	overlay.style.display = 'none';
@@ -326,10 +326,10 @@ function tick() {
 				//console.log('Insect '+insect+' performing action '+nextAction );
 			}
 		} else if (o.action && o.type==1) {
-			var g = d.graphics;
+			/*var g = d.graphics;
 			g.beginStroke("#ff0000");
 			g.setStrokeStyle(1)
-			g.drawCircle(o.x,o.y, 1);
+			g.drawCircle(o.x,o.y, 1);*/
 		}	
 		
 		if (o.killed && frog.tongueIsBack) {
@@ -463,9 +463,9 @@ function showHighScores ()
 
 function outOfBounds (o, bounds) 
 {
-	return false;
+	//return false;
 	//is it visibly off screen
-	return o.x < bounds + canvas.width*0.2 || o.y < bounds || o.x > canvas.width-bounds || o.y > canvas.height-bounds;
+	return o.x < bounds + canvas.width*0.4 || o.y < bounds || o.x > canvas.width-bounds || o.y > canvas.height-bounds;
 }
 
 function placeInBounds (o, bounds)
@@ -473,8 +473,8 @@ function placeInBounds (o, bounds)
 	//if its visual bounds are entirely off screen place it off screen on the other side
 	if(o.x > canvas.width-bounds) {
 		o.x = canvas.width-bounds;
-	} else if (o.x < bounds + canvas.width * 0.2) {
-		o.x = bounds + canvas.width * 0.2;
+	} else if (o.x < bounds + canvas.width * 0.4) {
+		o.x = bounds + canvas.width * 0.4;
 	}
 	
 	//if its visual bounds are entirely off screen place it off screen on the other side
