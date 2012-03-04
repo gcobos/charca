@@ -175,6 +175,9 @@ Insect.prototype = new Container();
 	{
 		this.action = 0;
 		this.step = 0;
+		this.vX = 0;
+		this.vY = 0;
+		
 	}
 	
 	// Performs a step in the action if any
