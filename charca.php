@@ -243,7 +243,7 @@ function restart() {
 	stage.removeAllChildren();
 	
 	if (!frog.alive) {
-		level = 0;
+		level = 9;
 		score = 0;
 	}
 	time = levelConfig[level][1];
@@ -295,7 +295,7 @@ function tick() {
 		// handle new insects
 		if ( aliveInsects < Math.min(MAX_INSECTS,levelConfig[level][0]) && (insectsKilled + aliveInsects) < levelConfig[level][0]) {
 			if (frog.alive) {
-				var type = 1+ Math.floor(Math.random() * levelConfig[level][2]);	// Difficulty
+				var type = 1 + Math.floor(Math.random() * levelConfig[level][2]);	// Difficulty
 				//console.log('new bug type', type);
 				var power = (level - (type+1) + Math.round((Math.random()-0.5)*2)); 
 				var index = getInsect(type, power);

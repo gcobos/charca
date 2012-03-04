@@ -35,7 +35,7 @@ Insect.prototype = new Container();
 				fly: [0,2, "fly"],	//attack: [20,39,"fly"],
 			}, 
 		5:	{ 
-				fly: [0,2, "fly"], attack: [3, 3, 3, "fly"],
+				fly: [0,2, "fly"], 	attack: [3, 3, 3, "fly"],
 			}, 
 	};
 
@@ -87,7 +87,7 @@ Insect.prototype = new Container();
 	//handle reinit for poolings sake
 	Insect.prototype.activate = function (type, power) {
 		if (power<0) power = 0;
-		if (type >= Insect.types) type = 0;
+		if (type >= Insect.types) type = 1;
 		this.type = type;
 		this.power = power;
 		
@@ -234,8 +234,11 @@ Insect.prototype = new Container();
 				case 3:
 					
 				case 4:
+
+				case 5:
 				
 				default:
+				
 				
 				}
 				this.step++;
