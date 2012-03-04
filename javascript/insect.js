@@ -60,6 +60,9 @@ Insect.prototype = new Container();
 	
 	Insect.prototype.step = 0;			// Number of step in the action (from 0 to 1000) or when action goes back to 0	
 
+	Insect.prototype.oX = 0;			// original value of X before starting an action
+	Insect.prototype.oY = 0;			// original value of Y before starting an action
+
 	Insect.prototype.vX = 0;			// delta advance in X
 	Insect.prototype.vY = 0;			// delta advance in Y
 	
@@ -118,11 +121,11 @@ Insect.prototype = new Container();
 	//handle what a Insect does to itself every frame
 	Insect.prototype.tick = function () {
 		if (!this.killed && this.active) {
-			this.x += this.vX + (Math.random()-0.5) * this.speed;
-			this.y += this.vY + (Math.random()-0.5) * this.speed;
 			if (this.action) {
 				this.performStep();
 			}
+			this.x += this.vX + (Math.random()-0.5) * this.speed;
+			this.y += this.vY + (Math.random()-0.5) * this.speed;
 		}			
 	}
 	
@@ -158,6 +161,8 @@ Insect.prototype = new Container();
 	Insect.prototype.perform = function (action) {
 		if (!this.action && !this.killed) {
 			if (action < 0) action = 0;
+			this.oX = this.x;
+			this.oY = this.y;
 			this.action = action;
 			this.step = 0;			
 		}
@@ -176,13 +181,26 @@ Insect.prototype = new Container();
 		if (this.action && !this.killed) {
 			if (this.step < 1000) {
 				switch (this.type) {
-				case 1:	// Se mueve rápido y efectua 3 cambios de dirección
+				case 1:	// Mosca: Traza un círculo de radio creciente y luego decreciente
+					if (this.step>800) {
+						var radio = ((this.step<900)? this.step-800 : 1000 - this.step)*0.3;
+						var angle = this.step / 10 * Math.PI;  // Two rounds
+						this.vX = radio * Math.cos(angle);
+						this.vY = radio * Math.sin(angle);
+						//this.x = this.oX + radio * Math.cos(angle);
+						//this.y = this.oY + radio * Math.sin(angle);
+						//this.rotation = angle*(180/Math.PI)-90;
+						//console.log(radio);
+					}
+					break;
+				case 2:	// Avispa: Se mueve rápido y efectua 3 cambios de dirección
 					if (this.step%250 == 0) {
 						this.step+=200;
-						this.vX = 4 * (Math.random()-0.5);
-						this.vY = 4 * (Math.random()-0.5);
+						this.vX = 2 * (Math.random()-0.5);
+						this.vY = 2 * (Math.random()-0.5);
 					}	
-					break;			
+					break;
+			
 				case 5:
 					//console.log(this.step);
 					if (this.step == 0) {

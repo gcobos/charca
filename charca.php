@@ -82,13 +82,13 @@ var levelConfig = {
 	0: [15, 100, 1],   // 15
 	1: [25, 95, 2],	// 25
 	2: [45, 90, 3],	// 45
-	3: [65, 80, 3],	// 65
-	4: [75, 75, 3],	// 75
-	5: [85, 70, 3],	// 85
-	6: [90, 65, 3],	// 90
-	7: [95, 60, 4],	// 95
-	8: [100,55, 4],	// 100
-	9: [105,50, 5],	// 105
+	3: [65, 85, 3],	// 65
+	4: [75, 80, 3],	// 75
+	5: [85, 75, 3],	// 85
+	6: [90, 70, 3],	// 90
+	7: [95, 65, 4],	// 95
+	8: [100,60, 4],	// 100
+	9: [105,55, 5],	// 105
 };
 
 /*
@@ -320,7 +320,7 @@ function tick() {
 			placeInBounds(o, o.bounds);
 		}
 		if (!o.action && !o.killed) {
-			var nextAction = Math.round(((Math.random()-0.8)*5) * o.power);
+			var nextAction = Math.round(((Math.random()-0.9)*5) * o.power);	// 10% de probabilidad
 			if (nextAction > 0) {
 				o.perform(nextAction);
 				//console.log('Insect '+insect+' performing action '+nextAction );
