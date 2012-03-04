@@ -134,6 +134,8 @@ Insect.prototype = new Container();
 		//base bias on real estate and pick a side or top/bottom
 		this.x = width * 0.5 + Math.random() * width * 0.4;
 		this.y = height * 0.1 + Math.random() * height * 0.8;
+		this.vX = 0;
+		this.vY = 0;
 	}
 	
 	// Sets the insect as killed
