@@ -353,7 +353,7 @@ function tick() {
 			if(frog.alive && o.hitRadius(frog.tonguePos.x, frog.tonguePos.y, frog.hit)) {
 				this.score += o.score;
 				o.die();	// stops animation and follows tongue
-				SoundJS.play("punch");
+				//SoundJS.play("punch");
 				insectsKilled++;
 				continue;
 			}

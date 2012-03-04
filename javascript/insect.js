@@ -179,8 +179,8 @@ Insect.prototype = new Container();
 				case 1:	// Se mueve rápido y efectua 3 cambios de dirección
 					if (this.step%250 == 0) {
 						this.step+=200;
-						this.vX = 2 * (Math.random()-0.5);
-						this.vY = 2 * (Math.random()-0.5);
+						this.vX = 4 * (Math.random()-0.5);
+						this.vY = 4 * (Math.random()-0.5);
 					}	
 					break;			
 				case 5:
