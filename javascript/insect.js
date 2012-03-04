@@ -184,7 +184,9 @@ Insect.prototype = new Container();
 			if (this.step < 1000) {
 				switch (this.type) {
 				case 1:	// Mosca: Traza un círculo de radio creciente y luego decreciente
-					if (this.step>800) {
+					if (this.step==0) {
+						
+					} else if (this.step>800) {
 						var radio = ((this.step<900)? this.step-800 : 1000 - this.step)*0.3;
 						var angle = this.step / 10 * Math.PI;  // Two rounds
 						this.vX = radio * Math.cos(angle);
@@ -198,8 +200,8 @@ Insect.prototype = new Container();
 				case 2:	// Avispa: Se mueve rápido y efectua 3 cambios de dirección
 					if (this.step%250 == 0) {
 						this.step+=200;
-						this.vX = 2 * (Math.random()-0.5);
-						this.vY = 2 * (Math.random()-0.5);
+						this.vX = 3 * (Math.random()-0.5);
+						this.vY = 3 * (Math.random()-0.5);
 					}	
 					break;
 			
