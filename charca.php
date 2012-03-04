@@ -320,7 +320,7 @@ function tick() {
 			placeInBounds(o, o.bounds);
 		}
 		if (!o.action && !o.killed) {
-			var nextAction = Math.round(((Math.random()-0.9)*5) * o.power);	// 10% de probabilidad
+			var nextAction = Math.round(((Math.random()-0.77)*5) * o.power);	// 23% de probabilidad
 			if (nextAction > 0) {
 				o.perform(nextAction);
 				//console.log('Insect '+insect+' performing action '+nextAction );
