@@ -17,7 +17,7 @@ Insect.prototype = new Container();
 		1: {width:80, height:80, regX:40, regY:40},
 		2: {width:80, height:80, regX:40, regY:40},
 		3: {width:80, height:80, regX:40, regY:40},
-		4: {width:58, height:47, regX:25, regY:24},
+		4: {width:80, height:80, regX:40, regY:40},
 		5: {width:180, height:180, regX:90, regY:90},
 	};		
 	

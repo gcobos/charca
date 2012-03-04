@@ -243,7 +243,7 @@ function restart() {
 	stage.removeAllChildren();
 	
 	if (!frog.alive) {
-		level = 0;
+		level = 7;
 		score = 0;
 	}
 	time = levelConfig[level][1];
