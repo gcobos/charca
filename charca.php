@@ -89,7 +89,7 @@ var levelConfig = {
 	7: [95, 65, 4,1],	// 95
 	8: [100,65, 5,1],	// 100
 	9: [110,60, 5,2],	// 110
-	10: [405,5, 6,2],  // 405
+	10: [405,5, 5,2],  // 405
 };
 
 /*
@@ -129,6 +129,7 @@ var time = 0;				// actual time left
 var timer;
 var baseTime;
 var fireflies = 0;          // How many fireflies have appeared already in this level
+var aliveFireflies = 0;
 
 var messageField;		   // message display field
 var levelField;			// level field
@@ -282,6 +283,10 @@ function restart() {
 	    //d = new Shape();
 	    //stage.addChild(d);
 	
+	    if (level == 10) {
+    	    var index = getInsect(6, 0);
+	    	insectsCloud[index].floatOnScreen(canvas.width, canvas.height);
+	    }
 	    // Remove overlay
 	    overlay.style.display = 'none';
 	
@@ -315,7 +320,7 @@ function tick() {
 				var power = (level - (type+1) + Math.round((Math.random()-0.5)*2)); 
 				if (type != 5 || fireflies < levelConfig[level][3]) {
     				if (type == 5) {
-    				    if (insectsKilled > levelConfig[level][0]/2 ) {
+    				    if (aliveFireflies==0 && insectsKilled > levelConfig[level][0]/2 ) {
     				    //if ((baseTime - time) > levelConfig[level][1]/2) {
     				        fireflies++;
     				        var index = getInsect(type, power);
@@ -337,6 +342,7 @@ function tick() {
 	
 	// handle insects
 	aliveInsects = 0;
+	aliveFireflies = 0;
 	for (insect in insectsCloud) {
 		var o = insectsCloud[insect];
 		if(!o || !o.active) { continue; }
@@ -393,6 +399,7 @@ function tick() {
 				insectsKilled++;
 				continue;
 			}
+			if (o.type == 5) aliveFireflies++;
 			aliveInsects++;				
 		}
 
