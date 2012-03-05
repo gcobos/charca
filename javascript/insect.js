@@ -234,9 +234,9 @@ Insect.prototype = new Container();
 				        this.bmpAnimation.gotoAndStop('fly');
 				        this.vY = 5;
 				        this.vX = (Math.random()-0.5)*0.2;
-				    } else if (this.step==15) {
+				    } else if (this.step==7) {
 				        this.vY = -0.3;
-				        this.step = 850;
+				        this.step = 930;
 				        this.bmpAnimation.gotoAndPlay('fly');
 				    }
 				    break;
