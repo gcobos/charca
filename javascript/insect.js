@@ -18,7 +18,8 @@ Insect.prototype = new Container();
 		2: {width:80, height:80, regX:40, regY:40},
 		3: {width:80, height:80, regX:40, regY:40},
 		4: {width:64, height:64, regX:32, regY:32},
-		5: {width:180, height:180, regX:90, regY:90},
+		5: {width:64, height:64, regX:32, regY:32},
+		6: {width:180, height:180, regX:90, regY:90},
 	};		
 	
 	Insect.typeAnimations = {	// animations for every insect type
@@ -35,7 +36,10 @@ Insect.prototype = new Container();
 				fly: [0,2, "fly"],	//attack: [20,39,"fly"],
 			}, 
 		5:	{ 
-				fly: [0,2, "fly"], 	attack: [3, 3, 3, "fly"],
+				fly: [0,2, "fly"],	//attack: [20,39,"fly"],
+			}, 
+		6:	{ 
+				fly: [0,7, "fly"], 	attack: [8, 10, "fly"],
 			}, 
 	};
 
@@ -57,6 +61,7 @@ Insect.prototype = new Container();
 	Insect.prototype.killed = false;	// true when it's trapped by the tongue
 	
 	Insect.prototype.action = 0;		// Number of action performing (0 means just flying)
+	Insect.prototype.cinema = false;    // Specify when the insect should ignore bounds
 	
 	Insect.prototype.step = 0;			// Number of step in the action (from 0 to 1000) or when action goes back to 0	
 
@@ -200,7 +205,7 @@ Insect.prototype = new Container();
 						//console.log(radio);
 					}
 					break;
-				case 2: // Mariposa: Baja rápidamente cuando les estan disparando y luego vuelve a subir lentamente
+				case 3: // Mosquitos: Baja rápidamente cuando les estan disparando y luego vuelve a subir lentamente
 				    if (this.step==0) {
 				        this.bmpAnimation.gotoAndStop('fly');
 				        this.vY = 6;
@@ -218,8 +223,11 @@ Insect.prototype = new Container();
 						this.vY = 3 * (Math.random()-0.5);
 					}	
 					break;
-			
-				case 5:
+			    case 5: // Luciernaga
+			        break;
+			    case 6:
+			        break;
+				case 7:
 					//console.log(this.step);
 					if (this.step == 0) {
 						var w = this.parent.canvas.width;

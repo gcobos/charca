@@ -243,8 +243,12 @@ function restart() {
 	// hide anything on stage
 	stage.removeAllChildren();
 	
+	var wlevel = 0
+	if (document.getElementById('wlevel')) {
+    	wlevel = document.getElementById('wlevel').value
+    }
 	if (!frog.alive) {
-		level = 0;
+		level = wlevel;
 		score = 0;
 	}
 	time = levelConfig[level][1];
@@ -317,12 +321,12 @@ function tick() {
 		if(!o || !o.active) { continue; }
 		
 		// handle insect movement
-		if(outOfBounds(o, o.bounds)) {
+		if(!o.cinema && outOfBounds(o, o.bounds)) {
 			placeInBounds(o, o.bounds);
 		}
 		// handle insect's actions
 		if (!o.action && !o.killed) {
-		    if (o.type == 2) {  // Mariposa
+		    if (o.type == 3) {  // Mosquito
 		        if (frog.shooting && o.hitRadius(frog.tongueTarget.x, frog.tongueTarget.y, 50)) {
 		            o.perform(1);
 		        }
@@ -545,7 +549,7 @@ function handleMouseMove (e)
     fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
    </script>
-	Sin sonidos, a ver qué tal va ahora...
+	Sin sonidos, a ver qué tal va ahora...<?php if (in_array($_SESSION['fb_user_id'],array('1236628420','752565913'))): ?><input id="wlevel" type="text" value="0" /><?php endif; ?>
 	<div id="canvasWrapper" align="center" style="width: 640px; height: 480px">
 		<div id="canvasOverlay" style="width: 640px; height: 480px"></div>
 		<canvas width="640" height="480" id="stageCanvas" class="pantalla"></canvas>
