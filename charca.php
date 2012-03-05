@@ -326,7 +326,7 @@ function tick() {
 		}
 		// handle insect's actions
 		if (!o.action && !o.killed) {
-		    if (o.type == 3) {  // Mosquito
+		    if (o.type == 4) {  // Mosquito
 		        if (frog.shooting && o.hitRadius(frog.tongueTarget.x, frog.tongueTarget.y, 50)) {
 		            o.perform(1);
 		        }
