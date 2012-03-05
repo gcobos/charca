@@ -244,7 +244,7 @@ Insect.prototype = new Container();
 			        if (this.step == 0) {
 			            
 			            this.x = this.parent.canvas.width;
-			            this.y = 20;
+			            this.y = 30;
 			            this.vX = -4;
 			            this.cinema = true;
 			        }
