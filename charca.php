@@ -315,7 +315,8 @@ function tick() {
 				if (type != 5 || fireflies < levelConfig[level][3]) {
 				    //console.log('Se cumple?',(time - timeBase) > levelConfig[level][1]/2));
     				if (type == 5) {
-    				    if ((baseTime - time) > levelConfig[level][1]/2) {
+    				    if (insectsKilled > levelConfig[level][0]/2 ) {
+    				    //if ((baseTime - time) > levelConfig[level][1]/2) {
     				        fireflies++;
     				        var index = getInsect(type, power);
 				            insectsCloud[index].floatOnScreen(canvas.width, canvas.height);
