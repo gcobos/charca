@@ -304,7 +304,6 @@ function tick() {
 				//console.log('new bug type', type);
 				var power = (level - (type+1) + Math.round((Math.random()-0.5)*2)); 
 				var index = getInsect(type, power);
-				insectsCloud[index].floatOnScreen(canvas.width, canvas.height);
 			}
 		}	
 

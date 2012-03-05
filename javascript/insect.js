@@ -18,7 +18,7 @@ Insect.prototype = new Container();
 		2: {width:80, height:80, regX:40, regY:40},
 		3: {width:80, height:80, regX:40, regY:40},
 		4: {width:64, height:64, regX:32, regY:32},
-		5: {width:64, height:64, regX:32, regY:32},
+		5: {width:80, height:80, regX:40, regY:40},
 		6: {width:180, height:180, regX:90, regY:90},
 	};		
 	
@@ -95,6 +95,13 @@ Insect.prototype = new Container();
 		if (type > Insect.types) type = 1;
 		this.type = type;
 		this.power = power;
+		
+		// Special settings
+		if (this.type == 5) {   // Luciérnaga (empieza realizando una acción)
+		    this.action = 1;
+		} else {
+    		this.floatOnScreen(this.parent.canvas.width, this.parent.canvas.height);
+		}
 		
 		// Clean previous animation
 		this.removeAllChildren();
@@ -205,7 +212,14 @@ Insect.prototype = new Container();
 						//console.log(radio);
 					}
 					break;
-				case 3: // Mosquitos: Baja rápidamente cuando les estan disparando y luego vuelve a subir lentamente
+				case 3:	// Avispa: Se mueve rápido y efectua 3 cambios de dirección
+					if (this.step%250 == 0) {
+						this.step+=200;
+						this.vX = 3 * (Math.random()-0.5);
+						this.vY = 3 * (Math.random()-0.5);
+					}	
+					break;
+				case 4: // Mosquitos: Baja rápidamente cuando les estan disparando y luego vuelve a subir lentamente
 				    if (this.step==0) {
 				        this.bmpAnimation.gotoAndStop('fly');
 				        this.vY = 6;
@@ -216,14 +230,12 @@ Insect.prototype = new Container();
 				        this.bmpAnimation.gotoAndPlay('fly');
 				    }
 				    break;
-				case 3:	// Avispa: Se mueve rápido y efectua 3 cambios de dirección
-					if (this.step%250 == 0) {
-						this.step+=200;
-						this.vX = 3 * (Math.random()-0.5);
-						this.vY = 3 * (Math.random()-0.5);
-					}	
-					break;
 			    case 5: // Luciernaga
+			        if (this.step == 0) {
+			            this.x = 20;
+			            this.y = 10;
+			            this.cinema = true;
+			        }
 			        break;
 			    case 6:
 			        break;
