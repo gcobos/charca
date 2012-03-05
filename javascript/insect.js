@@ -39,7 +39,7 @@ Insect.prototype = new Container();
 				fly: [0,2, "fly"],	//attack: [20,39,"fly"],
 			}, 
 		6:	{ 
-				fly: [0,7, "fly"], 	attack: [8, 10, "fly"],
+				fly: [0,6, "fly"], 	attack: [7, 10, "fly"],
 			}, 
 	};
 
