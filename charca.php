@@ -87,9 +87,9 @@ var levelConfig = {
 	5: [85, 75, 4,0],	// 85
 	6: [90, 70, 4,0],	// 90
 	7: [95, 65, 4,1],	// 95
-	8: [100,60, 5,1],	// 100
-	9: [110,55, 5,2],	// 110
-	10: [405,10, 6,2],  // 405
+	8: [100,65, 5,1],	// 100
+	9: [110,60, 5,2],	// 110
+	10: [405,5, 6,2],  // 405
 };
 
 /*
@@ -314,7 +314,6 @@ function tick() {
 				//console.log('new bug type', type);
 				var power = (level - (type+1) + Math.round((Math.random()-0.5)*2)); 
 				if (type != 5 || fireflies < levelConfig[level][3]) {
-				    //console.log('Se cumple?',(time - timeBase) > levelConfig[level][1]/2));
     				if (type == 5) {
     				    if (insectsKilled > levelConfig[level][0]/2 ) {
     				    //if ((baseTime - time) > levelConfig[level][1]/2) {
