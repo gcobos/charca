@@ -230,8 +230,8 @@ Insect.prototype = new Container();
 				        this.vY = 6;
 				        this.vX = (Math.random()-0.5)*0.2;
 				    } else if (this.step==15) {
-				        this.vY = -0.2
-				        this.step=650;
+				        this.vY = -0.4;
+				        this.step=900;
 				        this.bmpAnimation.gotoAndPlay('fly');
 				    }
 				    break;

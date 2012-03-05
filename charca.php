@@ -549,7 +549,7 @@ function handleMouseMove (e)
     fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
    </script>
-	Sin sonidos, a ver qué tal va ahora...<?php if (in_array($_SESSION['fb_user_id'],array('1236628420','752565913'))): ?><input id="wlevel" type="text" value="0" /><?php endif; ?>
+	Sin sonidos, a ver qué tal va ahora...<?php if (in_array($_SERVER['HTTP_HOST']=='localhost' || $_SESSION['fb_user_id'],array('1236628420','752565913'))): ?><input id="wlevel" type="text" value="0" /><?php endif; ?>
 	<div id="canvasWrapper" align="center" style="width: 640px; height: 480px">
 		<div id="canvasOverlay" style="width: 640px; height: 480px"></div>
 		<canvas width="640" height="480" id="stageCanvas" class="pantalla"></canvas>
