@@ -245,7 +245,7 @@ function restart() {
 	
 	var wlevel = 0
 	if (document.getElementById('wlevel')) {
-    	wlevel = document.getElementById('wlevel').value
+    	wlevel = parseInt(document.getElementById('wlevel').value);
     }
 	if (!frog.alive) {
 		level = wlevel;
