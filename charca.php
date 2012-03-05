@@ -77,19 +77,19 @@ $base_url = $proto.$server.'/'.dirname($_SERVER['REQUEST_URI']);
 // Defines 
 var MAX_INSECTS = 15;       // how many bugs can be in the stage at the same time
 
-// Configuration for every level  [ number of insects, time, difficulty (max type of insect to generate) ]
+// Configuration for every level  [ number of insects, time, difficulty (max type of insect to generate), number of fireflies ]
 var levelConfig = { 
-	0: [15, 100, 1],   // 15
-	1: [25, 95, 2],	// 25
-	2: [45, 90, 3],	// 45
-	3: [65, 85, 3],	// 65
-	4: [75, 80, 3],	// 75
-	5: [85, 75, 4],	// 85
-	6: [90, 70, 4],	// 90
-	7: [95, 65, 4],	// 95
-	8: [20,60, 5],	// 100
-	9: [105,55, 5],	// 105
-	10: [405,10, 6],// 405
+	0: [15, 100, 1,0],   // 15
+	1: [25, 95, 2,0],	// 25
+	2: [45, 90, 3,0],	// 45
+	3: [65, 85, 3,0],	// 65
+	4: [75, 80, 3,0],	// 75
+	5: [85, 75, 4,0],	// 85
+	6: [90, 70, 4,0],	// 90
+	7: [95, 65, 4,0],	// 95
+	8: [100,60, 5,1],	// 100
+	9: [105,55, 5,2],	// 105
+	10: [405,10, 6,3],// 405
 };
 
 /*
@@ -128,6 +128,7 @@ var level = 0; 			// actual level
 var time = 0;				// actual time left
 var timer;
 var baseTime;
+var fireflies = 0;          // How many fireflies have appeared already in this level
 
 var messageField;		   // message display field
 var levelField;			// level field
@@ -160,17 +161,14 @@ function init (canvasId, canvasWrapper, overlayBlock) {
 
 	//ensure stage is blank and add the frog
 	stage.clear();
-
-	background = new Image();
-	background.src = "images/background.jpg";
 	
 	// Splash window
 	splash = new Image();
 	splash.src = "images/title.jpg";
 	splash.onload = function () {
 		var bitmap = new Bitmap(splash);
-   	bitmap.x = 0;
-   	bitmap.y = 0;
+       	bitmap.x = 0;
+       	bitmap.y = 0;
 		stage.addChild(bitmap);
 
 		// Create an insect, just to ensure that everything is loaded for later
@@ -259,32 +257,43 @@ function restart() {
 	insectsCloud = new Array();
 	aliveInsects = 0;
 	insectsKilled = 0;
+    fireflies = 0;
 	
 	//ensure stage is blank and add the frog
 	stage.clear();
 
-	var bitmap = new Bitmap(background);
-	bitmap.x = 0;
-	bitmap.y = 0;
-	stage.addChild(bitmap);
+	background = new Image();
+	if (level< 4) {
+	    background.src = "images/background.jpg";
+	} else if (level < 8) {
+	    background.src = "images/background2.jpg";
+	} else {
+	    background.src = "images/background3.jpg";
+	}
+    background.onload = function () {
+	    var bitmap = new Bitmap(background);
+	    bitmap.x = 0;
+	    bitmap.y = 0;
+	    stage.addChild(bitmap);
 
-	stage.addChild(frog);
+	    stage.addChild(frog);
 
-	//d = new Shape();
-	//stage.addChild(d);
+	    //d = new Shape();
+	    //stage.addChild(d);
 	
-	// Remove overlay
-	overlay.style.display = 'none';
+	    // Remove overlay
+	    overlay.style.display = 'none';
 	
-	Ticker.addListener(window);
+	    Ticker.addListener(window);
 	
-	//start game timer
-	window.clearInterval(timer);
-	baseTime = time + Math.round(Ticker.getTime() / 1000);
-	timer = setInterval("refreshHeader();", 250);	
-	//console.log(time,Math.round(Ticker.getTime() / 1000) );
-	playing = true;
-	refreshHeader();
+	    //start game timer
+	    window.clearInterval(timer);
+	    baseTime = time + Math.round(Ticker.getTime() / 1000);
+	    timer = setInterval("refreshHeader();", 250);	
+	    //console.log(time,Math.round(Ticker.getTime() / 1000) );
+	    playing = true;
+	    refreshHeader();
+    }
 }
 
 function tick() {
@@ -303,8 +312,19 @@ function tick() {
 				var type = 1 + Math.floor(Math.random() * levelConfig[level][2]);	// Difficulty
 				//console.log('new bug type', type);
 				var power = (level - (type+1) + Math.round((Math.random()-0.5)*2)); 
-				var index = getInsect(type, power);
-				insectsCloud[index].floatOnScreen(canvas.width, canvas.height);
+				if (type != 5 || fireflies < levelConfig[level][3]) {
+				    //console.log('Se cumple?',(time - timeBase) > levelConfig[level][1]/2));
+    				if (type == 5) {
+    				    if ((baseTime - time) > levelConfig[level][1]/2) {
+    				        fireflies++;
+    				        var index = getInsect(type, power);
+				            insectsCloud[index].floatOnScreen(canvas.width, canvas.height);
+				        }
+				    } else {
+				        var index = getInsect(type, power);
+				        insectsCloud[index].floatOnScreen(canvas.width, canvas.height);
+				    }
+				}
 			}
 		}	
 
@@ -364,6 +384,9 @@ function tick() {
 				// handle tongue collisions
 			if(frog.alive && o.hitRadius(frog.tonguePos.x, frog.tonguePos.y, frog.hit)) {
 				this.score += o.score;
+				if (o.type == 5) {  // firefly
+				    time+=10;
+				}
 				o.die();	// stops animation and follows tongue
 				//SoundJS.play("punch");
 				insectsKilled++;
