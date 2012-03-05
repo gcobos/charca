@@ -245,7 +245,7 @@ Insect.prototype = new Container();
 			            
 			            this.x = this.parent.canvas.width;
 			            this.y = 30;
-			            this.vX = -4;
+			            this.vX = -3.6;
 			            this.cinema = true;
 			        }
 			        if (this.step == 999 || this.x < -this.bounds) {
