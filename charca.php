@@ -258,9 +258,6 @@ function restart() {
 	aliveInsects = 0;
 	insectsKilled = 0;
     fireflies = 0;
-	
-	//ensure stage is blank and add the frog
-	stage.clear();
 
 	background = new Image();
 	if (level< 4) {
@@ -271,6 +268,10 @@ function restart() {
 	    background.src = "images/background3.jpg";
 	}
     background.onload = function () {
+
+    	//ensure stage is blank and add the frog
+    	stage.clear();
+
 	    var bitmap = new Bitmap(background);
 	    bitmap.x = 0;
 	    bitmap.y = 0;
