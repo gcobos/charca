@@ -9,7 +9,7 @@ Insect.prototype = new Container();
 
 // static properties:
 
-	Insect.types = 5;
+	Insect.types = 6;
 	
 	Insect.typeImages = {};	
 	
