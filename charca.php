@@ -387,7 +387,7 @@ function tick() {
 			if(frog.alive && o.hitRadius(frog.tonguePos.x, frog.tonguePos.y, frog.hit)) {
 				this.score += o.score;
 				if (o.type == 5) {  // firefly
-				    time-=10;
+				    time+=10;
 				}
 				o.die();	// stops animation and follows tongue
 				//SoundJS.play("punch");
