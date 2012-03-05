@@ -90,15 +90,20 @@ Insect.prototype = new Container();
 // public methods:
 	
 	//handle reinit for poolings sake
-	Insect.prototype.activate = function (type, power, width, height) {
+	Insect.prototype.activate = function (type, power) {
 		if (power<0) power = 0;
 		if (type > Insect.types) type = 1;
 		this.type = type;
 		this.power = power;
+		this.cinema = false;
+		this.action = 0;
+		this.killed = false;
 		
 		// Special settings
 		if (this.type == 5) {   // Luciérnaga (empieza realizando una acción)
-		    this.action = 1;
+		    this.x = -80;
+		    this.y = -80;
+		    this.perform(1);
 		} else {
 		    
 		}
@@ -124,10 +129,9 @@ Insect.prototype = new Container();
 		// start playing the first sequence:
 		this.bmpAnimation.gotoAndPlay("fly");		//animate	
 		this.bounds = Insect.typeFrames[this.type].width / 2;
-		this.speed = (Math.random() + 1.8 )* this.type;
+		this.speed = (Math.random() + 1.6 )* this.type;
 		this.score = Math.round(this.type * 4.6 + this.power * 1.3);
 		this.active = true;
-		this.killed = false;
 	}
 	
 	//handle what a Insect does to itself every frame
@@ -144,8 +148,8 @@ Insect.prototype = new Container();
 	//position the Insect so it floats on screen
 	Insect.prototype.floatOnScreen = function (width, height) {
 	    if (this.type == 5) {       // Luciernaga
-	        this.x = 10;
-	        this.y = 20;
+	        this.x = -80;
+	        this.y = -80;
 	    } else {
     		//base bias on real estate and pick a side or top/bottom
     		this.x = width * 0.5 + Math.random() * width * 0.4;
@@ -194,6 +198,7 @@ Insect.prototype = new Container();
 		this.step = 0;
 		this.vX = 0;
 		this.vY = 0;
+		this.cinema = false;
 		
 	}
 	
@@ -227,19 +232,24 @@ Insect.prototype = new Container();
 				case 4: // Mosquitos: Baja rápidamente cuando les estan disparando y luego vuelve a subir lentamente
 				    if (this.step==0) {
 				        this.bmpAnimation.gotoAndStop('fly');
-				        this.vY = 6;
+				        this.vY = 5;
 				        this.vX = (Math.random()-0.5)*0.2;
 				    } else if (this.step==15) {
-				        this.vY = -0.4;
-				        this.step=900;
+				        this.vY = -0.3;
+				        this.step = 850;
 				        this.bmpAnimation.gotoAndPlay('fly');
 				    }
 				    break;
 			    case 5: // Luciernaga
 			        if (this.step == 0) {
-			            this.x = 20;
-			            this.y = 10;
+			            
+			            this.x = this.parent.canvas.width;
+			            this.y = 20;
+			            this.vX = -5;
 			            this.cinema = true;
+			        }
+			        if (this.step == 999 || this.x < -this.bounds) {
+			            this.active = 0;    // And die gracefully
 			        }
 			        break;
 			    case 6:
