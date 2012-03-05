@@ -140,8 +140,14 @@ Insect.prototype = new Container();
 			if (this.action) {
 				this.performStep();
 			}
-			this.x += this.vX + (Math.random()-0.5) * this.speed;
-			this.y += this.vY + (Math.random()-0.5) * this.speed;
+			if (this.type !=6 ) {
+    			this.x += this.vX + (Math.random()-0.5) * this.speed;
+	    		this.y += this.vY + (Math.random()-0.5) * this.speed;
+	        } else {
+	        	this.x += this.vX;
+	    		this.y += this.vY;
+	        
+	        }
 		}			
 	}
 	
