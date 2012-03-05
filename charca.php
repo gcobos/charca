@@ -87,8 +87,9 @@ var levelConfig = {
 	5: [85, 75, 4],	// 85
 	6: [90, 70, 4],	// 90
 	7: [95, 65, 4],	// 95
-	8: [100,60, 4],	// 100
+	8: [100,60, 5],	// 100
 	9: [105,55, 5],	// 105
+	10: [405,10, 6],// 405
 };
 
 /*
@@ -319,11 +320,18 @@ function tick() {
 		if(outOfBounds(o, o.bounds)) {
 			placeInBounds(o, o.bounds);
 		}
+		// handle insect's actions
 		if (!o.action && !o.killed) {
-			var nextAction = Math.round(((Math.random()-0.77)*5) * o.power);	// 23% de probabilidad
-			if (nextAction > 0) {
-				o.perform(nextAction);
-				//console.log('Insect '+insect+' performing action '+nextAction );
+		    if (o.type == 2) {  // Mariposa
+		        if (frog.shooting && o.hitRadius(frog.tongueTarget.x, frog.tongueTarget.y, 50)) {
+		            o.perform(1);
+		        }
+		    } else {
+			    var nextAction = Math.round(((Math.random()-0.77)*5) * o.power);	// 23% probability
+			    if (nextAction > 0) {
+				    o.perform(nextAction);
+				    //console.log('Insect '+insect+' performing action '+nextAction );
+				}
 			}
 		} else if (o.action && o.type==1) {
 			/*var g = d.graphics;
@@ -342,8 +350,8 @@ function tick() {
 		o.tick();
 	
 		if (playing) {
-			//	handle frog collisions
-			if	(frog.alive && o.hitRadius(frog.x, frog.y, frog.hit)) {
+			//	handle frog collisions (not used now)
+			if	(false && frog.alive && o.hitRadius(frog.x, frog.y, frog.hit)) {
 				frog.die();
 				messageField.text = "Estás frito. Pulsa aquí para jugar de nuevo";
 				watchRestart();
@@ -401,7 +409,7 @@ function getInsect (type, power) {
 	}
 	
 	stage.addChild(insectsCloud[i]);
-	//console.log('Added insect to stage');
+	//console.log('Added insect type '+type+' to stage');
 	return i;
 }
 

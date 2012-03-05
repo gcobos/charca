@@ -16,8 +16,8 @@ Insect.prototype = new Container();
 	Insect.typeFrames = {	// frames for each insect type
 		1: {width:80, height:80, regX:40, regY:40},
 		2: {width:80, height:80, regX:40, regY:40},
-		3: {width:64, height:64, regX:32, regY:32},
-		4: {width:80, height:80, regX:40, regY:40},
+		3: {width:80, height:80, regX:40, regY:40},
+		4: {width:64, height:64, regX:32, regY:32},
 		5: {width:180, height:180, regX:90, regY:90},
 	};		
 	
@@ -87,7 +87,7 @@ Insect.prototype = new Container();
 	//handle reinit for poolings sake
 	Insect.prototype.activate = function (type, power) {
 		if (power<0) power = 0;
-		if (type >= Insect.types) type = 1;
+		if (type > Insect.types) type = 1;
 		this.type = type;
 		this.power = power;
 		
@@ -200,7 +200,18 @@ Insect.prototype = new Container();
 						//console.log(radio);
 					}
 					break;
-				case 2:	// Avispa: Se mueve rápido y efectua 3 cambios de dirección
+				case 2: // Mariposa: Baja rápidamente cuando les estan disparando y luego vuelve a subir lentamente
+				    if (this.step==0) {
+				        this.bmpAnimation.gotoAndStop('fly');
+				        this.vY = 6;
+				        this.vX = (Math.random()-0.5)*0.2;
+				    } else if (this.step==15) {
+				        this.vY = -0.2
+				        this.step=650;
+				        this.bmpAnimation.gotoAndPlay('fly');
+				    }
+				    break;
+				case 3:	// Avispa: Se mueve rápido y efectua 3 cambios de dirección
 					if (this.step%250 == 0) {
 						this.step+=200;
 						this.vX = 3 * (Math.random()-0.5);
@@ -231,11 +242,6 @@ Insect.prototype = new Container();
 						//this.vY = ((0.1+Math.random())*h)*0.01;
 					}
 					break;
-				case 3:
-					
-				case 4:
-
-				case 5:
 				
 				default:
 				
