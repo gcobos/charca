@@ -39,7 +39,8 @@ Insect.prototype = new Container();
 				fly: [0,2, "fly"],	//attack: [20,39,"fly"],
 			}, 
 		6:	{ 
-				fly: [0,6, "fly"], 	attack: [7, 10, "fly"],
+				fly: { frames: [0,2,4,6], next: "fly"}, 
+				attack: { frames: [7,8,9,10,9,8,7], next: "fly"},
 			}, 
 	};
 
@@ -258,7 +259,11 @@ Insect.prototype = new Container();
 			            this.active = 0;    // And die gracefully
 			        }
 			        break;
-			    case 6:
+			    case 6:  // Monstruo final
+			        if (this.step == 0 ) {
+			            this.bmpAnimation.gotoAndPlay('attack');
+			            this.step = 900;
+			        }  
 			        break;
 				case 7:
 					//console.log(this.step);

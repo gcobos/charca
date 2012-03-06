@@ -284,7 +284,7 @@ function restart() {
 	    //stage.addChild(d);
 	
 	    if (level == 10) {
-    	    var index = getInsect(6, 0);
+    	    var index = getInsect(6, 1);
 	    	insectsCloud[index].floatOnScreen(canvas.width, canvas.height);
 	    }
 	    // Remove overlay
