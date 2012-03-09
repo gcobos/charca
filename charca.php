@@ -89,7 +89,7 @@ var levelConfig = {
 	7: [95, 70, 4,1],	// 95
 	8: [100,65, 5,1],	// 100
 	9: [110,60, 5,2],	// 110
-	10: [405,55, 5,3],  // 405
+	10: [100,55, 5,3],  // 405
 };
 
 // Variables
@@ -181,7 +181,7 @@ function init (canvasId, canvasWrapper, overlayBlock) {
 		timeField.x = canvas.width - 20;
 		timeField.y = 30;
 
-		messageField = new Text("Pulsa aquí para jugar", "bold 24px Arial", "#343814");
+		messageField = new Text("Pulsa aquí para jugar", "bold 24px Arial", "#647824");
 		messageField.textAlign = "center";
 		messageField.x = canvas.width / 2;
 		messageField.y = canvas.height / 2.6;
@@ -394,10 +394,17 @@ function tick() {
 		// handle the end of the level
 		//console.log('Alive: '+ aliveInsects, 'Killed: '+insectsKilled, 'In this level: '+levelConfig[level][0]);
 		if (insectsKilled >= levelConfig[level][0]) {
-			messageField.text = "¡Has pasado al siguiente nivel!\nPulsa aquí para continuar.";
-			level += 1;
-			score += time * 5;
-			watchRestart();
+		    if (level < 10) {
+			    messageField.text = "¡Has pasado al siguiente nivel!\nPulsa aquí para continuar.";
+			    level += 1;
+			    score += time * 5;
+			    watchRestart();
+			} else {
+			    messageField.text = "¡Enhorabuena! Has derrotado al bicho gordo!! Ahora el mundo es un poquito más feliz, excepto para la familia del bicho gordo.";
+			    score += 1000;
+			    watchRestart();
+			    level = 0;
+			}
 		}
 		//console.log(aliveInsects);
 	}

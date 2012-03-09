@@ -59,6 +59,7 @@ Insect.prototype = new Container();
 		
 	Insect.prototype.active = false;	//is it active
 	Insect.prototype.power = 0			// Every more power, adds some new capability :)	
+	Insect.prototype.attacking = false;	// Tells if the insect is attacking
 	
 	Insect.prototype.killed = false;	// true when it's trapped by the tongue
 	
@@ -256,20 +257,26 @@ Insect.prototype = new Container();
 			            this.y = 30;
 			            this.vX = -3.6;
 			            this.cinema = true;
+			        } else {
+			            this.y = 30;
 			        }
+			        
 			        if (this.step == 999 || this.x < -this.bounds) {
 			            this.active = 0;    // And die gracefully
+			            
 			        }
 			        break;
 			    case 6:  // Monstruo final
 			        //console.log('action '+this.action);
-			        if (this.action == 0) {             // Attact
+			        if (this.action == 1) {             // Attact
 			            if (this.step == 0 ) {
 			                this.bmpAnimation.gotoAndPlay('attack');
+			                this.attack = true;
 			                this.step = 850;
 			            }
-			        } else if (this.action >0) {      // Change position
+			        } else if (this.action >1) {      // Change position
 			            if (this.step == 0) {
+			                this.cinema = true;
 						    var w = this.parent.canvas.width;
 						    var h = this.parent.canvas.height;
 						    //this.oX = this.x;
@@ -277,8 +284,8 @@ Insect.prototype = new Container();
 						    var newX = w * 0.5 + Math.random() * w * 0.4;
         		            var newY = h * 0.1 + Math.random() * h * 0.8;
         		            var a = angleBetweenPoints({x: newX, y: newY}, this);
-        		            this.vX = Math.cos(a)* 20 ;
-        		            this.vY = Math.sin(a) * 20 ;
+        		            this.vX = Math.cos(a)* 12;
+        		            this.vY = Math.sin(a) * 12;
         		            this.step = 970;
         		            
         		        } else {
