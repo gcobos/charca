@@ -51,6 +51,7 @@ Insect.prototype = new Container();
 	
 	Insect.prototype.bmpAnimation = null;
 
+	Insect.prototype.life = 1;		// number of shots that can bear
 	Insect.prototype.hit = 30;		//average radial disparity
 	
 	Insect.prototype.speed = 0;		//speed ammount
@@ -99,14 +100,15 @@ Insect.prototype = new Container();
 		this.cinema = false;
 		this.action = 0;
 		this.killed = false;
+		this.life = 1;
 		
 		// Special settings
 		if (this.type == 5) {   // Luciérnaga (empieza realizando una acción)
 		    this.x = -80;
 		    this.y = -80;
 		    this.perform(1);
-		} else {
-		    
+		} else if (this.type==6) { // Final boss
+		    this.life = 20;
 		}
 		
 		// Clean previous animation
@@ -260,12 +262,34 @@ Insect.prototype = new Container();
 			        }
 			        break;
 			    case 6:  // Monstruo final
-			        if (this.step == 0 ) {
-			            this.bmpAnimation.gotoAndPlay('attack');
-			            this.step = 900;
-			        }  
+			        //console.log('action '+this.action);
+			        if (this.action == 0) {             // Attact
+			            if (this.step == 0 ) {
+			                this.bmpAnimation.gotoAndPlay('attack');
+			                this.step = 850;
+			            }
+			        } else if (this.action >0) {      // Change position
+			            if (this.step == 0) {
+						    var w = this.parent.canvas.width;
+						    var h = this.parent.canvas.height;
+						    //this.oX = this.x;
+						    //this.oY = this.y;
+						    var newX = w * 0.5 + Math.random() * w * 0.4;
+        		            var newY = h * 0.1 + Math.random() * h * 0.8;
+        		            var a = angleBetweenPoints({x: newX, y: newY}, this);
+        		            this.vX = Math.cos(a)* 20 ;
+        		            this.vY = Math.sin(a) * 20 ;
+        		            this.step = 970;
+        		            
+        		        } else {
+			                
+					    }
+			        } else {                            // Dying
+			        
+			        }
+			            
 			        break;
-				case 7:
+				case 7: // Not used
 					//console.log(this.step);
 					if (this.step == 0) {
 						var w = this.parent.canvas.width;
@@ -274,7 +298,7 @@ Insect.prototype = new Container();
 						//this.vY = Math.asin(400 - this.y);
 						this.x = 120;
 						this.y = 370;
-						//console.log(this.x, this.y);
+						console.log('WTH',this.x, this.y);
 						
 						//this.vY = (((h*0.1)+(h*0.8)) - this.y)*0.005;
 						//console.log('Lalalaa',this.vX,this.vY);	

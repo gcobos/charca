@@ -89,23 +89,9 @@ var levelConfig = {
 	7: [95, 70, 4,1],	// 95
 	8: [100,65, 5,1],	// 100
 	9: [110,60, 5,2],	// 110
-	10: [405,5, 5,2],  // 405
+	10: [405,55, 5,3],  // 405
 };
 
-/*
-// Testing
-var levelConfig = { 
-	0: [2, 10, 1], 
-	1: [3, 90, 2],
-	2: [45, 80, 3],
-	3: [65, 75, 3],
-	4: [80, 70, 3],
-	5: [90, 65, 3],
-	6: [100,60, 3],
-	7: [120,55, 4],
-	8: [130,50, 4],
-};
-*/
 // Variables
 
 var canvas;			      // main canvas
@@ -284,7 +270,7 @@ function restart() {
 	    //stage.addChild(d);
 	
 	    if (level == 10) {
-    	    var index = getInsect(6, 1);
+    	    var index = getInsect(6, 3);
 	    	insectsCloud[index].floatOnScreen(canvas.width, canvas.height);
 	    }
 	    // Remove overlay
@@ -321,7 +307,6 @@ function tick() {
 				if (type != 5 || fireflies < levelConfig[level][3]) {
     				if (type == 5) {
     				    if (aliveFireflies==0 && insectsKilled > levelConfig[level][0]/2 ) {
-    				    //if ((baseTime - time) > levelConfig[level][1]/2) {
     				        fireflies++;
     				        var index = getInsect(type, power);
 				            insectsCloud[index].floatOnScreen(canvas.width, canvas.height);
@@ -389,14 +374,17 @@ function tick() {
 				continue;
 			}
 				// handle tongue collisions
-			if(frog.alive && o.hitRadius(frog.tonguePos.x, frog.tonguePos.y, frog.hit)) {
+			if (frog.alive && o.hitRadius(frog.tonguePos.x, frog.tonguePos.y, frog.hit)) {
 				this.score += o.score;
-				if (o.type == 5) {  // firefly
+			    o.life -= 1;
+			    if (o.life <= 0) {
+			        o.die();	// stops animation and follows tongue
+				    insectsKilled++;
+			    }
+			    if (o.type == 5) {  // firefly
 				    baseTime+=10;
 				}
-				o.die();	// stops animation and follows tongue
 				//SoundJS.play("punch");
-				insectsKilled++;
 				continue;
 			}
 			if (o.type == 5) aliveFireflies++;
