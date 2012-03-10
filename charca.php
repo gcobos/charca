@@ -88,8 +88,8 @@ var levelConfig = {
 	6: [90, 70, 4,0],	// 90
 	7: [95, 70, 4,1],	// 95
 	8: [100,65, 5,1],	// 100
-	9: [110,60, 5,2],	// 110
-	10: [100,55, 5,3],  // 100
+	9: [1,60, 5,2],	// 110
+	10: [1,55, 5,3],  // 100
 };
 
 // Variables
@@ -394,18 +394,19 @@ function tick() {
 		}
 
 		// handle the end of the level
-		//console.log('Alive: '+ aliveInsects, 'Killed: '+insectsKilled, 'In this level: '+levelConfig[level][0]);
 		if (insectsKilled >= levelConfig[level][0]) {
 		    if (level < 10) {
 			    messageField.text = "¡Has pasado al siguiente nivel!\nPulsa aquí para continuar.";
 			    level += 1;
 			    score += time * 5;
+			    insectsKilled = 0;
 			    watchRestart();
 			} else if (aliveInsects <= 0) {
-			    messageField.text = "¡Enhorabuena!\n\nHas derrotado al bicho gordo de la charca!!\nAhora el mundo es un poquito más feliz,\nexcepto para la familia del bicho gordo.";
+			    messageField.text = "¡Enhorabuena!\n\nHas derrotado al bicho gordo de la charca!!\nAhora el mundo es un poquito más feliz,\nexcepto para la familia del bicho gordo!!!";
 			    score += 1000;
-			    watchRestart();
+			    insectsKilled = 0;
 			    level = 0;
+			    watchRestart();
 			}
 		}
 		//console.log(aliveInsects);
