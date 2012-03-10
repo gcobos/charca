@@ -89,7 +89,7 @@ var levelConfig = {
 	7: [95, 70, 4,1],	// 95
 	8: [100,65, 5,1],	// 100
 	9: [110,60, 5,2],	// 110
-	10: [100,55, 5,3],  // 405
+	10: [2,55, 5,3],  // 100
 };
 
 // Variables
@@ -181,7 +181,7 @@ function init (canvasId, canvasWrapper, overlayBlock) {
 		timeField.x = canvas.width - 20;
 		timeField.y = 30;
 
-		messageField = new Text("Pulsa aquí para jugar", "bold 24px Arial", "#647824");
+		messageField = new Text("Pulsa aquí para jugar", "bold 24px Arial", "#ffffff");
 		messageField.textAlign = "center";
 		messageField.x = canvas.width / 2;
 		messageField.y = canvas.height / 2.6;
@@ -232,7 +232,7 @@ function restart() {
 	if (document.getElementById('wlevel')) {
     	wlevel = parseInt(document.getElementById('wlevel').value);
     }
-	if (!frog.alive) {
+	if (!frog.alive || level == 0) {
 		level = wlevel;
 		score = 0;
 	}
@@ -294,7 +294,7 @@ function tick() {
 		// handle time limits
 		if (time <= 0) {
 			frog.die();
-			messageField.text = "Estás frito. Pulsa aquí para jugar de nuevo";
+			messageField.text = "Estás frito.\nPulsa aquí para jugar de nuevo";
 			watchRestart();
 		}
 
@@ -369,23 +369,25 @@ function tick() {
 			//	handle frog collisions (not used now)
 			if	(false && frog.alive && o.hitRadius(frog.x, frog.y, frog.hit)) {
 				frog.die();
-				messageField.text = "Estás frito. Pulsa aquí para jugar de nuevo";
+				messageField.text = "Estás frito.\nPulsa aquí para jugar de nuevo";
 				watchRestart();
 				continue;
 			}
-				// handle tongue collisions
+			
+			// handle tongue collisions
 			if (frog.alive && o.hitRadius(frog.tonguePos.x, frog.tonguePos.y, frog.hit)) {
 				this.score += o.score;
 			    o.life -= 1;
 			    if (o.life <= 0) {
 			        o.die();	// stops animation and follows tongue
 				    insectsKilled++;
+				    aliveInsects--;
+				    //console.log('Killed!');
 			    }
 			    if (o.type == 5) {  // firefly
 				    baseTime+=10;
 				}
 				//SoundJS.play("punch");
-				continue;
 			}
 			if (o.type == 5) aliveFireflies++;
 			aliveInsects++;				
@@ -399,8 +401,8 @@ function tick() {
 			    level += 1;
 			    score += time * 5;
 			    watchRestart();
-			} else {
-			    messageField.text = "¡Enhorabuena! Has derrotado al bicho gordo!! Ahora el mundo es un poquito más feliz, excepto para la familia del bicho gordo.";
+			} else if (aliveInsects <= 0) {
+			    messageField.text = "¡Enhorabuena!\n\nHas derrotado al bicho gordo de la charca!!\nAhora el mundo es un poquito más feliz,\nexcepto para la familia del bicho gordo.";
 			    score += 1000;
 			    watchRestart();
 			    level = 0;
@@ -447,21 +449,22 @@ function httpGet (theUrl, callback)
 {
    var xmlHttp = null;
 
-	//if (theUrl.indexOf("localhost")==-1) {
+	if (theUrl.indexOf("localhost")==-1) {
 		xmlHttp = new XMLHttpRequest();
-   	xmlHttp.open( "GET", theUrl, true);
-   	xmlHttp.onreadystatechange = function() {
-  			if (xmlHttp.readyState==4 && xmlHttp.status==200) {
-   			try {
-   				var result = []				
-   				eval('result=' + xmlHttp.responseText);
-   				callback(result);
-   			} catch (e) {
-   				alert('Failed to set High-Score!');
-   			}
-  			}
- 		}
-   	xmlHttp.send( null );
+       	xmlHttp.open( "GET", theUrl, true);
+       	xmlHttp.onreadystatechange = function() {
+      			if (xmlHttp.readyState==4 && xmlHttp.status==200) {
+       			try {
+       				var result = []				
+       				eval('result=' + xmlHttp.responseText);
+       				callback(result);
+       			} catch (e) {
+       				alert('Failed to set High-Score! ');
+       			}
+      			}
+     		}
+       	xmlHttp.send( null );
+   	}
 
 }
     

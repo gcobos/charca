@@ -261,9 +261,9 @@ Insect.prototype = new Container();
 			            this.y = 30;
 			        }
 			        
-			        if (this.step == 999 || this.x < -this.bounds) {
-			            this.active = 0;    // And die gracefully
-			            
+			        if (this.step > 400 && this.x < -this.bounds) {
+			            this.step=999;
+			            this.active = 0;    // And die gracefully 
 			        }
 			        break;
 			    case 6:  // Monstruo final
@@ -279,17 +279,14 @@ Insect.prototype = new Container();
 			                this.cinema = true;
 						    var w = this.parent.canvas.width;
 						    var h = this.parent.canvas.height;
-						    //this.oX = this.x;
-						    //this.oY = this.y;
 						    var newX = w * 0.5 + Math.random() * w * 0.3;
         		            var newY = h * 0.1 + Math.random() * h * 0.7;
-        		            var a = angleBetweenPoints({x: newX, y: newY}, this);
-        		            this.vX = Math.cos(a)* 12;
-        		            this.vY = Math.sin(a) * 12;
-        		            this.step = 970;
-        		            
+        		            var a = Math.atan2((newY - this.y) , (newX - this.x));
+        		            this.vX = Math.cos(a) * this.speed;
+        		            this.vY = Math.sin(a) * this.speed;
+        		            var steps = modulusOfVector(makeVector({x: newX, y: newY}, this)) / this.speed;
+        		            this.step = 1000 - steps;
         		        } else {
-			                
 					    }
 			        } else {                            // Dying
 			        
