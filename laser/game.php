@@ -90,10 +90,10 @@ var KEYCODE_S = 83;			//usefull keycode
 
 // Configuration for every level  [ number of particles, time ]
 var levelConfig = { 
-	0: [1, 100],
-	1: [2, 100],
-	2: [3, 100],
-	3: [4, 100],
+	0: [1, 1000],
+	1: [2, 1000],
+	2: [3, 1000],
+	3: [4, 1000],
 };
 
 // Variables
@@ -300,16 +300,15 @@ function tick() {
 		}
 
 	//handle turning
-	if(lfHeld){
-		particleContainer.rotation += (360.0 / particleContainer.sides);
+	if (lfHeld) {
+		particleContainer.rotateLeft();
 	} else if(rtHeld) {
-		particleContainer.rotation -=  (360.0 / particleContainer.sides);
+		particleContainer.rotateRight();
 	}
 
-	if(upHeld){
-	    
+	if (upHeld) {
 		particleContainer.increaseSides();
-	} else if(dwHeld) {
+	} else if (dwHeld) {
 		particleContainer.decreaseSides();
 	}
 
@@ -494,14 +493,14 @@ function refreshHeader ()
 			time = 0;
 		}
 	}
-
+/*
 	levelField.text = "NIVEL: " + (Number(level)).toString();
 	stage.addChild(levelField);
 	timeField.text = "TIEMPO: " + (Number(time)).toString();
 	stage.addChild(timeField);
 	scoreField.text = "PUNTOS: " + (Number(score)).toString();
 	stage.addChild(scoreField);
-	
+*/
 }
 
 function showHighScores ()
@@ -621,7 +620,7 @@ function handleMouseMove (e)
 <body onload="init('stageCanvas', 'canvasWrapper','canvasOverlay')"> <!-- bgcolor="#769083">-->
 	<div id="canvasWrapper" align="center" style="width: 640px; height: 480px">
 		<div id="canvasOverlay" style="width: 640px; height: 480px"></div>
-		<canvas width="640" height="480" id="stageCanvas" class="pantalla"></canvas>
+		<canvas width="800" height="480" id="stageCanvas" class="pantalla"></canvas>
 	</div>
 </body>
 </html>

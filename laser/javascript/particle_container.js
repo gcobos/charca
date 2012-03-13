@@ -85,8 +85,12 @@ ParticleContainer.prototype = new Container();
 		this.y += this.vY;
 		this.rotation ++;
 		
+		if (this.timeout >0) {
+		    this.timeout --;
+		}
+		
 		//with thrust flicker a flame every ParticleContainer.TOGGLE frames, attenuate thrust
-		if(this.thrust > 0) {
+		/*if(this.thrust > 0) {
 			this.timeout++;
 			this.magnet.alpha = 1;
 			
@@ -104,22 +108,42 @@ ParticleContainer.prototype = new Container();
 		} else {
 			this.magnet.alpha = 0;
 			this.thrust = 0;
-		}
+		}*/
 	}
 	
 	ParticleContainer.prototype.increaseSides = function ()
 	{
-	    if (this.sides < ParticleContainer.MAX_SIDES) {
+	    if (this.sides < ParticleContainer.MAX_SIDES && this.timeout == 0) {
 	        this.sides++;
+	        this.timeout = 5;
 	        this.makeShape();
 	    }
 	}
 		
 	ParticleContainer.prototype.decreaseSides = function ()
 	{
-	    if (this.sides > 3) {
+	    if (this.sides > 3 && this.timeout == 0) {
 	        this.sides--;
+	        this.timeout = 5;
 	        this.makeShape();
+	    }
+	}	
+	
+	ParticleContainer.prototype.rotateLeft = function ()
+	{
+	    if (this.timeout == 0) {
+	        this.rotation -=  (360.0 / this.sides);
+	        this.timeout = Math.round(ParticleContainer.MAX_SIDES / this.sides);
+	        //this.makeShape();
+	    }
+	}
+		
+	ParticleContainer.prototype.rotateRight = function ()
+	{
+	    if (this.timeout == 0) {
+	        this.rotation +=  (360.0 / this.sides);
+	        this.timeout = Math.round(ParticleContainer.MAX_SIDES / this.sides);
+	        //this.makeShape();
 	    }
 	}
 	
