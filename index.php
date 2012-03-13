@@ -20,6 +20,7 @@
      $code = $_REQUEST["code"];
   }
 
+  
   if(empty($code) && !isset($_REQUEST['error'])) {
     $_SESSION['state'] = md5(uniqid(rand(), TRUE)); //CSRF protection
     // Enforce https on production
