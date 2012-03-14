@@ -11,8 +11,8 @@ function Frog() {
 	Frog.TONGUE_SPEED = 28;		// how fast the tongue moves
 	Frog.TONGUE_INIT = 0;		// how many ticks after the origin begins to draw the tongue
 
-	Frog.head_img = "images/frog_head_gonzalo.png";
-	Frog.head2_img = "images/frog_head2_gonzalo.png";
+	Frog.head_img = "images/frog_head.png";
+	Frog.head2_img = "images/frog_head2.png";
 	Frog.body_img = "images/frog_body.png";
 	Frog.dead_img = "images/frog_dead.png";
 
@@ -84,12 +84,13 @@ function Frog() {
 		this.dead.y = -30;
 
         // For gonzalo's head
-		this.head.x = 36;
+		/*this.head.x = 36;
 		this.head.y = -2;
 		this.head.regX = 41;		// rotation center
 		this.head.regY = 90;
 		this.dead.x = -30;
 		this.dead.y = -30;
+		*/
 		
 		this.head2.x = this.head.x;
 		this.head2.y = this.head.y;
