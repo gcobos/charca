@@ -21,9 +21,10 @@ ParticleContainer.prototype = new Container();
 	
 	ParticleContainer.prototype.vX = 0;
 	ParticleContainer.prototype.vY = 0;
-	ParticleContainer.prototype.sides = 4;
+	ParticleContainer.prototype.sides = 7;
 	ParticleContainer.prototype.radius = 220;
 	ParticleContainer.prototype.hit = 0;
+	ParticleContainer.prototype.programmedRotation = 0;
 	
 // constructor:
 	ParticleContainer.prototype.Container_initialize = ParticleContainer.prototype.initialize;	//unique to avoid overiding base class
@@ -89,6 +90,14 @@ ParticleContainer.prototype = new Container();
 		    this.timeout --;
 		}
 		
+		if (this.timeout == 0 && this.programmedRotation) {
+		    if (this.programmedRotation >= 0) {
+		        this.rotateRight();
+		    } else {
+		        this.rotateLeft();
+		    }
+		}
+		
 		//with thrust flicker a flame every ParticleContainer.TOGGLE frames, attenuate thrust
 		/*if(this.thrust > 0) {
 			this.timeout++;
@@ -134,7 +143,7 @@ ParticleContainer.prototype = new Container();
 	    if (this.timeout == 0) {
 	        this.rotation -=  (360.0 / this.sides);
 	        this.timeout = Math.round(ParticleContainer.MAX_SIDES / this.sides);
-	        //this.makeShape();
+	        if (this.programmedRotation) this.programmedRotation++;
 	    }
 	}
 		
@@ -143,13 +152,38 @@ ParticleContainer.prototype = new Container();
 	    if (this.timeout == 0) {
 	        this.rotation +=  (360.0 / this.sides);
 	        this.timeout = Math.round(ParticleContainer.MAX_SIDES / this.sides);
-	        //this.makeShape();
+	        if (this.programmedRotation) this.programmedRotation--;
 	    }
 	}
 	
 	
-	ParticleContainer.prototype.accelerate = function() {
-		//increase push amount for acceleration
+	ParticleContainer.prototype.goTo = function(target)
+	{
+	    console.log(target.x, target.y);
+	    
+	    var targetAngle = angleBetweenPoints(this, target);
+	    //if (targetAngle < 0) targetAngle += 360;
+	    //targetAngle = targetAngle % 360;
+	    console.log('Target angle', targetAngle);
+	   
+	    var rotationAngle = (this.rotation + (180.0 / this.sides));
+	    //if (rotationAngle < 0) rotationAngle += 360;
+	    //rotationAngle = rotationAngle % 360;
+	    console.log('Rotation angle', rotationAngle);
+	    
+        var diff = (targetAngle - rotationAngle);
+        console.log('Diff raw:',diff);
+        diff = diff % 360;
+        if (diff > 180) {
+            diff = diff - 180;
+        } else if (diff < -180) {
+            diff = diff + 360;
+        }
+	    //console.log('Diff:',diff);
+	    this.programmedRotation += Math.round(diff / (360.0 / this.sides));
+	    //console.log('Programmed ',this.programmedRotation);
+	    
+/*		//increase push amount for acceleration
 		this.thrust += this.thrust + 0.6;
 		if(this.thrust >= ParticleContainer.MAX_THRUST) {
 			this.thrust = ParticleContainer.MAX_THRUST;
@@ -162,6 +196,7 @@ ParticleContainer.prototype = new Container();
 		//cap max speeds
 		this.vX = Math.min(ParticleContainer.MAX_VELOCITY, Math.max(-ParticleContainer.MAX_VELOCITY, this.vX));
 		this.vY = Math.min(ParticleContainer.MAX_VELOCITY, Math.max(-ParticleContainer.MAX_VELOCITY, this.vY));
+*/
 	}
 
 window.ParticleContainer = ParticleContainer;

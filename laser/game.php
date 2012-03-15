@@ -234,9 +234,8 @@ function watchRestart () {
 	//register key functions
     document.onkeydown = handleKeyDown;
     document.onkeyup = handleKeyUp;
-
 	
-	timer = setTimeout('overlay.onclick = handleClick; canvas.onmousemove = handleMouseMove; overlay.onmousemove = handleMouseMove; canvas.onclick = handleClick; canvas.ondblclick = null', 2000);
+	timer = setTimeout('overlay.onclick = handleClick; canvas.onmousemove = handleMouseMove; overlay.onmousemove = handleMouseMove; canvas.onclick = handleClick; canvas.ondblclick = null', 100);
 }
 
 // reset all game logic
@@ -563,10 +562,11 @@ function angleBetweenPoints (p1, p2)
 // executed in response to a mouse click on the screen
 function handleClick (e) {
 	// prevent extra clicks and hide text
-	if (playing && particleContainer.alive) {
-	 	if (!particleContainer.shooting) {
-	 		particleContainer.shoot(mouse);
-		}
+	if (playing) {
+	 	//if (!particleContainer.shooting) {
+	 	    //console.log(mouse.x);
+	 		particleContainer.goTo(mouse);
+		//}
 	} else {
 		stage.removeChild(messageField);
 		restart();
@@ -611,6 +611,7 @@ function handleKeyUp(e) {
 //called when the mouse is moved over the canvas
 function handleMouseMove (e)
 {
+    //console.log(stage.mouseX);
 	mouse.x = stage.mouseX;
 	mouse.y = stage.mouseY;
 }
