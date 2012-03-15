@@ -51,6 +51,8 @@ $base_url = $proto.$server.'/'.dirname($_SERVER['REQUEST_URI']);
 			font: 28px "Sans-serif";
 			text-shadow: #104030 1px -1px;
 			color: #6394bB;
+			list-style: none;
+			line-height: 30px;
 		}
 		
 		.highscores li div.score {
