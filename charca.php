@@ -136,8 +136,8 @@ function init (canvasId, canvasWrapper, overlayBlock) {
 	//associate the canvas with the stage
 	canvas = document.getElementById(canvasId);
 	overlay = document.getElementById(overlayBlock);
-	canvas.onselectstart = function () { return false; }
-	overlay.onselectstart = function () { return false; }
+	//canvas.onselectstart = function () { return false; }
+	//overlay.onselectstart = function () { return false; }
 	stage = new Stage(canvas);
 
 	// List of samples
@@ -221,7 +221,7 @@ function watchRestart () {
 	if (score) {
 		wait = 1500;
 	}
-	timer = setTimeout('overlay.onclick = handleClick; canvas.onmousemove = handleMouseMove; canvas.onmousedown = handleClick; canvas.ondblclick = null', 2000);
+	timer = setTimeout('overlay.onclick = handleClick; canvas.onmousemove = handleMouseMove; canvas.onmousedown = handleClick; canvas.ondblclick = null', wait);
 }
 
 // reset all game logic
