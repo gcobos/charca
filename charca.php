@@ -194,8 +194,7 @@ function init (canvasId, canvasWrapper, overlayBlock) {
 
 function watchRestart () {
 	overlay.onclick = null;
-	overlay.onmousemove = null;
-	canvas.onclick = null;	
+	canvas.onmousedown = null;	
 	canvas.ondblclick = null;
 	canvas.onmousemove = null;
 
@@ -222,7 +221,7 @@ function watchRestart () {
 	if (score) {
 		wait = 1500;
 	}
-	timer = setTimeout('overlay.onclick = handleClick; canvas.onmousemove = handleMouseMove; overlay.onmousemove = handleMouseMove; canvas.onclick = handleClick; canvas.ondblclick = null', 2000);
+	timer = setTimeout('overlay.onclick = handleClick; canvas.onmousemove = handleMouseMove; canvas.onmousedown = handleClick; canvas.ondblclick = null', 2000);
 }
 
 // reset all game logic
@@ -560,6 +559,7 @@ function handleClick (e) {
 		stage.removeChild(messageField);
 		restart();
 	}
+	event.stopPropagation();
 	e.preventDefault();
 }
 
