@@ -221,7 +221,7 @@ function watchRestart () {
 	if (score) {
 		wait = 1500;
 	}
-	timer = setTimeout('overlay.onclick = handleClick; canvas.onmousemove = handleMouseMove; canvas.onclick = handleClick; canvas.ondblclick = null', wait);
+	timer = setTimeout('overlay.onclick = handleClick; canvas.onmousemove = handleMouseMove; canvas.onmousedown = handleClick; canvas.ondblclick = null', wait);
 }
 
 // reset all game logic
