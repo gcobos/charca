@@ -199,6 +199,8 @@ function watchRestart () {
 	canvas.ondblclick = null;
 	canvas.onmousemove = null;
 
+	refreshHeader();
+
 	playing = false;
 	// watch for clicks
 	stage.addChild(messageField);
@@ -406,6 +408,8 @@ function tick() {
 			} else if (aliveInsects <= 0) {
 			    messageField.text = "¡Enhorabuena!\n\nHas derrotado al bicho gordo de la charca!!\nAhora el mundo es un poquito más feliz,\nexcepto para la familia del bicho gordo!!!";
 			    score += 1000;
+			    frog.shooting = false;
+			    frog.tongue = null;
 			    frog.alive = false;
 			    insectsKilled = 0;
 			    level = 0;
