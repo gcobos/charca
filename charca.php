@@ -497,29 +497,29 @@ function refreshHeader ()
 	stage.addChild(scoreField);
 
     if (d && playing) {
-        var w = Number(time) * canvas.width /  levelConfig[level][1];
+        var w = Number(time) * 600 /  levelConfig[level][1];
     	var g = d.graphics;
     	g.clear();
-    	g.moveTo(0,40);
+    	g.moveTo(20,40);
     	var barColor = "#00aa00";
-    	if (w < canvas.width / 8) {
+    	if (w < canvas.width / 7) {
     	    barColor = "#ff0000";
     	} else if (w < canvas.width / 3) {
     	    barColor = "#ffee00";
     	}
 		g.beginStroke(barColor);
 		g.setStrokeStyle(6)
-    	g.lineTo(w,40);
+    	g.lineTo(20+w,40);
     	g.endStroke()
     	
     	if (level == 10) {
     	    var o = insectsCloud[bossIndex];
             if (o.type == 6) {
-                var w = o.life * canvas.width / 20;
-        	    g.moveTo(0,50);
+                var w = o.life * 600 / 20;
+        	    g.moveTo(20,50);
 		        g.beginStroke("#ffbb00");
 		        g.setStrokeStyle(6)
-    	        g.lineTo(w,50);
+    	        g.lineTo(20+w,50);
     	        g.endStroke()
     	    }
     	}
