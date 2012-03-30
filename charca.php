@@ -208,7 +208,7 @@ function watchRestart () {
 	stage.addChild(messageField);
 	stage.update(); 	//update the stage to show text
 	
-	mouse = {x:0,y:0};
+	mouse = {x:canvas.width/2,y:canvas.height/2};
 	
 	// Get scores
 	//console.log(window.location.href+'?func=scores&v='+score)
