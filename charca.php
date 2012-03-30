@@ -1,4 +1,4 @@
-<?php 
+<?php
 //print var_export($_SERVER,true);
 if (in_array($_SERVER['HTTP_HOST'], array('localhost','::1','127.0.0.1'))) {
 	$server = 'localhost';
@@ -209,7 +209,7 @@ function watchRestart () {
 	mouse = {x:0,y:0};
 	
 	// Get scores
-	//console.log(window.location.href+'&func=scores&v='+score)
+	//console.log(window.location.href+'?func=scores&v='+score)
 	if (!frog.alive) {
 		httpGet('<?php echo $base_url ?>'+'?func=scores&v='+score, function (scores) {
 			scoreList = scores;
@@ -277,8 +277,6 @@ function restart() {
     	    var index = getInsect(6, 3);
 	    	insectsCloud[index].floatOnScreen(canvas.width, canvas.height);
 	    }
-	    // Remove overlay
-	    overlay.style.display = 'none';
 	
 	    Ticker.addListener(window);
 	
@@ -288,6 +286,8 @@ function restart() {
 	    timer = setInterval("refreshHeader();", 250);	
 	    //console.log(time,Math.round(Ticker.getTime() / 1000) );
 	    playing = true;
+	    // Remove overlay
+	    overlay.style.display = 'none';
 	    refreshHeader();
     }
 }
@@ -498,16 +498,18 @@ function refreshHeader ()
 
 function showHighScores ()
 {
-	//console.log('printing high scores',scoreList);
-	content = '<ul class="highscores">';
-	for (i in scoreList) {
-		content += '<li><div class="score">'+scoreList[i][0]+'</div><div class="name">'+scoreList[i][1]+'</div></li>';
-	}
-	content += '</ul>';
-	overlay.innerHTML = content;
-	overlay.style.display = 'block';
-	//console.log('Content',content);
-	//console.log(overlay)
+    if (!playing) {
+    	//console.log('printing high scores',scoreList);
+    	content = 'HIhscores<ul class="highscores">';
+    	for (i in scoreList) {
+    		content += '<li><div class="score">'+scoreList[i][0]+'</div><div class="name">'+scoreList[i][1]+'</div></li>';
+    	}
+    	content += '</ul>';
+    	overlay.innerHTML = content;
+    	overlay.style.display = 'block';
+    	//console.log('Content',content);
+    	//console.log(overlay)
+    }
 }
 
 function outOfBounds (o, bounds) 
