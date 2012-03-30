@@ -109,6 +109,7 @@ var frog;			      // the frog
 var insectsCloud;			// array of insects
 var insectsKilled;		// Insects killed in a level
 var aliveInsects;			// Alive insects in any moment
+var bossIndex;              // index of the boss in the cloud
 
 var playing;				// true when in game mode 
 var score = 0;				// actual score
@@ -128,7 +129,7 @@ var sounds;
 
 var scoreList;
 
-var d;						// debug shapes
+var d;						// drawing shapes
 
 // Functions
 
@@ -199,9 +200,10 @@ function watchRestart () {
 	canvas.ondblclick = null;
 	canvas.onmousemove = null;
 
+	playing = false;
+
 	refreshHeader();
 
-	playing = false;
 	// watch for clicks
 	stage.addChild(messageField);
 	stage.update(); 	//update the stage to show text
@@ -270,12 +272,12 @@ function restart() {
 
 	    stage.addChild(frog);
 
-	    //d = new Shape();
-	    //stage.addChild(d);
+	    d = new Shape();
+	    stage.addChild(d);
 	
 	    if (level == 10) {
-    	    var index = getInsect(6, 3);
-	    	insectsCloud[index].floatOnScreen(canvas.width, canvas.height);
+    	    bossIndex = getInsect(6, 3);
+	    	insectsCloud[bossIndex].floatOnScreen(canvas.width, canvas.height);
 	    }
 	
 	    Ticker.addListener(window);
@@ -283,7 +285,7 @@ function restart() {
 	    //start game timer
 	    window.clearInterval(timer);
 	    baseTime = time + Math.round(Ticker.getTime() / 1000);
-	    timer = setInterval("refreshHeader();", 250);	
+	    timer = setInterval("refreshHeader();", 450);	
 	    //console.log(time,Math.round(Ticker.getTime() / 1000) );
 	    playing = true;
 	    // Remove overlay
@@ -310,7 +312,7 @@ function tick() {
 				var power = (level - (type+1) + Math.round((Math.random()-0.5)*2)); 
 				if (type != 5 || fireflies < levelConfig[level][3]) {
     				if (type == 5) {
-    				    if (aliveFireflies==0 && insectsKilled > levelConfig[level][0]/2 ) {
+    				    if (aliveFireflies==0 && insectsKilled > levelConfig[level][0]/4 ) {
     				        fireflies++;
     				        var index = getInsect(type, power);
 				            insectsCloud[index].floatOnScreen(canvas.width, canvas.height);
@@ -493,6 +495,36 @@ function refreshHeader ()
 	stage.addChild(timeField);
 	scoreField.text = "PUNTOS: " + (Number(score)).toString();
 	stage.addChild(scoreField);
+
+    if (d && playing) {
+        var w = Number(time) * canvas.width /  levelConfig[level][1];
+    	var g = d.graphics;
+    	g.clear();
+    	g.moveTo(0,40);
+    	var barColor = "#00aa00";
+    	if (w < canvas.width / 8) {
+    	    barColor = "#ff0000";
+    	} else if (w < canvas.width / 3) {
+    	    barColor = "#ffee00";
+    	}
+		g.beginStroke(barColor);
+		g.setStrokeStyle(6)
+    	g.lineTo(w,40);
+    	g.endStroke()
+    	
+    	if (level == 10) {
+    	    var o = insectsCloud[bossIndex];
+            if (o.type == 6) {
+                var w = o.life * canvas.width / 20;
+        	    g.moveTo(0,50);
+		        g.beginStroke("#ffbb00");
+		        g.setStrokeStyle(6)
+    	        g.lineTo(w,50);
+    	        g.endStroke()
+    	    }
+    	}
+    	//console.log(w);
+    }
 	
 }
 
@@ -500,7 +532,7 @@ function showHighScores ()
 {
     if (!playing) {
     	//console.log('printing high scores',scoreList);
-    	content = 'HIhscores<ul class="highscores">';
+    	content = '<ul class="highscores">';
     	for (i in scoreList) {
     		content += '<li><div class="score">'+scoreList[i][0]+'</div><div class="name">'+scoreList[i][1]+'</div></li>';
     	}
