@@ -72,8 +72,8 @@ $base_url = $proto.$server.'/'.dirname($_SERVER['REQUEST_URI']);
 	</style>
 	<script src="javascript/easel.js"></script>
 	<script src="javascript/sound.js"></script>
-   <script src="javascript/frog.js"></script>
-   <script src="javascript/insect.js"></script>
+	<script src="javascript/frog.js"></script>
+	<script src="javascript/insect.js"></script>
 <script>
 
 // Defines 
